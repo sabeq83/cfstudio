@@ -520,3 +520,13 @@ Repliz publishing requires Google Drive staging. Configure OAuth client ID/secre
 Only approved final media is copied to Drive after scheduling. Verify checksum and anonymous binary download before Repliz POST. Persist pre-generated file ID to recover ambiguous uploads without duplicate copies. Reuse staging by tenant/item/revision/checksum/Drive connection. A Drive failure blocks publishing, not production; error is visible and queued for Telegram. No fallback to localhost/signed links.
 
 Retention extends past latest referenced schedule plus grace. Cleanup only when all referencing intents are terminal, never while unknown or active. Revoke the staging file's public permission and move its app-owned copy to trash; never delete originals. Tenant boundaries and explicit publisher/approver permissions remain mandatory. Live OAuth/provider tests require the user's CF Studio credentials; offline tests do not prove live readiness.
+
+## Approved Gemini V2 parity revision — 2 November 2026
+
+Supersedes the earlier project-group requirement: no Project group input or project budget gates in new pool operations. Each key has its own local daily cap, cooldown and concurrency reservation. Historical project-linked records are retained for audit. Summary is local bookkeeping and not authoritative Google quota.
+
+Pool UI follows the approved mockup: active/used/remaining summary, utilization, status filter, masked rows, audit/test, Single Input/Bulk Add with alias prefix/default cap/live precheck, duplicate/rejected/transient summaries, pause/enable, archive invalid and restore paused. Invalid keys require successful retest before activation. Without live precheck, newly imported keys start paused.
+
+Model UI has Paid/Free Tier, primary/custom ID, optional fallback, paid smart module routing and Context Caching. No TTS model or timezone input here. Older internal TTS/timezone configuration remains intact. Free tier forces caching off. Catalog IDs mirror V2; runtime availability/authorization is not assumed. CF Studio exposes routing only for its supported extraction/deconstruct/campaign modules.
+
+The shared gateway records each generation attempt before HTTP. Explicit model 404 or structured 503 UNAVAILABLE may fall back with bounded delay; network loss/unknown POST does not retry under another key/model. Routine and catalog-job policies are snapshotted. Explicit cache uses tenant/credential/model/exact long text identity with 15-minute TTL; unsupported/rejected/uncertain cache preparation falls back inline without repeating generation. No V2 Master KB asset or guaranteed saving is claimed.

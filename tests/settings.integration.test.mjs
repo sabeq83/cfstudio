@@ -15,6 +15,7 @@ import {
   executePool,
   poolKeyState,
   testPoolKeys,
+  archiveInvalidKeys,
 } from "../lib/gemini-pool.js";
 import {
   saveProviderSettings,
@@ -87,7 +88,7 @@ after(async () => {
 });
 async function resetPool() {
   await pg.exec(
-    "DELETE FROM gemini_pool_attempts;DELETE FROM gemini_pool_keys;DELETE FROM gemini_pool_projects;DELETE FROM connections WHERE kind='gemini';",
+    "DELETE FROM gemini_context_caches;DELETE FROM gemini_pool_attempts;DELETE FROM gemini_pool_keys;DELETE FROM gemini_pool_projects;DELETE FROM connections WHERE kind='gemini';",
   );
 }
 async function add(
@@ -95,11 +96,18 @@ async function add(
   limit = 5,
   keys = ["TEST_MOCK_KEY_ONE", "TEST_MOCK_KEY_TWO"],
 ) {
-  return addPoolKeys(actor, {
-    projectName: project,
-    projectLimit: limit,
-    keys: keys.map((apiKey, i) => ({ name: "Key " + i, apiKey })),
-  });
+  return addPoolKeys(
+    actor,
+    {
+      validateLive: true,
+      keys: keys.map((apiKey, i) => ({
+        name: "Key " + i,
+        apiKey,
+        dailyLimit: limit,
+      })),
+    },
+    async () => json({ models: [] }),
+  );
 }
 test("Gemini bulk import is encrypted, deduplicated, masked and tenant scoped", async () => {
   pool = await add();
@@ -128,12 +136,14 @@ test("Gemini bulk import is encrypted, deduplicated, masked and tenant scoped", 
     code: "NOT_FOUND",
   });
 });
-test("project daily budget is shared across keys; reservations survive worker interruption", async () => {
+test("per-key budget and concurrency stay independent; interrupted reservations remain counted", async () => {
   await resetPool();
   await add("Shared", 2);
   const r1 = await reservePoolKey("a", "model"),
     r2 = await reservePoolKey("a", "model");
   assert.notEqual(r1.keyId, r2.keyId);
+  await reservePoolKey("a", "model");
+  await reservePoolKey("a", "model");
   await assert.rejects(() => reservePoolKey("a", "model"), {
     code: "GEMINI_POOL_UNAVAILABLE",
   });
@@ -149,10 +159,10 @@ test("project daily budget is shared across keys; reservations survive worker in
         "SELECT count(*)::int n FROM gemini_pool_attempts WHERE status='unknown'",
       )
     ).rows[0].n,
-    2,
+    4,
   );
 });
-test("rate limit cools entire project without invalidating key; another project may rotate", async () => {
+test("rate limit cools one key without invalidating it; another key may rotate", async () => {
   await resetPool();
   await add("First", 9, ["TEST_MOCK_FIRST"]);
   await add("Second", 9, ["TEST_MOCK_SECOND"]);
@@ -166,7 +176,7 @@ test("rate limit cools entire project without invalidating key; another project 
   assert.equal(calls, 2);
   const view = await listPool(actor);
   assert.ok(view.keys.every((k) => k.status === "active"));
-  assert.equal(view.projects.filter((p) => p.cooldown_until).length, 1);
+  assert.equal(view.keys.filter((p) => p.cooldown_until).length, 1);
 });
 test("ambiguous Gemini POST never rotates; archived pool never falls back to hidden legacy key", async () => {
   await resetPool();
@@ -605,4 +615,334 @@ test("disconnect removes public copies and offline tokens but keeps encrypted OA
       .every((f) => f.trashed),
   );
   await startGoogleOAuth(actor, drive.id);
+});
+
+test("bulk live validation counts duplicates, invalid and transient failures without raw key exposure", async () => {
+  await resetPool();
+  const keys = [
+    "TEST_MOCK_GOOD",
+    "TEST_MOCK_BAD",
+    "TEST_MOCK_TEMP",
+    "TEST_MOCK_GOOD",
+  ].map((apiKey, i) => ({ name: "Import " + i, apiKey, dailyLimit: 20 }));
+  const result = await addPoolKeys(
+    actor,
+    { keys, validateLive: true },
+    async (u, o) =>
+      o.headers["x-goog-api-key"].includes("BAD")
+        ? json({ error: { details: [{ reason: "API_KEY_INVALID" }] } }, 400)
+        : o.headers["x-goog-api-key"].includes("TEMP")
+          ? json({}, 503)
+          : json({ models: [] }),
+  );
+  assert.deepEqual(
+    [result.added, result.duplicates, result.rejected, result.failed],
+    [1, 1, 1, 1],
+  );
+  assert.ok(!JSON.stringify(result).includes("TEST_MOCK_GOOD"));
+  const view = await listPool(actor);
+  assert.equal(view.summary.capacity, 20);
+  assert.equal(view.projects, undefined);
+  assert.equal(
+    (await pg.query("SELECT project_id FROM gemini_pool_keys")).rows[0]
+      .project_id,
+    null,
+  );
+  const paused = await addPoolKeys(actor, {
+    keys: [{ name: "Paused", apiKey: "TEST_MOCK_PAUSED", dailyLimit: 7 }],
+    validateLive: false,
+  });
+  assert.equal(paused.added, 1);
+  assert.equal(
+    (await listPool(actor)).keys.find((k) => k.name === "Paused").status,
+    "disabled",
+  );
+});
+test("invalid cleanup preserves archived history and restores paused; invalid keys require successful retest", async () => {
+  const keys = (await listPool(actor)).keys;
+  await testPoolKeys(actor, keys[0].id, async () =>
+    json({ error: { details: [{ reason: "API_KEY_INVALID" }] } }, 400),
+  );
+  await assert.rejects(() => poolKeyState(actor, keys[0].id, "active"), {
+    code: "KEY_RETEST_REQUIRED",
+  });
+  assert.equal((await archiveInvalidKeys(actor)).archived, 1);
+  const view = await listPool(actor);
+  assert.equal(view.archived.length, 1);
+  assert.equal(view.keys.length, 1);
+  await poolKeyState(actor, view.archived[0].id, "active");
+  assert.equal(
+    (await listPool(actor)).keys.find((k) => k.id === view.archived[0].id)
+      .status,
+    "disabled",
+  );
+  await assert.rejects(
+    () => poolKeyState(actor, view.archived[0].id, "active"),
+    { code: "KEY_RETEST_REQUIRED" },
+  );
+  await testPoolKeys(actor, view.archived[0].id, async () =>
+    json({ models: [] }),
+  );
+  await poolKeyState(actor, view.archived[0].id, "active");
+});
+test("free tier forces cache off and policy snapshot preserves routing while hidden TTS/timezone settings survive", async () => {
+  await pg.query(
+    "UPDATE integration_settings SET config=config||$2::jsonb WHERE tenant_id=$1 AND kind='gemini'",
+    ["a", { ttsModel: "internal-audio", budgetTimezone: "Asia/Jakarta" }],
+  );
+  const c = await savePoolSettings(actor, {
+    tier: "free",
+    model: "gemini-3.6-flash",
+    fallbackModel: "custom-fallback",
+    contextCaching: true,
+    smartRouting: true,
+  });
+  assert.equal(c.contextCaching, false);
+  assert.equal(c.ttsModel, "internal-audio");
+  assert.equal(c.budgetTimezone, "Asia/Jakarta");
+  const snapshot = await productionDefaults(getPool(), "a");
+  await savePoolSettings(actor, {
+    tier: "paid",
+    model: "new-model",
+    smartRouting: false,
+  });
+  assert.equal(snapshot.geminiConfig.model, "gemini-3.6-flash");
+  assert.equal(snapshot.geminiConfig.tier, "free");
+  await assert.rejects(
+    () => savePoolSettings(actor, { tier: "paid", model: "bad/model" }),
+    { code: "MODEL_INVALID" },
+  );
+});
+const generated = () =>
+  json({ candidates: [{ content: { parts: [{ text: '{"ok":true}' }] } }] });
+test("paid module routing selects extraction/deconstruct/campaign models through the same pool", async () => {
+  await resetPool();
+  await add("ignored", 30, ["TEST_MOCK_ROUTING"]);
+  await savePoolSettings(actor, {
+    tier: "paid",
+    model: "custom-primary",
+    smartRouting: true,
+    contextCaching: false,
+  });
+  const urls = [],
+    g = new ProviderGateway({
+      fetcher: async (u) => {
+        urls.push(String(u));
+        return generated();
+      },
+    }),
+    connection = await resolveConnection("a", null, "gemini");
+  for (const module of ["extraction", "deconstruct", "campaign"])
+    await g.gemini(connection, "test", { module });
+  assert.ok(urls[0].includes("gemini-1.5-flash-8b"));
+  assert.ok(urls[1].includes("gemini-2.5-flash"));
+  assert.ok(urls[2].includes("gemini-3.6-flash"));
+});
+test("safe model rejection falls back in order but ambiguous generation never changes model or key", async () => {
+  await resetPool();
+  await add("ignored", 30, ["TEST_MOCK_FALLBACK"]);
+  await savePoolSettings(actor, {
+    tier: "free",
+    model: "custom-primary",
+    fallbackModel: "custom-backup",
+    smartRouting: false,
+  });
+  const urls = [];
+  const g = new ProviderGateway({
+    fetcher: async (u) => {
+      urls.push(String(u));
+      return urls.length === 1
+        ? json({ error: { status: "NOT_FOUND" } }, 404)
+        : generated();
+    },
+  });
+  await g.gemini(await resolveConnection("a", null, "gemini"), "test");
+  assert.equal(urls.length, 2);
+  assert.ok(urls[0].includes("custom-primary"));
+  assert.ok(urls[1].includes("custom-backup"));
+  let calls = 0;
+  const awaitedConnection = await resolveConnection("a", null, "gemini");
+  const lost = new ProviderGateway({
+    fetcher: async () => {
+      calls++;
+      throw new Error("lost");
+    },
+  });
+  await assert.rejects(() => lost.gemini(awaitedConnection, "test"), {
+    code: "PROVIDER_OUTCOME_UNKNOWN",
+  });
+  assert.equal(calls, 1);
+});
+test("context cache reuses exact long prompt scoped to credential/model and remains disabled for free tier", async () => {
+  await resetPool();
+  await add("ignored", 30, ["TEST_MOCK_CACHE"]);
+  await savePoolSettings(actor, {
+    tier: "paid",
+    model: "cache-model",
+    contextCaching: true,
+    smartRouting: false,
+  });
+  let caches = 0,
+    generations = 0;
+  const g = new ProviderGateway({
+    fetcher: async (u, o) => {
+      const body = JSON.parse(o.body);
+      if (String(u).includes("cachedContents")) {
+        caches++;
+        assert.equal(body.model, "models/cache-model");
+        return json({
+          name: "cachedContents/test_cache",
+          expireTime: new Date(Date.now() + 900000).toISOString(),
+        });
+      }
+      generations++;
+      assert.equal(body.cachedContent, "cachedContents/test_cache");
+      return generated();
+    },
+  });
+  const c = await resolveConnection("a", null, "gemini"),
+    prompt = "Long input ".repeat(1000);
+  await g.gemini(c, prompt);
+  await g.gemini(c, prompt);
+  assert.equal(caches, 1);
+  assert.equal(generations, 2);
+  await savePoolSettings(actor, {
+    tier: "free",
+    model: "cache-model",
+    contextCaching: true,
+  });
+  const uncached = new ProviderGateway({
+    fetcher: async (u, o) => {
+      assert.ok(!String(u).includes("cachedContents"));
+      assert.equal(JSON.parse(o.body).cachedContent, undefined);
+      return generated();
+    },
+  });
+  await uncached.gemini(await resolveConnection("a", null, "gemini"), prompt);
+});
+test("cache rejection falls back inline and cached-resource rejection retries inline only after explicit rejection", async () => {
+  await resetPool();
+  await add("ignored", 30, ["TEST_MOCK_CACHE_REJECT"]);
+  await savePoolSettings(actor, {
+    tier: "paid",
+    model: "cache-model",
+    contextCaching: true,
+  });
+  let cacheCalls = 0,
+    posts = 0;
+  const g = new ProviderGateway({
+    fetcher: async (u, o) => {
+      if (String(u).includes("cachedContents")) {
+        cacheCalls++;
+        return json({ error: { status: "INVALID_ARGUMENT" } }, 400);
+      }
+      posts++;
+      assert.equal(JSON.parse(o.body).cachedContent, undefined);
+      return generated();
+    },
+  });
+  await g.gemini(
+    await resolveConnection("a", null, "gemini"),
+    "Prompt ".repeat(1500),
+  );
+  assert.equal(cacheCalls, 1);
+  assert.equal(posts, 1);
+  await pg.exec("DELETE FROM gemini_context_caches");
+  let attempts = 0;
+  const expired = new ProviderGateway({
+    fetcher: async (u, o) => {
+      if (String(u).includes("cachedContents"))
+        return json({
+          name: "cachedContents/expired",
+          expireTime: new Date(Date.now() + 900000).toISOString(),
+        });
+      attempts++;
+      return JSON.parse(o.body).cachedContent
+        ? json({ error: { status: "NOT_FOUND" } }, 404)
+        : generated();
+    },
+  });
+  await expired.gemini(
+    await resolveConnection("a", null, "gemini"),
+    "Prompt ".repeat(1500),
+  );
+  assert.equal(attempts, 2);
+});
+
+test("structured 503 safely falls back, while an unstructured server error remains unknown", async () => {
+  await resetPool();
+  await add("unused", 20, ["TEST_MOCK_BUSY"]);
+  await savePoolSettings(actor, {
+    tier: "free",
+    model: "busy-primary",
+    fallbackModel: "busy-backup",
+  });
+  let calls = 0;
+  const g = new ProviderGateway({
+    fetcher: async () =>
+      ++calls === 1
+        ? json({ error: { status: "UNAVAILABLE" } }, 503)
+        : generated(),
+  });
+  await g.gemini(await resolveConnection("a", null, "gemini"), "test");
+  assert.equal(calls, 2);
+  let unknown = 0;
+  const c = await resolveConnection("a", null, "gemini"),
+    g2 = new ProviderGateway({
+      fetcher: async () => {
+        unknown++;
+        return json({}, 503);
+      },
+    });
+  await assert.rejects(() => g2.gemini(c, "test"), {
+    code: "PROVIDER_OUTCOME_UNKNOWN",
+  });
+  assert.equal(unknown, 1);
+});
+test("context caches never cross tenant or model boundaries for identical prompts", async () => {
+  await resetPool();
+  await add("unused", 20, ["TEST_MOCK_SCOPE_A"]);
+  await addPoolKeys(
+    other,
+    {
+      validateLive: true,
+      keys: [{ name: "B", apiKey: "TEST_MOCK_SCOPE_B", dailyLimit: 20 }],
+    },
+    async () => json({ models: [] }),
+  );
+  for (const a of [actor, other])
+    await savePoolSettings(a, {
+      tier: "paid",
+      model: "scoped-model",
+      contextCaching: true,
+    });
+  let caches = 0;
+  const g = new ProviderGateway({
+      fetcher: async (u, o) =>
+        String(u).includes("cachedContents")
+          ? json({
+              name: "cachedContents/scope_" + ++caches,
+              expireTime: new Date(Date.now() + 900000).toISOString(),
+            })
+          : generated(),
+    }),
+    prompt = "Scoped long prompt ".repeat(600);
+  await g.gemini(await resolveConnection("a", null, "gemini"), prompt);
+  await g.gemini(await resolveConnection("b", null, "gemini"), prompt);
+  assert.equal(caches, 2);
+  await savePoolSettings(actor, {
+    tier: "paid",
+    model: "other-model",
+    contextCaching: true,
+  });
+  await g.gemini(await resolveConnection("a", null, "gemini"), prompt);
+  assert.equal(caches, 3);
+  assert.equal(
+    (
+      await pg.query(
+        "SELECT count(DISTINCT tenant_id)::int n FROM gemini_context_caches",
+      )
+    ).rows[0].n,
+    2,
+  );
 });

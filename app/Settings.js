@@ -1,4 +1,5 @@
 "use client";
+import GeminiSettings from "./GeminiSettings.js";
 import { useEffect, useState } from "react";
 const tabs = [
   "Gemini API Pool Manager",
@@ -34,11 +35,13 @@ export default function Settings({ actor, api, action }) {
         ? tabs[3]
         : tabs[0],
     ),
-    [pool, setPool] = useState({ projects: [], keys: [], settings: {} }),
+    [pool, setPool] = useState({ keys: [], archived: [], settings: {} }),
     [poolConfig, setPoolConfig] = useState({
-      model: "",
-      ttsModel: "gemini-2.5-flash-preview-tts",
-      budgetTimezone: "Asia/Jakarta",
+      model: "gemini-3.6-flash",
+      tier: "paid",
+      fallbackModel: "",
+      smartRouting: true,
+      contextCaching: true,
     }),
     [forms, setForms] = useState(defaults),
     [connections, setConnections] = useState([]),
@@ -49,12 +52,6 @@ export default function Settings({ actor, api, action }) {
       folderId: "",
       retentionDays: 14,
       graceDays: 2,
-    }),
-    [importKeys, setImportKeys] = useState({
-      projectId: "",
-      projectName: "",
-      projectLimit: 20,
-      text: "",
     }),
     [audio, setAudio] = useState(null),
     [busy, setBusy] = useState(false),
@@ -164,270 +161,14 @@ export default function Settings({ actor, api, action }) {
         </p>
       )}
       {tab === tabs[0] && (
-        <>
-          <h3>Gemini API Pool Manager</h3>
-          <p>
-            {pool.keys.length} key • {pool.projects.length} project • pemakaian
-            lokal {pool.projects.reduce((a, p) => a + p.used_today, 0)} /{" "}
-            {pool.projects.reduce((a, p) => a + p.daily_limit, 0)} request •{" "}
-            {pool.budgetDay}
-          </p>
-          <small>
-            Kuota Google berlaku per project. Angka di sini adalah batas dan
-            catatan lokal CF Studio, bukan sisa kuota langsung dari Google.
-          </small>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              perform(
-                () => api("settings/pool-config", poolConfig),
-                "Model dan zona waktu pool tersimpan.",
-              );
-            }}
-          >
-            <div className="grid">
-              <label>
-                Model planner / creative / analisis
-                <input
-                  required
-                  value={poolConfig.model || ""}
-                  onChange={(e) =>
-                    setPoolConfig({ ...poolConfig, model: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Model Gemini TTS
-                <input
-                  required
-                  value={poolConfig.ttsModel || ""}
-                  onChange={(e) =>
-                    setPoolConfig({ ...poolConfig, ttsModel: e.target.value })
-                  }
-                />
-              </label>
-              <label>
-                Zona waktu batas lokal
-                <select
-                  value={poolConfig.budgetTimezone}
-                  onChange={(e) =>
-                    setPoolConfig({
-                      ...poolConfig,
-                      budgetTimezone: e.target.value,
-                    })
-                  }
-                >
-                  {[
-                    "Asia/Jakarta",
-                    "Asia/Makassar",
-                    "Asia/Jayapura",
-                    "America/Los_Angeles",
-                    "UTC",
-                  ].map((x) => (
-                    <option key={x}>{x}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <button disabled={busy}>Simpan default Gemini</button>
-          </form>
-          <details>
-            <summary>Tambah key satuan / bulk</summary>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                const keys = importKeys.text
-                  .split("\n")
-                  .map((x) => x.trim())
-                  .filter(Boolean)
-                  .map((line, index) => {
-                    const sep = line.includes(":")
-                      ? ":"
-                      : line.includes(",")
-                        ? ","
-                        : null;
-                    const i = sep ? line.indexOf(sep) : -1;
-                    return {
-                      name:
-                        i >= 0 ? line.slice(0, i).trim() : "Key " + (index + 1),
-                      apiKey: i >= 0 ? line.slice(i + 1).trim() : line,
-                      dailyLimit: Number(importKeys.projectLimit),
-                    };
-                  });
-                const r = await perform(
-                  () =>
-                    api("settings/pool", {
-                      projectId: importKeys.projectId || undefined,
-                      projectName: importKeys.projectName,
-                      projectLimit: Number(importKeys.projectLimit),
-                      keys,
-                    }),
-                  "Impor selesai; key duplikat tidak ditambahkan.",
-                );
-                if (r) {
-                  setImportKeys({ ...importKeys, text: "" });
-                  setMessage(
-                    `${r.added} ditambahkan • ${r.duplicates} duplikat dilewati`,
-                  );
-                }
-              }}
-            >
-              <div className="grid">
-                <label>
-                  Project group
-                  <select
-                    value={importKeys.projectId}
-                    onChange={(e) => {
-                      const p = pool.projects.find(
-                        (p) => p.id === e.target.value,
-                      );
-                      setImportKeys({
-                        ...importKeys,
-                        projectId: e.target.value,
-                        projectName: p?.label || "",
-                        projectLimit: p?.daily_limit || 20,
-                      });
-                    }}
-                  >
-                    <option value="">Project baru</option>
-                    {pool.projects.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.label}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label>
-                  Nama project
-                  <input
-                    required
-                    value={importKeys.projectName}
-                    readOnly={!!importKeys.projectId}
-                    onChange={(e) =>
-                      setImportKeys({
-                        ...importKeys,
-                        projectName: e.target.value,
-                      })
-                    }
-                  />
-                </label>
-                <label>
-                  Batas request lokal per hari
-                  <input
-                    type="number"
-                    required
-                    min="1"
-                    max="100000"
-                    readOnly={!!importKeys.projectId}
-                    value={importKeys.projectLimit}
-                    onChange={(e) =>
-                      setImportKeys({
-                        ...importKeys,
-                        projectLimit: Number(e.target.value),
-                      })
-                    }
-                  />
-                </label>
-              </div>
-              <label>
-                Key • satu baris per key
-                <textarea
-                  required
-                  type="password"
-                  autoComplete="off"
-                  rows="4"
-                  placeholder="Nama key: YOUR_API_KEY_HERE"
-                  value={importKeys.text}
-                  onChange={(e) =>
-                    setImportKeys({ ...importKeys, text: e.target.value })
-                  }
-                />
-              </label>
-              <button disabled={busy}>Tambahkan ke pool</button>
-            </form>
-          </details>
-          <div className="actions">
-            <button
-              disabled={busy || !pool.keys.length}
-              onClick={() =>
-                perform(
-                  () => api("settings/pool-test", {}),
-                  "Pemeriksaan key selesai. Gangguan sementara tidak menonaktifkan key.",
-                )
-              }
-            >
-              Audit & tes semua key
-            </button>
-          </div>
-          {pool.projects.map((p) => (
-            <div className="target" key={p.id}>
-              <h3>{p.label}</h3>
-              <small>
-                {p.used_today}/{p.daily_limit} request lokal •{" "}
-                {p.cooldown_until && new Date(p.cooldown_until) > new Date()
-                  ? "cooldown"
-                  : "siap"}
-                {p.exhausted_day === pool.budgetDay
-                  ? " • batas project tercapai"
-                  : ""}
-              </small>
-            </div>
-          ))}
-          {pool.keys.map((k) => (
-            <div className="target row" key={k.id}>
-              <div>
-                <h3>{k.name}</h3>
-                <small>
-                  {k.masked} • {k.status} • {k.used_today}/{k.daily_limit} •{" "}
-                  {k.last_error_code || "belum ada error"}
-                </small>
-              </div>
-              <div className="actions">
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    perform(
-                      () => api("settings/pool-test", { id: k.id }),
-                      "Status key diperiksa.",
-                    )
-                  }
-                >
-                  Tes
-                </button>
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    perform(
-                      () =>
-                        api("settings/pool-state", {
-                          id: k.id,
-                          status: k.status === "active" ? "disabled" : "active",
-                        }),
-                      "Status key diperbarui.",
-                    )
-                  }
-                >
-                  {k.status === "active" ? "Nonaktifkan" : "Aktifkan"}
-                </button>
-                <button
-                  disabled={busy}
-                  onClick={() =>
-                    perform(
-                      () =>
-                        api("settings/pool-state", {
-                          id: k.id,
-                          status: "archived",
-                        }),
-                      "Key diarsipkan; catatan pemakaian dipertahankan.",
-                    )
-                  }
-                >
-                  Arsipkan
-                </button>
-              </div>
-            </div>
-          ))}
-        </>
+        <GeminiSettings
+          pool={pool}
+          config={poolConfig}
+          setConfig={setPoolConfig}
+          api={api}
+          perform={perform}
+          busy={busy}
+        />
       )}
       {tab === tabs[1] && (
         <>

@@ -2365,3 +2365,32 @@ Before: public/mockup_gemini_pool_v2.html has planner text input, Gemini TTS and
 ## Execution Task List
 - [x] Update model mockup and verify tier/custom/fallback/cache interactions.
 - [x] Show preview and sync CF Studio repository.
+
+## Implement approved V2-style Gemini Settings — 2 November 2026
+
+## Execution Task List
+- [x] Replace project grouping with per-key budgets/cooldown; preserve historical rows and masked secrets.
+- [x] Implement V2 model/tier/custom/fallback/routing/cache settings through the shared gateway and frozen routine snapshots.
+- [x] Implement approved UI: summary, status filters, Single/Bulk, live validation, archive/restore, separate model panel without TTS/timezone.
+- [ ] Verify migration, isolation, import diagnostics, safe fallback, caching, API and build; release only CF Studio.
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| db/migrations/008_gemini_v2_settings.sql | Absent | Nullable historical project references, per-key cooldown/concurrency, cache ledger |
+| lib/gemini-models.js | Absent | Shared V2 catalogs, validated model config and routing chain |
+| lib/gemini-cache.js | Absent | Tenant/key/model-scoped durable explicit caching; inline fallback on cache rejection |
+| lib/gemini-pool.js | Project budgets required | Key-only budgets/import checks/status/archive restore |
+| lib/provider-gateway.js | One model plus key rotation | V2 routing/fallback/cache, no retry after unknown POST |
+| lib/provider-settings.js, lib/production-worker.js | Primary model snapshot only | Full model policy frozen in routine snapshot |
+| lib/lab-service.js | Default model call | Explicit catalog analysis routing |
+| app/GeminiSettings.js | Absent | Approved dedicated pool/model controls using semantic tokens |
+| app/Settings.js | Embedded project forms | Render GeminiSettings and preserve other providers |
+| app/api/v3/[...segments]/route.js | Pool basic routes | Clean-invalid archive API |
+| tests/settings.integration.test.mjs | Project tests | Key-only budgets, validation, models/cache/fallback tests |
+| docs/PRD.md, docs/operations.md, docs/delivery-status.md | Project grouping contract | Approved V2 key-only contract/setup/live limitations |
+| app/globals.css | Basic settings styles | Responsive approved pool/model layout |
+| package.json, package-lock.json, CHANGELOG.md, app/api/health/route.js | alpha.4 | alpha.5 verified release |
+
+Additional safe retry integration: lib/provider-jobs.js previously prepared only quota/pacing rejections; prepare GEMINI_MODEL_BUSY after exhausted safe model fallback so bounded worker backoff can resume.
+
+Alpha.5 verification evidence: 71 tests passed including fake provider generation/cache/fallback, multi-tenant cache scope, masked imports and restore-paused behavior. Eight actual PostgreSQL reservations obeyed two concurrent slots/key and six total daily requests across two keys. Actual HTTP settings mutation smoke passed in a disposable tenant (removed afterward); catalog counts unchanged. Eight migrations installed; post-migration backup/restore, optimized build, npm audit (0 vulnerabilities), light-theme UI/Single Input/Free Tier controls verified. All live dispatch flags remain OFF. No production deployment or real Google request during verification.

@@ -1,5 +1,6 @@
 import {
   listPool,
+  archiveInvalidKeys,
   addPoolKeys,
   poolKeyState,
   testPoolKeys,
@@ -298,6 +299,8 @@ export async function POST(request, context) {
       );
     }
     if (s.join("/") === "settings/pool") data = await addPoolKeys(actor, b);
+    else if (s.join("/") === "settings/pool-clean")
+      data = await archiveInvalidKeys(actor);
     else if (s.join("/") === "settings/pool-config")
       data = await savePoolSettings(actor, b);
     else if (s.join("/") === "settings/pool-state")
