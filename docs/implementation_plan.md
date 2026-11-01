@@ -2358,3 +2358,10 @@ User requests V2 parity: remove project grouping entirely from mockup; use per-k
 ## Execution Task List
 - [x] Remove project UI/state and verify standalone interactions.
 - [x] Show updated mockup and sync CF Studio repository.
+
+## Model configuration mockup aligned with V2
+Before: public/mockup_gemini_pool_v2.html has planner text input, Gemini TTS and timezone. After: V2 dual-tier selection, primary/custom model, fallback preview, paid smart routing and context caching. Remove TTS and timezone inputs. Model IDs copied as V2 mock data, not live availability claims.
+
+## Execution Task List
+- [x] Update model mockup and verify tier/custom/fallback/cache interactions.
+- [x] Show preview and sync CF Studio repository.
