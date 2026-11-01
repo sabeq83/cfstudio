@@ -24,7 +24,7 @@ Versi kontrak: 0.1, 1 November 2026. Status: rancangan untuk review; endpoint/se
   "brandId": "brand-id",
   "timezone": "Asia/Jakarta",
   "schedule": {"frequency": "daily", "localTime": "05:00", "weekdays": []},
-  "creativeApproval": {"mode": "manual", "policyPresetRevision": null},
+  "creativeApproval": {"mode": "auto", "policyPresetRevision": null},
   "publishingSuggestions": {"dayOffset": 1, "localSlots": ["08:00", "12:00"]},
   "targets": [{"id": "target-id", "kind": "product_campaign", "name": "Video produk", "count": 2, "selected": true, "productId": "product-id", "presetRef": {"id": "preset-id", "revision": 1}}]
 }
@@ -152,7 +152,7 @@ Telegram event: error pertama segera masuk durable outbox (target ≤1 menit set
 | Schedule/cancel/reconcile publishing | Ya | Tidak | Tidak | Ya | Tidak |
 | Manage tenant members/integrations | Ya | Tidak | Tidak | Tidak | Tidak |
 
-Ini preset role usulan; seorang user dapat menerima capability gabungan. Self-approval dan default creative mode masih perlu keputusan produk. Role simulasi mockup hanya menunjukkan batas aksi, tidak membuktikan RBAC server.
+Ini preset role usulan; seorang user dapat menerima capability gabungan. Default creative mode telah dikonfirmasi otomatis berbasis preset dan dapat diubah per rutinitas. Self-approval diperbolehkan hanya jika pembuat memiliki capability produksi+approval sekaligus; tenant/brand scope tetap diperiksa. Role simulasi mockup hanya menunjukkan batas aksi, tidak membuktikan RBAC server.
 
 ## 8. Kriteria review Fase 1
 
@@ -165,3 +165,7 @@ Ini preset role usulan; seorang user dapat menerima capability gabungan. Self-ap
 - Klik nama brand membuka Preset default dan Visual Identity; existing preset dipilih sebagai assignment tanpa duplikasi.
 - History memuat revision/run/action/actor dan event provider demo; data contoh tidak diberi label migrasi selesai.
 - Light/dark, mobile, label, keyboard dan disabled capability dapat diperiksa manual.
+
+## 9. Keputusan approval terkonfirmasi
+
+Default creative approval adalah auto berbasis preset berversi, dengan override manual per rutinitas. Final approval selalu manual. Untuk approver yang merupakan pembuat konten, server wajib memeriksa `production.run` dan `content.approve` sekaligus selain scope tenant/brand; approver berbeda cukup memenuhi capability approval yang relevan. Identitas pembuat aktual disimpan saat run/item dibuat, bukan diinferensikan dari role saat request. Catat selfApproval boolean dan actorId pada audit.

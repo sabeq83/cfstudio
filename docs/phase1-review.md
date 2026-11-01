@@ -1,6 +1,6 @@
 # Fase 1 — Paket Review UI dan Kontrak
 
-Tanggal: 1 November 2026. Status: artefak siap direview; persetujuan pengguna atas mockup keseluruhan dan dua keputusan kebijakan belum diasumsikan.
+Tanggal: 1 November 2026. Status: artefak siap direview; dua kebijakan approval telah dikonfirmasi; review keseluruhan mockup belum diasumsikan.
 
 ## Artefak
 
@@ -47,12 +47,15 @@ Ini smoke interaksi prototype, bukan tes backend, transaksi DB, provider, atau b
 - Error Telegram, eskalasi dan pemulihan, gap media terdokumentasi.
 - Baseline kode lokal/data staging; akun baru, storage terpisah dan pengembangan port 3100 dahulu.
 
-## Keputusan produk menunggu jawaban
+## Keputusan approval sudah dikonfirmasi
 
-1. Default creative approval: otomatis berbasis preset atau manual sebelum render. Keduanya tetap dapat dipilih per rutinitas. Default manual di prototype hanyalah skenario demonstrasi konservatif, bukan keputusan produksi.
-2. Self-approval: apakah pengguna dengan capability produksi+approval dapat menyetujui hasil sendiri, atau harus pengguna lain. Role Admin demo saat ini dapat keduanya untuk mencoba flow, bukan bukti kebijakan telah diterima.
-3. Review keseluruhan mockup: persetujuan atau koreksi terhadap navigasi, revision, review, schedule dan brand detail sebelum kode UI utama mengikuti rancangan baru.
+1. Creative approval default otomatis berdasarkan preset, dapat diubah menjadi manual per rutinitas. Mockup kini membuka mode otomatis secara default.
+2. Pengguna dengan izin produksi dan approval sekaligus boleh menyetujui hasilnya sendiri. Final approval tetap manual, exact revision dan tercatat audit; scope tenant/brand tetap berlaku.
+
+## Review yang masih terbuka
+
+Review keseluruhan mockup: persetujuan atau koreksi terhadap navigasi, revision, review, schedule dan brand detail sebelum kode UI utama mengikuti rancangan baru. Jawaban kebijakan tidak dianggap persetujuan semua detail UI.
 
 ## Gate menuju Fase 2
 
-Artefak dan kontrak tersedia. Checklist induk Fase 1 belum ditutup sampai keputusan kebijakan dan review pengguna dicatat. Tidak mengaktifkan provider, migrasi apply atau perubahan UI utama sambil menunggu. Fondasi aplikasi yang sudah ada tetap alpha dan status belum selesai pada rencana tetap berlaku.
+Artefak dan kontrak tersedia. Checklist induk Fase 1 belum ditutup sampai review keseluruhan pengguna dicatat; kedua keputusan kebijakan sudah ditutup. Tidak mengaktifkan provider, migrasi apply atau perubahan UI utama sambil menunggu. Fondasi aplikasi yang sudah ada tetap alpha dan status belum selesai pada rencana tetap berlaku.

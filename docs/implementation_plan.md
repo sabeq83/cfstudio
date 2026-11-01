@@ -232,8 +232,8 @@ Definition of Done tiap fase: hasil fase nyata tersedia, tes bermakna lulus, ket
 | Repository/path, host/port, database/storage | Sebelum bootstrap | Aplikasi dan ruang data terpisah |
 | Sumber data V2 aktual | Sebelum inventory/migration | Pilih satu environment otoritatif secara eksplisit |
 | Login akun | Sebelum auth import | Sesi baru; jangan menyalin token sesi |
-| Creative approval | Sebelum shared auto-render diaktifkan | Kebijakan per rutinitas; final manual selalu |
-| Role mapping dan self-approval | Sebelum final approval/publishing | Capability eksplisit; catat kombinasi izin |
+| Creative approval | Dikonfirmasi pengguna | Default otomatis berdasarkan preset; bisa manual per rutinitas; final manual selalu |
+| Role mapping dan self-approval | Self-approval dikonfirmasi; role mapping diverifikasi saat provisioning | Self-approval boleh dengan izin produksi+approval; scope brand/tenant tetap wajib |
 | Kuota, concurrency, retensi | Sebelum provider pilot | Konservatif, berdasarkan inventaris dan pengukuran |
 | Provider publishing dan akun uji | Sebelum live integration | Verifikasi kemampuan nyata per akun/media |
 
@@ -1659,3 +1659,22 @@ Kontrak versioned, capability, idempotency, expected revision, transaksi, transi
 ### Status hasil Fase 1
 
 Mockup `public/mockup_cfstudio_phase1.html` dan `docs/phase1-contracts.md` siap. Ringkasan pemeriksaan dan keputusan tertunda ada pada `docs/phase1-review.md`. Gate utama Fase 1 tetap menunggu review pengguna dan pilihan creative default/self-approval; tidak dianggap selesai hanya karena prototype ditampilkan. Tidak ada perubahan React/backend/DB/provider pada pengerjaan fase ini.
+
+## 24. Kebijakan approval dikonfirmasi pengguna
+
+- [x] Default creative approval otomatis berdasarkan preset, dapat diubah per rutinitas.
+- [x] Self-approval diperbolehkan bagi pengguna yang memiliki capability produksi dan approval; tenant/brand scope tetap berlaku.
+- [x] Final approval tetap manual pada revision/fingerprint tepat dan dicatat sebagai keputusan manusia.
+- [ ] Review keseluruhan mockup masih perlu dicatat; jawaban kebijakan bukan otomatis persetujuan semua detail UI.
+
+File `public/mockup_cfstudio_phase1.html` — **Code Sebelum (Current/Before)**:
+```html
+<option value="manual">Manual • storyboard/start frame</option>
+<option value="auto">Otomatis • kebijakan preset</option>
+```
+**Code Sesudah (Proposed/After)**:
+```html
+<option value="manual">Manual • storyboard/start frame</option>
+<option value="auto" selected>Otomatis • kebijakan preset</option>
+```
+Kontrak/PRD/review diperbarui untuk menghapus status kedua kebijakan sebagai keputusan terbuka. Tidak ada perubahan backend/provider.

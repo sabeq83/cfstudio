@@ -1,6 +1,6 @@
 # PRD — CF Studio V3
 
-**Versi dokumen:** 1.6
+**Versi dokumen:** 1.7
 **Tanggal:** 1 November 2026
 **Status:** Baseline implementasi; eksekusi diotorisasi pengguna, keputusan terbuka tetap mengikuti gate teknis
 **Basis produk:** MAKNA Flow V2
@@ -212,7 +212,7 @@ Run manual memakai konfigurasi tersimpan yang dipilih dan memiliki identitas eks
 
 ### Dua lapis persetujuan
 
-1. **Persetujuan kreatif sebelum render:** usulan default otomatis berdasarkan preset yang telah disetujui admin, sehingga rutinitas dapat berjalan sampai hasil final. Mode manual tersedia per rutinitas dan menahan produksi sampai storyboard/start frame disetujui. Pemilihan default ini perlu persetujuan produk sebelum implementasi.
+1. **Persetujuan kreatif sebelum render:** default otomatis berdasarkan preset yang telah disetujui admin, sehingga rutinitas dapat berjalan sampai hasil final. Mode manual tersedia per rutinitas dan menahan produksi sampai storyboard/start frame disetujui. Default ini telah dikonfirmasi pengguna; rutinitas dapat memilih mode manual.
 2. **Persetujuan final sebelum publikasi:** selalu manual oleh pengguna dengan izin approve; tidak dapat dilewati oleh preset atau worker.
 
 Persetujuan kreatif otomatis harus dicatat sebagai keputusan sistem berbasis kebijakan dan versi preset, bukan dipalsukan sebagai persetujuan manusia. UI memperlihatkan item yang sedang menunggu review kreatif secara terpisah dari hasil final siap review.
@@ -464,10 +464,10 @@ Pilot awal yang diusulkan: Nutribake dengan 2 Multiplier, 2 video Recipe Campaig
 
 ## 18. Keputusan terbuka sebelum implementasi
 
-1. Setujui default persetujuan kreatif otomatis berbasis preset atau manual per rutinitas. Final approval sebelum publikasi tetap manual.
+1. Keputusan selesai: creative approval default otomatis berdasarkan preset, dapat diubah per rutinitas. Final approval sebelum publikasi tetap manual.
 2. Pilih apakah akun pengguna V2 diimpor atau menggunakan login bersama; repository dan ruang data terpisah merupakan rekomendasi awal.
 3. Tetapkan batas biaya, jumlah konten, concurrency, dan retensi per tenant berdasarkan kapasitas aktual.
-4. Tentukan pemetaan role V2 ke capability baru serta apakah self-approval diperbolehkan bagi pengguna yang memiliki kedua izin.
+4. Verifikasi pemetaan role V2 ke capability baru saat provisioning. Keputusan self-approval selesai: diperbolehkan bagi pengguna yang memiliki izin produksi dan approval sekaligus, dengan scope tenant/brand tetap diperiksa.
 5. Konfirmasi provider/media/platform Repliz yang masuk pilot, termasuk perilaku reschedule/cancel dan rekonsiliasi yang benar-benar tersedia.
 
 Keputusan ini tidak mengubah kebutuhan inti; harus diselesaikan pada desain teknis dan validasi produk sebelum aktivasi pilot.
@@ -502,3 +502,7 @@ Repository source V2 tetap read-only untuk adopsi. CF Studio baru menggunakan Ne
 - Data migrasi tetap dari default tenant schema staging.
 - Sebanyak 199 referensi file lokal belum ditemukan pada lokasi yang diperiksa. Lokasi arsip belum diketahui; pengguna menetapkannya sebagai gap migrasi dahulu. Simpan analisis deconstruct yang tersedia, pertahankan status media belum terverifikasi/tidak tersedia sesuai bukti, dan jangan mengarang file pengganti atau otomatis mengulang analisis.
 - Fase 0 selesai dengan gap terdokumentasi. Database tujuan dan rekonsiliasi media tetap menjadi gate fase migrasi, bukan dinyatakan selesai.
+
+## 23. Kebijakan approval terkonfirmasi
+
+Creative approval default otomatis berdasarkan preset dan dapat diubah per rutinitas. Keputusan otomatis dicatat sebagai sistem berbasis versi preset, bukan manusia. Final approval tetap manual untuk versi yang tepat. Pengguna boleh menyetujui hasil produksinya sendiri jika memiliki izin produksi dan approval sekaligus; status role/nama pembuat tidak menggantikan pemeriksaan capability dan assignment brand. Semua keputusan diaudit.
