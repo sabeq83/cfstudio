@@ -67,3 +67,5 @@ Rilis `v3.0.0-alpha.3` / kode `b0854f39881b8ba19769ef7eb03669aea8e70bca` telah d
 UI dan API mengikuti mockup yang disetujui, tanpa Project group/TTS model/timezone pada editor. Anggaran/cooldown per key, impor live precheck, masked diagnostics, arsip/pulihkan, tier/model/fallback/routing dan cache diimplementasikan. Riwayat project lama dipertahankan, tidak lagi mengatur kapasitas baru. Seluruh tes layanan menggunakan transport tiruan; koneksi nyata, katalog model yang tersedia dan manfaat cache tetap membutuhkan pilot.
 
 Alpha.5 verifikasi: 71 tes lulus; build dan API aktual Settings termasuk mutasi tenant sementara lulus; isolasi/concurrency PostgreSQL, delapan migrasi, backup/restore dan npm audit 0 vulnerability lulus. Tampilan aktual tersedia pada port 3100, termasuk Single/Bulk dan Free Tier cache-off. Data uji tenant sementara dibersihkan. Dispatch tetap OFF, koneksi/model/cache nyata tetap gate pilot.
+
+Rilis v3.0.0-alpha.5 (`f6941761f1e0bf037903f74ee4572196eab2cec2`) telah tersimpan pada main/tag CF Studio. CI [41359933695](https://github.com/sabeq83/cfstudio/actions/runs/41359933695) completed/success.
