@@ -1,7 +1,7 @@
 # Implementation Plan — CF Studio V3
 
 **Tanggal:** 1 November 2026
-**Basis:** PRD versi 1.5 (`sot/cf-studio-v3/PRD.md`)
+**Basis:** PRD versi 1.6 (`sot/cf-studio-v3/PRD.md`)
 **Revisi:** 1.1 — diperjelas setelah audit pipeline produksi bersama.
 **Status:** Eksekusi dimulai. Fondasi aplikasi lokal terverifikasi; migrasi apply dan provider belum berjalan.
 
@@ -1562,3 +1562,16 @@ export default async function BrandPage({ params }) {
   return <BrandDetail brand={brand} tabs={["Preset", "Visual Identity"]} />;
 }
 ```
+
+## 19. Preset hasil impor wajib dapat dipakai tanpa dibuat ulang
+
+- [x] Tegaskan di PRD 1.6 bahwa preset default tenant staging ikut dimigrasikan dan dapat dipilih kembali.
+- [ ] Lengkapi migrator preset dari `staging.tenant_settings` key `operator_presets_json`, bukan mencari tabel preset kustom yang tidak ada.
+- [ ] Ambil seluruh preset pada snapshot final; baseline 21 hanya inventaris awal.
+- [ ] Pertahankan key/nama, konfigurasi non-secret, versi tersedia dan kompatibilitas campaign; petakan dependency Visual Identity/produk/brand dengan origin ledger.
+- [ ] Inventaris preset sistem/bawaan yang tersedia atau dirujuk; petakan key+versi kompatibel dan pertahankan sifat baca-saja.
+- [ ] Pertahankan assignment brand yang benar-benar tersedia. Preset tanpa assignment tetap di katalog tenant dan dapat dipilih melalui aksi Pilih preset yang sudah ada.
+- [ ] Verifikasi bahwa pemilihan preset hasil impor pada brand tidak membuat preset duplikat, tidak mengharuskan input ulang, dan menghasilkan parameter produksi yang setara dengan konfigurasi sumber.
+- [ ] Rekonsiliasi seluruh preset terhadap snapshot final; laporkan dependency yang belum cocok tanpa menyatakan preset tersebut siap produksi.
+
+Tidak diperlukan desain ulang preset dari nol. Import apply saat ini belum tersedia dan masih menunggu tahap migrasi relasi/media serta database tujuan, sebagaimana dicatat pada progress eksekusi.

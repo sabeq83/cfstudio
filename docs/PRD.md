@@ -1,6 +1,6 @@
 # PRD — CF Studio V3
 
-**Versi dokumen:** 1.5
+**Versi dokumen:** 1.6
 **Tanggal:** 1 November 2026
 **Status:** Baseline implementasi; eksekusi diotorisasi pengguna, keputusan terbuka tetap mengikuti gate teknis
 **Basis produk:** MAKNA Flow V2
@@ -88,6 +88,12 @@ Alur wajib: **Brand Profile Manager → daftar brand → klik nama brand → det
 - Detail menampilkan identitas/nama brand yang sedang dipilih dan navigasi kembali ke daftar brand.
 - Tab detail berurutan: **Preset**, lalu **Visual Identity**. Default saat pertama membuka detail adalah Preset.
 - Tab Preset menampilkan dan mengelola preset yang terkait brand tersebut, termasuk versi, assignment dan pilihan preset aktif sesuai capability pengguna.
+- **Preset lama wajib diimpor dan digunakan kembali:** seluruh preset kustom yang ada pada default tenant staging MAKNA Flow dimigrasikan ke default tenant CF Studio. Pengguna tidak perlu mengetik ulang atau membuat ulang preset untuk memakai konfigurasi yang sama. Inventaris awal menemukan 21 preset kustom; jumlah final mengikuti snapshot saat migrasi, bukan dibatasi 21.
+- Impor mempertahankan nama/key, konfigurasi lengkap non-secret, versi yang tersedia, kompatibilitas jalur produksi, serta referensi Visual Identity/produk/brand yang dapat dipetakan. Konfigurasi provider yang mengandung secret dikecualikan dan koneksinya diatur ulang secara terpisah; jangan membuang konfigurasi kreatif yang aman.
+- Pada detail brand, tampilkan preset hasil impor yang sudah terkait dengan brand tersebut. Aksi **Pilih preset yang sudah ada** membuka katalog preset default tenant CF Studio, termasuk hasil impor, untuk dipakai/dikaitkan ke brand tanpa menyalin atau membuat preset baru.
+- Jika sumber tidak menyimpan assignment brand yang eksplisit, preset tetap masuk katalog tenant dengan status belum ditautkan. Pengguna cukup memilih preset hasil impor untuk brand; jangan mengarang assignment atau membuat ulang konfigurasinya.
+- Preset sistem/bawaan yang dirujuk preset kustom atau tersedia sebagai pilihan V2 juga tetap dapat dipakai melalui pemetaan key+versi kompatibel atau salinan dependency terverifikasi. Status baca-saja dan asal sistem tetap jelas.
+- Membuat preset baru merupakan pilihan tambahan, bukan prasyarat onboarding atau produksi. Jika reference hasil impor belum tersedia, jelaskan bagian yang perlu dipetakan/diperbaiki tanpa meminta pengguna membuat ulang seluruh preset.
 - Tab Visual Identity menampilkan dan mengelola identitas visual yang terkait brand tersebut, termasuk assignment dan pilihan identity aktif sesuai capability pengguna.
 - Katalog tenant/sistem yang boleh dipilih dapat tersedia melalui aksi tambah/pilih dalam tab. Tidak menampilkan seluruh assignment brand lain seolah-olah milik brand aktif.
 - Profil dasar, audiens, arahan komunikasi dan relasi produk tetap dapat dikelola melalui aksi Edit Brand atau area informasi profil. Tidak membuat tab Overview/Products sebagai tab utama detail tanpa perubahan kebutuhan yang disepakati.
@@ -439,8 +445,9 @@ Daftar ini adalah kandidat hasil inspeksi, bukan jaminan seluruh modul siap dipi
 18. Error pertama pada setiap tahap yang dicakup masuk outbox tanpa menunggu batch selesai; pesan membedakan jalur, tahap, dampak, retry dan tindakan, serta menaut ke detail yang berizin.
 19. Retry berulang tidak membanjiri Telegram; eskalasi gagal permanen dan pemulihan menghasilkan pembaruan insiden. Quiet hours, penerima lintas brand dan sanitasi secret diuji.
 20. Crash/heartbeat timeout dideteksi monitor terpisah; kegagalan Telegram dicatat dan dicoba ulang tanpa menghentikan produksi atau memicu loop notifikasi.
-21. Brand Profile Manager membuka daftar brand; klik nama membuka detail brand dengan tab Preset dan Visual Identity. Pergantian brand menampilkan assignment yang benar, empty state tersedia, dan akses brand lain tetap ditolak server.
-22. Semua tab dapat digunakan pada light/dark mode dan layar mobile untuk review serta penjadwalan.
+21. Seluruh preset kustom default tenant staging diimpor dengan konfigurasi non-secret dan reference yang dipetakan; pengguna dapat memilih preset hasil impor pada detail brand tanpa membuat ulang. Assignment asal dipertahankan bila ada; preset tanpa assignment tetap tersedia di katalog tenant. Jumlah direkonsiliasi terhadap snapshot final dan preset sistem terkait tetap tersedia secara kompatibel.
+22. Brand Profile Manager membuka daftar brand; klik nama membuka detail brand dengan tab Preset dan Visual Identity. Pergantian brand menampilkan assignment yang benar, empty state tersedia, dan akses brand lain tetap ditolak server.
+23. Semua tab dapat digunakan pada light/dark mode dan layar mobile untuk review serta penjadwalan.
 
 ## 17. Tahapan delivery yang disarankan
 
