@@ -58,6 +58,9 @@ for (const endpoint of [
   "notifications",
   "telegram/bots",
   "catalog-jobs",
+  "settings/pool",
+  "settings/providers",
+  "google/status",
 ])
   assert.equal((await request(endpoint)).status, 200, endpoint);
 assert.equal(

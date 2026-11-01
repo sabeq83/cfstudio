@@ -1,3 +1,4 @@
+import { cleanupPublishingMedia } from "../lib/google-drive.js";
 import { processCatalogAnalysis } from "../lib/lab-service.js";
 import { randomUUID } from "node:crypto";
 import { scheduleDue, processProduction } from "../lib/production-worker.js";
@@ -22,6 +23,7 @@ do {
     if (process.env.ENABLE_PUBLISHING_DISPATCH === "true") {
       await processPublishing(id);
       await reconcilePublishing();
+      await cleanupPublishingMedia(id);
     }
     if (process.env.ENABLE_TELEGRAM_DISPATCH === "true")
       await deliverNotification(id);

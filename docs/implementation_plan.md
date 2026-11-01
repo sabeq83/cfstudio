@@ -2268,3 +2268,56 @@ After: CHANGELOG.md alpha.2 and `.github/workflows/ci.yml` run contract/SQL/fake
 - [ ] Live provider parity/pilot dan deployment tetap gate terbuka. Rilis alpha kode bukan penutupan seluruh PRD.
 
 Verifikasi CI rilis: https://github.com/sabeq83/cfstudio/actions/runs/41280372228 . Dokumen verifikasi setelah rilis dapat memajukan main tanpa mengubah kode pada tag alpha.2.
+
+## Settings adoption — approved 1 November 2026
+
+## Execution Task List
+- [x] Update PRD and simulate dedicated Settings panels before React changes.
+- [x] Implement tenant-scoped Gemini pool, atomic project/key budgets, persistent cooldown and masked health checks.
+- [x] Implement MiniMax/G-Labs configuration, diagnostics and shared scheduling defaults.
+- [x] Implement tenant-bound Google OAuth, encrypted refresh, folder create/verify and publishing staging ledger.
+- [x] Integrate Drive staging with Repliz, retries before POST, reconciliation and safe retention cleanup.
+- [x] Wire dedicated Settings UI and test SQL/provider/HTTP flows without live credentials.
+- [ ] Apply local migration, build, release and push verified CF Studio repository.
+
+### Before / After code map
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| docs/PRD.md | Generic integration setting | Dedicated pool, MiniMax, G-Labs and Repliz/Google Drive acceptance contract |
+| public/mockup_settings_v3.html | Absent | Standalone interactive panels and test/status simulation |
+| db/migrations/007_settings_adoption.sql | Absent | settings, pool projects/keys/attempts, OAuth state and Drive staging with tenant-aware FK |
+| lib/gemini-pool.js | Absent | Atomic reservations, group quotas, safe rotation, masked tests |
+| lib/provider-settings.js | Absent | Versioned defaults, secret-preserving saves and authorized diagnostics |
+| lib/google-drive.js | Absent | OAuth, refresh, folder verification, file staging/probe/cleanup |
+| lib/provider-gateway.js | Single Gemini key | Pool wrapper around one request; no retry after ambiguous POST |
+| lib/connections.js | Select one configured connection | Pool-aware selection and safe credential/config updates |
+| lib/publishing-service.js | Local signed URL, max 23h | Drive-required durable staging; separate preparing from submitting |
+| lib/media-services.js | Per-preset fixed defaults | Shared G-Labs dispatch settings, pacing and T2I pattern |
+| lib/production-adapters.js | Preset-only defaults | Snapshot tenant defaults beneath explicit preset values |
+| app/Settings.js | Absent | Dedicated panels for pool/MiniMax/G-Labs/Repliz/Drive |
+| app/Studio.js | Generic integration form | Render dedicated Settings while preserving users/Telegram/accounts |
+| app/api/v3/[...segments]/route.js | Connection CRUD | Admin settings/pool endpoints and session-bound OAuth start/callback |
+| scripts/worker.mjs | Publish/cancel/reconcile | Also process terminal Drive staging retention |
+| tests/settings.integration.test.mjs | Absent | SQL/concurrency/error/OAuth/cross-tenant/staging/retry/cleanup cases |
+| tests/pipeline.integration.test.mjs | Publishing via signed URL fixture | Publishing via fake Drive, same final approval protections |
+| docs/operations.md, docs/delivery-status.md | Alpha.2 limitations | Alpha.3 setup, verified changes and live gates |
+| package.json, package-lock.json, CHANGELOG.md, app/api/health/route.js | alpha.2 | alpha.3 after verification |
+
+### Controlled Google transport fixture
+Before: pipeline tests use signed local media.
+After: `tests/helpers/fake-google.mjs` implements OAuth/Drive HTTP protocol, multipart upload, permission, anonymous binary probe and trash in memory; integration tests prove no real Google/Repliz calls.
+
+### Preserved Telegram setup
+Before: generic connection form also supplied bot creation; dedicated panels replace it.
+After: app/Studio.js retains a compact tenant bot form beside Telegram recipient verification; token remains encrypted. Mockup includes the same control.
+
+### HTTP verification extension
+Before: scripts/smoke-local.mjs checks catalog and operational APIs.
+After: also checks authenticated Settings pool/provider/Google status routes without live provider calls.
+
+### Verified alpha.3 evidence
+- 62 contract/SQL/fake-provider/FFmpeg tests passed. Lost-upload recovery reuses one pre-generated file ID; HTML/public-sharing denial prevents Repliz POST; cleanup preserves source and holds unknown intents.
+- Actual PostgreSQL temporary database: eight simultaneous reservations obey two concurrency slots and three daily project requests. Temporary database removed; zero provider calls.
+- Seven migrations installed locally; backup/restore drill passed. Build and authenticated Settings/catalog/operational HTTP smoke passed; imported counts unchanged.
+- Four actual UI panels inspected at port 3100. npm audit reports zero vulnerabilities. Source V2 untouched; all live dispatch OFF.
+- Live OAuth consent, provider compatibility, public download limits and Repliz consumption require CF Studio credentials and remain pilot gates.

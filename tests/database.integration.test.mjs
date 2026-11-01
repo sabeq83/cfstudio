@@ -1,7 +1,7 @@
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
 import { PGlite } from "@electric-sql/pglite";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { setTestDatabase, transaction } from "../lib/db-pg.js";
 import {
   saveCatalog,
@@ -43,18 +43,15 @@ const other = { ...actor, id: "user-b", tenantId: "tenant-b" };
 before(async () => {
   process.env.NODE_ENV = "test";
   pg = new PGlite();
-  await pg.exec(
-    await readFile(
-      new URL("../db/migrations/001_cf_studio.sql", import.meta.url),
-      "utf8",
-    ),
-  );
-  await pg.exec(
-    await readFile(
-      new URL("../db/migrations/002_operations.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  for (const name of (
+    await readdir(new URL("../db/migrations/", import.meta.url))
+  ).sort())
+    await pg.exec(
+      await readFile(
+        new URL("../db/migrations/" + name, import.meta.url),
+        "utf8",
+      ),
+    );
   const query = async (sql, args) => {
     const r = await pg.query(sql, args);
     return { ...r, rowCount: r.rows.length || r.affectedRows || 0 };

@@ -1,4 +1,25 @@
 import {
+  listPool,
+  addPoolKeys,
+  poolKeyState,
+  testPoolKeys,
+  savePoolSettings,
+} from "../../../../lib/gemini-pool.js";
+import {
+  listProviderSettings,
+  saveProviderSettings,
+  testProviderSettings,
+} from "../../../../lib/provider-settings.js";
+import {
+  googleStatus,
+  saveGoogleConfig,
+  startGoogleOAuth,
+  finishGoogleOAuth,
+  ensureDriveFolder,
+  verifyDrive,
+  disconnectGoogle,
+} from "../../../../lib/google-drive.js";
+import {
   uploadCatalogFile,
   approveProductPhoto,
   queueCatalogAnalysis,
@@ -121,8 +142,35 @@ async function media(request, s) {
 export async function GET(request, context) {
   try {
     const { segments: s } = await context.params;
+    if (s.join("/") === "google/callback") {
+      const url = new URL(request.url);
+      const nonce = (request.headers.get("cookie") || "")
+        .split(";")
+        .map((x) => x.trim())
+        .find((x) => x.startsWith("cf_google_oauth="))
+        ?.slice(16);
+      await finishGoogleOAuth({
+        state: url.searchParams.get("state"),
+        code: url.searchParams.get("code"),
+        error: url.searchParams.get("error"),
+        nonce,
+      });
+      return new Response(null, {
+        status: 303,
+        headers: {
+          Location: "/?google=connected",
+          "Set-Cookie":
+            "cf_google_oauth=; HttpOnly; SameSite=Lax; Path=/api/v3/google/callback; Max-Age=0",
+          "Cache-Control": "no-store",
+        },
+      });
+    }
     if (s[0] === "media") return await media(request, s);
     const actor = await requireSession(request);
+    if (s.join("/") === "settings/pool") return json(await listPool(actor));
+    if (s.join("/") === "settings/providers")
+      return json(await listProviderSettings(actor));
+    if (s.join("/") === "google/status") return json(await googleStatus(actor));
     if (s[0] === "me") return json(actor);
     if (s[0] === "catalog") return json(await listCatalog(actor, s[1]));
     if (s[0] === "assignments") return json(await listAssignments(actor, s[1]));
@@ -237,7 +285,38 @@ export async function POST(request, context) {
     }
     const key = request.headers.get("Idempotency-Key");
     let data;
-    if (s[0] === "catalog" && s[2] === "analyze")
+    if (s.join("/") === "google/start") {
+      const started = await startGoogleOAuth(actor, b.id);
+      return Response.json(
+        { data: { authUrl: started.authUrl } },
+        {
+          headers: {
+            "Cache-Control": "no-store",
+            "Set-Cookie": `cf_google_oauth=${started.nonce}; HttpOnly; SameSite=Lax; Path=/api/v3/google/callback; Max-Age=600${process.env.CF_PUBLIC_BASE_URL?.startsWith("https:") ? "; Secure" : ""}`,
+          },
+        },
+      );
+    }
+    if (s.join("/") === "settings/pool") data = await addPoolKeys(actor, b);
+    else if (s.join("/") === "settings/pool-config")
+      data = await savePoolSettings(actor, b);
+    else if (s.join("/") === "settings/pool-state")
+      data = await poolKeyState(actor, b.id, b.status);
+    else if (s.join("/") === "settings/pool-test")
+      data = await testPoolKeys(actor, b.id);
+    else if (s.join("/") === "settings/provider")
+      data = await saveProviderSettings(actor, b);
+    else if (s.join("/") === "settings/provider-test")
+      data = await testProviderSettings(actor, b.kind);
+    else if (s.join("/") === "google/config")
+      data = await saveGoogleConfig(actor, b);
+    else if (s.join("/") === "google/folder")
+      data = await ensureDriveFolder(actor, b.id);
+    else if (s.join("/") === "google/verify")
+      data = await verifyDrive(actor, b.id);
+    else if (s.join("/") === "google/disconnect")
+      data = await disconnectGoogle(actor, b.id);
+    else if (s[0] === "catalog" && s[2] === "analyze")
       data = await queueCatalogAnalysis(actor, s[1], b.revision);
     else if (s[0] === "catalog" && s[2] === "approve-photo")
       data = await approveProductPhoto(actor, s[1], b.revision);

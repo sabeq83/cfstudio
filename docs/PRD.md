@@ -1,6 +1,6 @@
 # PRD — CF Studio V3
 
-**Versi dokumen:** 1.7
+**Versi dokumen:** 1.8
 **Tanggal:** 1 November 2026
 **Status:** Baseline implementasi; eksekusi diotorisasi pengguna, keputusan terbuka tetap mengikuti gate teknis
 **Basis produk:** MAKNA Flow V2
@@ -506,3 +506,17 @@ Repository source V2 tetap read-only untuk adopsi. CF Studio baru menggunakan Ne
 ## 23. Kebijakan approval terkonfirmasi
 
 Creative approval default otomatis berdasarkan preset dan dapat diubah per rutinitas. Keputusan otomatis dicatat sebagai sistem berbasis versi preset, bukan manusia. Final approval tetap manual untuk versi yang tepat. Pengguna boleh menyetujui hasil produksinya sendiri jika memiliki izin produksi dan approval sekaligus; status role/nama pembuat tidak menggantikan pemeriksaan capability dan assignment brand. Semua keputusan diaudit.
+
+## Settings adoption contract — 1 November 2026
+
+User approved six sections: Gemini API Pool Manager, MiniMax AI Configuration, G-Labs Webhook Configuration, Repliz Publishing Integration including Google Drive, Telegram Notification and Users/Permissions.
+
+Gemini: single/bulk import, labels/project groups, encrypted keys, local project/key budgets, atomic reservation, durable cooldown, health diagnostics and soft archive. Google quotas apply per project; local counters are not authoritative Google remaining quota. All planner/creative/analysis/Gemini TTS calls use the same pool. Invalid credentials differ from permissions, transient failures and quota. Unknown POST is never repeated using another key.
+
+MiniMax: encrypted key replacement, model/default voice, bounded voice test and Gemini fallback. Presets override production defaults; changing settings does not rewrite an active routine snapshot. G-Labs: endpoint/key, image/video model defaults, persistent safety delay, max concurrency and threading/sequential start-frame dispatch. Shared gateway retains each job's original route.
+
+Repliz publishing requires Google Drive staging. Configure OAuth client ID/secret for CF Studio, callback origin, tenant-bound one-use state and browser nonce, drive.file/email scopes, encrypted offline refresh. No automatic import of V2 credentials/tokens. Create/verify app-owned tenant publishing folder, validate write access, expose only safe status.
+
+Only approved final media is copied to Drive after scheduling. Verify checksum and anonymous binary download before Repliz POST. Persist pre-generated file ID to recover ambiguous uploads without duplicate copies. Reuse staging by tenant/item/revision/checksum/Drive connection. A Drive failure blocks publishing, not production; error is visible and queued for Telegram. No fallback to localhost/signed links.
+
+Retention extends past latest referenced schedule plus grace. Cleanup only when all referencing intents are terminal, never while unknown or active. Revoke the staging file's public permission and move its app-owned copy to trash; never delete originals. Tenant boundaries and explicit publisher/approver permissions remain mandatory. Live OAuth/provider tests require the user's CF Studio credentials; offline tests do not prove live readiness.

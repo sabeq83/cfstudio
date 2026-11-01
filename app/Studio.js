@@ -1,4 +1,5 @@
 "use client";
+import Settings from "./Settings";
 import { useEffect, useRef, useState } from "react";
 const menus = [
   "Automation",
@@ -133,17 +134,7 @@ export default function Studio() {
     [selectedItem, setSelectedItem] = useState(null),
     [caption, setCaption] = useState(""),
     [schedule, setSchedule] = useState({ accountId: "", scheduledAt: "" }),
-    [connection, setConnection] = useState({
-      kind: "gemini",
-      label: "",
-      brandId: "",
-      baseUrl: "https://generativelanguage.googleapis.com/",
-      model: "",
-      apiKey: "",
-      accessKey: "",
-      secretKey: "",
-      botToken: "",
-    }),
+    [connection, setConnection] = useState({ label: "", botToken: "" }),
     [mapping, setMapping] = useState({
       connectionId: "",
       brandId: "",
@@ -221,6 +212,8 @@ export default function Studio() {
     }
   }
   useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("google"))
+      setMenu("Setting");
     fetch("/api/health")
       .then((r) => r.json())
       .then(setHealth);
@@ -1253,182 +1246,7 @@ export default function Studio() {
             )}
             {menu === "Setting" && (
               <>
-                <section className="panel">
-                  <h2>Koneksi layanan CF Studio</h2>
-                  <p>
-                    Credential disimpan terenkripsi. Koneksi MAKNA Flow V2 tidak
-                    digunakan otomatis.
-                  </p>
-                  {connections.map((c) => (
-                    <div className="target" key={c.id}>
-                      <h3>
-                        {c.label} <span className="badge">{c.kind}</span>
-                      </h3>
-                      <small>
-                        {c.brand_id ? names(c.brand_id) : "Seluruh tenant"} •{" "}
-                        {c.status} • secret tersimpan
-                      </small>
-                    </div>
-                  ))}
-                  {settingsEnabled && (
-                    <form
-                      onSubmit={async (e) => {
-                        e.preventDefault();
-                        const secret =
-                          connection.kind === "repliz"
-                            ? {
-                                accessKey: connection.accessKey,
-                                secretKey: connection.secretKey,
-                              }
-                            : connection.kind === "telegram"
-                              ? { botToken: connection.botToken }
-                              : { apiKey: connection.apiKey };
-                        const value = await action(
-                          () =>
-                            api("connections", {
-                              kind: connection.kind,
-                              label: connection.label,
-                              brandId: connection.brandId || null,
-                              config: {
-                                baseUrl: connection.baseUrl,
-                                model: connection.model,
-                              },
-                              secret,
-                            }),
-                          "Koneksi tersimpan terenkripsi.",
-                        );
-                        if (value)
-                          setConnection({
-                            ...connection,
-                            apiKey: "",
-                            accessKey: "",
-                            secretKey: "",
-                            botToken: "",
-                          });
-                      }}
-                    >
-                      <div className="grid">
-                        <label>
-                          Jenis koneksi
-                          <select
-                            value={connection.kind}
-                            onChange={(e) => {
-                              const kind = e.target.value;
-                              setConnection({
-                                ...connection,
-                                kind,
-                                baseUrl: {
-                                  gemini:
-                                    "https://generativelanguage.googleapis.com/",
-                                  glabs: "http://",
-                                  minimax: "https://api.minimax.io/",
-                                  telegram: "https://api.telegram.org/",
-                                  repliz: "https://api.repliz.com/",
-                                }[kind],
-                              });
-                            }}
-                          >
-                            {[
-                              "gemini",
-                              "glabs",
-                              "minimax",
-                              "telegram",
-                              "repliz",
-                            ].map((k) => (
-                              <option key={k}>{k}</option>
-                            ))}
-                          </select>
-                        </label>
-                        <label>
-                          Nama koneksi
-                          <input
-                            required
-                            value={connection.label}
-                            onChange={(e) =>
-                              setConnection({
-                                ...connection,
-                                label: e.target.value,
-                              })
-                            }
-                          />
-                        </label>
-                        <label>
-                          Brand
-                          <select
-                            value={connection.brandId}
-                            onChange={(e) =>
-                              setConnection({
-                                ...connection,
-                                brandId: e.target.value,
-                              })
-                            }
-                          >
-                            <option value="">Seluruh tenant</option>
-                            {catalogs.brand.map((b) => (
-                              <option key={b.id} value={b.id}>
-                                {b.name}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                        <label>
-                          Endpoint
-                          <input
-                            required
-                            type="url"
-                            value={connection.baseUrl}
-                            onChange={(e) =>
-                              setConnection({
-                                ...connection,
-                                baseUrl: e.target.value,
-                              })
-                            }
-                          />
-                        </label>
-                        {connection.kind === "gemini" && (
-                          <label>
-                            Model Gemini
-                            <input
-                              required
-                              value={connection.model}
-                              onChange={(e) =>
-                                setConnection({
-                                  ...connection,
-                                  model: e.target.value,
-                                })
-                              }
-                            />
-                          </label>
-                        )}
-                        {(connection.kind === "repliz"
-                          ? ["accessKey", "secretKey"]
-                          : connection.kind === "telegram"
-                            ? ["botToken"]
-                            : ["apiKey"]
-                        ).map((k) => (
-                          <label key={k}>
-                            {k}
-                            <input
-                              type="password"
-                              autoComplete="new-password"
-                              required
-                              value={connection[k]}
-                              onChange={(e) =>
-                                setConnection({
-                                  ...connection,
-                                  [k]: e.target.value,
-                                })
-                              }
-                            />
-                          </label>
-                        ))}
-                      </div>
-                      <button disabled={busy} className="primary">
-                        Simpan koneksi
-                      </button>
-                    </form>
-                  )}
-                </section>
+                <Settings actor={actor} api={api} action={action} />
                 {settingsEnabled && (
                   <section className="panel">
                     <h2>Akun publikasi per brand</h2>
@@ -1538,6 +1356,61 @@ export default function Studio() {
                 )}
                 <section className="panel">
                   <h2>Notifikasi Telegram saya</h2>
+                  {settingsEnabled && actor.allBrands && (
+                    <details>
+                      <summary>Koneksi bot Telegram tenant</summary>
+                      <form
+                        onSubmit={async (e) => {
+                          e.preventDefault();
+                          const r = await action(
+                            () =>
+                              api("connections", {
+                                kind: "telegram",
+                                label: connection.label,
+                                config: {
+                                  baseUrl: "https://api.telegram.org/",
+                                },
+                                secret: { botToken: connection.botToken },
+                              }),
+                            "Bot tersimpan. Penerima perlu verifikasi.",
+                          );
+                          if (r) setConnection({ label: "", botToken: "" });
+                        }}
+                      >
+                        <label>
+                          Nama bot
+                          <input
+                            required
+                            value={connection.label}
+                            onChange={(e) =>
+                              setConnection({
+                                ...connection,
+                                label: e.target.value,
+                              })
+                            }
+                          />
+                        </label>
+                        <label>
+                          Bot token baru
+                          <input
+                            required
+                            type="password"
+                            autoComplete="new-password"
+                            placeholder="YOUR_BOT_TOKEN_HERE"
+                            value={connection.botToken}
+                            onChange={(e) =>
+                              setConnection({
+                                ...connection,
+                                botToken: e.target.value,
+                              })
+                            }
+                          />
+                        </label>
+                        <button disabled={busy}>Simpan bot Telegram</button>
+                      </form>
+                    </details>
+                  )}
+
                   <p>
                     Status:{" "}
                     {notifications.verified

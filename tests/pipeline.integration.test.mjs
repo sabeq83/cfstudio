@@ -1,3 +1,5 @@
+import { fakeGoogle, installFakeDrive } from "./helpers/fake-google.mjs";
+import { setGoogleTestFetch } from "../lib/google-drive.js";
 import test, { before, after } from "node:test";
 import assert from "node:assert/strict";
 import { PGlite } from "@electric-sql/pglite";
@@ -51,6 +53,7 @@ let pg,
   run,
   video,
   png,
+  google,
   geminiConnection,
   replizPosts = 0,
   taskIndex = 0;
@@ -274,6 +277,9 @@ before(async () => {
     }
     throw new Error("UNEXPECTED_TEST_ENDPOINT");
   };
+  google = fakeGoogle();
+  setGoogleTestFetch(google.fetcher);
+  await installFakeDrive(actor, google);
   brand = await saveCatalog(actor, {
     domain: "brand",
     name: "Test brand",
@@ -339,13 +345,22 @@ before(async () => {
   geminiConnection = await saveConnection(actor, {
     kind: "gemini",
     label: "Fake Gemini",
-    config: { baseUrl: "https://provider.example.test/", model: "test-model" },
+    config: {
+      baseUrl: "https://provider.example.test/",
+      delayEnabled: false,
+      maxConcurrent: 10,
+      model: "test-model",
+    },
     secret: { apiKey: "TEST_MOCK_API_KEY" },
   });
   await saveConnection(actor, {
     kind: "glabs",
     label: "Fake G-Labs",
-    config: { baseUrl: "https://provider.example.test/" },
+    config: {
+      baseUrl: "https://provider.example.test/",
+      delayEnabled: false,
+      maxConcurrent: 10,
+    },
     secret: { apiKey: "TEST_MOCK_API_KEY" },
   });
 });
@@ -463,7 +478,11 @@ test("final approval required, exact snapshot scheduled once, accepted is not pu
   const connection = await saveConnection(actor, {
     kind: "repliz",
     label: "Fake Repliz",
-    config: { baseUrl: "https://provider.example.test/" },
+    config: {
+      baseUrl: "https://provider.example.test/",
+      delayEnabled: false,
+      maxConcurrent: 10,
+    },
     secret: { accessKey: "TEST_MOCK_ACCESS", secretKey: "TEST_MOCK_SECRET" },
   });
   await pg.query(
@@ -1039,7 +1058,11 @@ test("running G-Labs task stays on original endpoint after connection rotation",
   const old = await saveConnection(actor, {
     kind: "glabs",
     label: "Old route",
-    config: { baseUrl: "https://old-provider.example.test/" },
+    config: {
+      baseUrl: "https://old-provider.example.test/",
+      delayEnabled: false,
+      maxConcurrent: 10,
+    },
     secret: { apiKey: "TEST_MOCK_API_KEY" },
   });
   const pkg = {
@@ -1059,7 +1082,11 @@ test("running G-Labs task stays on original endpoint after connection rotation",
   const next = await saveConnection(actor, {
     kind: "glabs",
     label: "New route",
-    config: { baseUrl: "https://new-provider.example.test/" },
+    config: {
+      baseUrl: "https://new-provider.example.test/",
+      delayEnabled: false,
+      maxConcurrent: 10,
+    },
     secret: { apiKey: "TEST_MOCK_API_KEY" },
   });
   const original = gateway.fetch;
@@ -1089,4 +1116,42 @@ test("running G-Labs task stays on original endpoint after connection rotation",
   } finally {
     gateway.fetch = original;
   }
+});
+
+test("Drive public-access failure prevents Repliz POST and keeps content production ready", async () => {
+  const item = (
+    await pg.query(
+      "SELECT * FROM content_items WHERE source_kind='recipe_video' AND status='ready' LIMIT 1",
+    )
+  ).rows[0];
+  assert.ok(item);
+  await approveFinal(actor, item.id, item.revision);
+  const intent = await createPublishingIntent(
+    actor,
+    item.id,
+    {
+      revision: item.revision,
+      accountId: "account",
+      scheduledAt: new Date(Date.now() + 3600000).toISOString(),
+    },
+    "blocked-drive",
+  );
+  const before = replizPosts;
+  google.faults.html = true;
+  await processPublishing("blocked-drive-worker");
+  google.faults.html = false;
+  const row = (
+    await pg.query(
+      "SELECT status,error_code FROM publishing_intents WHERE id=$1",
+      [intent.id],
+    )
+  ).rows[0];
+  assert.equal(row.status, "failed");
+  assert.equal(row.error_code, "DRIVE_DOWNLOAD_NOT_PUBLIC");
+  assert.equal(replizPosts, before);
+  assert.equal(
+    (await pg.query("SELECT status FROM content_items WHERE id=$1", [item.id]))
+      .rows[0].status,
+    "ready",
+  );
 });
