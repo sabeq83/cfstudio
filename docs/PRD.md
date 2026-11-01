@@ -1,10 +1,10 @@
 # PRD — CF Studio V3
 
-**Versi dokumen:** 1.4  
-**Tanggal:** 1 November 2026  
-**Status:** Draf untuk review produk; belum merupakan persetujuan implementasi  
-**Basis produk:** MAKNA Flow V2  
-**Nama aplikasi:** CF Studio  
+**Versi dokumen:** 1.4
+**Tanggal:** 1 November 2026
+**Status:** Baseline implementasi; eksekusi diotorisasi pengguna, keputusan terbuka tetap mengikuti gate teknis
+**Basis produk:** MAKNA Flow V2
+**Nama aplikasi:** CF Studio
 **Generasi:** V3
 
 ## 1. Ringkasan produk
@@ -267,12 +267,12 @@ Target operasional: event error terdeteksi dan masuk outbox dalam ≤1 menit set
 
 Contoh pesan:
 
-> CF Studio • Nutribake — Produksi Harian  
-> Jalur: Video Product Campaign  
-> Tahap: Start Frame, klip 2/4  
-> Gambar belum berhasil dibuat karena layanan sementara tidak merespons.  
-> Status: percobaan 1/3 gagal; retry berikutnya 05.12 WIB.  
-> Dampak: 1 konten tertahan; 5 konten lainnya tetap diproses.  
+> CF Studio • Nutribake — Produksi Harian
+> Jalur: Video Product Campaign
+> Tahap: Start Frame, klip 2/4
+> Gambar belum berhasil dibuat karena layanan sementara tidak merespons.
+> Status: percobaan 1/3 gagal; retry berikutnya 05.12 WIB.
+> Dampak: 1 konten tertahan; 5 konten lainnya tetap diproses.
 > Buka Detail Error → halaman item terkait.
 
 Contoh hanya ilustrasi; pesan aktual harus memakai status, hitungan dan waktu yang tersimpan, bukan angka perkiraan. Status pengiriman ambigu tidak boleh dilaporkan sebagai pasti gagal atau pasti terbit.
