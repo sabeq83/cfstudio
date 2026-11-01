@@ -38,10 +38,10 @@ export default function Settings({ actor, api, action }) {
     [pool, setPool] = useState({ keys: [], archived: [], settings: {} }),
     [poolConfig, setPoolConfig] = useState({
       model: "gemini-3.6-flash",
-      tier: "paid",
+      tier: "free",
       fallbackModel: "",
       smartRouting: true,
-      contextCaching: true,
+      contextCaching: false,
     }),
     [forms, setForms] = useState(defaults),
     [connections, setConnections] = useState([]),

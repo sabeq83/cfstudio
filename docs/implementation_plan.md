@@ -2396,3 +2396,18 @@ Additional safe retry integration: lib/provider-jobs.js previously prepared only
 Alpha.5 verification evidence: 71 tests passed including fake provider generation/cache/fallback, multi-tenant cache scope, masked imports and restore-paused behavior. Eight actual PostgreSQL reservations obeyed two concurrent slots/key and six total daily requests across two keys. Actual HTTP settings mutation smoke passed in a disposable tenant (removed afterward); catalog counts unchanged. Eight migrations installed; post-migration backup/restore, optimized build, npm audit (0 vulnerabilities), light-theme UI/Single Input/Free Tier controls verified. All live dispatch flags remain OFF. No production deployment or real Google request during verification.
 
 Release v3.0.0-alpha.5 / f6941761f1e0bf037903f74ee4572196eab2cec2 pushed to CF Studio main; annotated tag peeled SHA verified. GitHub Actions [41359933695](https://github.com/sabeq83/cfstudio/actions/runs/41359933695) completed/success for release code.
+
+## Free Tier default — 2 November 2026
+
+## Execution Task List
+- [x] Default mockup and unsaved Gemini policy/editor to Free Tier; preserve explicit saved Paid Tier.
+- [x] Verify policy, build and actual API; release CF Studio alpha.6.
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| public/mockup_gemini_pool_v2.html | Paid checked initially/on reset | Free checked initially/on reset; cache off |
+| lib/gemini-models.js | Missing tier resolves paid | Missing tier resolves free; explicit paid preserved |
+| app/Settings.js, app/GeminiSettings.js | Paid editor fallback | Free editor fallback; caching off |
+| package.json, package-lock.json, app/api/health/route.js, CHANGELOG.md | alpha.5 | alpha.6 |
+
+Alpha.6: 71 tests/build passed; actual authenticated pool API returns Free Tier and cache off for current unconfigured tenant. Explicit saved Paid Tier remains paid.

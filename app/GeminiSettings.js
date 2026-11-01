@@ -33,7 +33,7 @@ export default function GeminiSettings({
     [result, setResult] = useState(null),
     [confirm, setConfirm] = useState(null),
     [custom, setCustom] = useState(
-      !MODEL_CATALOG[config.tier || "paid"].includes(config.model),
+      !MODEL_CATALOG[config.tier || "free"].includes(config.model),
     );
   const c = modelConfig(config),
     summary = pool.summary || {},

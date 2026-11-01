@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-alpha.6 — 2 November 2026
+- Free Tier menjadi default konfigurasi Gemini baru dan mockup; pilihan Paid Tier yang tersimpan tetap dipertahankan.
+
 ## 3.0.0-alpha.5 — 2 November 2026
 - Gemini Settings mengikuti mockup V2: ringkasan/progress, Single/Bulk, validasi impor, status filter, pause, arsip invalid dan pulihkan.
 - Project group dihapus dari operasi baru; batas, cooldown dan reservasi dihitung per key, riwayat lama dipertahankan.
