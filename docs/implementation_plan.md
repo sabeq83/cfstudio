@@ -245,7 +245,7 @@ Checklist ini wajib diperbarui dari `- [ ]` menjadi `- [x]` setelah setiap tahap
 
 - [x] Baca PRD 1.1, mockup dan modul V2 relevan; identifikasi risiko adopsi.
 - [x] Susun rencana fase, pemetaan file, before/after, verifikasi dan gate delivery.
-- [ ] Fase 0: tetapkan lingkungan/repository, inventaris dependency dan lima domain default tenant.
+- [x] Fase 0: tetapkan lingkungan/repository, inventaris dependency dan lima domain default tenant; gap media dicatat dan baseline kode dipilih pengguna.
 - [ ] Fase 1: lengkapi mockup empat tab dan review pengguna; kunci kontrak API/state.
 - [ ] Fase 2: bootstrap aplikasi/database terisolasi, auth/tenant/capability dan worker OFF.
 - [ ] Fase 3: adopsi menu, trial migration objek/relasi/media, idempotensi dan rekonsiliasi.
@@ -1625,4 +1625,4 @@ Audit literal imports/hash dan inspeksi SSH baca-saja dengan JSON tersaring; tan
 
 Skrip ini untuk inventory. Daftar path media sementara tidak masuk Git. Tidak ada mutasi sumber.
 
-Fase 0: pekerjaan audit di atas selesai dengan gap yang dinyatakan pada docs/phase0-report.md; gate pilihan baseline kode dan penanganan missing media menunggu jawaban pengguna. Fase berikutnya belum dimulai pada turn ini.
+Fase 0 ditutup setelah jawaban pengguna: kode lokal terbaru menjadi baseline adopsi, data tetap staging; 199 referensi file yang belum ditemukan dicatat sebagai gap migrasi. Checklist ini tidak menyatakan migrasi apply atau kelengkapan media selesai. Fase 1 belum dimulai dalam pembaruan keputusan ini.

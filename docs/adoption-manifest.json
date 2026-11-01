@@ -2052,5 +2052,11 @@
   "notes": [
     "Static literal imports only; dynamic computed imports require manual audit.",
     "Shared helpers need tenant-aware repository adapters, not wholesale scheduler copy."
-  ]
+  ],
+  "baselineDecision": {
+    "codeSource": "local audited MAKNA Flow checkout",
+    "dataSource": "staging default_tenant",
+    "confirmedBy": "user",
+    "deltaAuditRequiredOnSourceChange": true
+  }
 }

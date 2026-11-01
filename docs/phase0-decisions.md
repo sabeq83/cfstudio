@@ -9,8 +9,8 @@
 | Storage media terpisah V2 | Dikonfirmasi | Jawaban pengguna pada Fase 0 |
 | Akun CF Studio baru dan mapping role V2 | Dikonfirmasi | Jawaban pengguna pada Fase 0 |
 | Remote dan deployment host | Ditunda sebelum rilis | Jawaban pengguna pada Fase 0 |
-| Source kode lokal vs release staging | Menunggu jawaban | SHA berbeda; pertanyaan sudah diajukan |
-| Arsip untuk 199 missing file references | Menunggu informasi | Pemeriksaan path/temp staging; pertanyaan sudah diajukan |
+| Source kode lokal vs release staging | Dikonfirmasi: kode lokal terbaru | Baseline audit `6c645e5cdf84d47d86a7e142c6e5679ba7bd25f2`; data tetap staging. Perubahan source sesudah SHA ini perlu delta audit sebelum adopsi |
+| Arsip untuk 199 missing file references | Dicatat sebagai gap migrasi, lokasi arsip belum diketahui | Pengguna meminta gap dicatat dahulu; tidak menandai media tersedia dan tidak menganggap file hilang dari seluruh storage |
 | Import credentials/sessions/active queues | Dikecualikan | PRD; tidak diperlukan membuat ulang preset |
 | Brand assignment preset dari nama | Dilarang diinferensikan | Tidak ada field assignment eksplisit pada preset diaudit |
 

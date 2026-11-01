@@ -1,6 +1,6 @@
 # Fase 0 — Baseline dan Inventory CF Studio
 
-Tanggal: 1 November 2026. Status: audit selesai; gate keputusan baseline kode masih menunggu jawaban pengguna. Tidak ada migrasi apply atau perubahan sumber.
+Tanggal: 1 November 2026. Status: Fase 0 ditutup dengan keputusan pengguna dan gap migrasi yang terdokumentasi. Tidak ada migrasi apply atau perubahan sumber.
 
 ## Keputusan terkonfirmasi
 
@@ -18,7 +18,7 @@ Tanggal: 1 November 2026. Status: audit selesai; gate keputusan baseline kode ma
 | Checkout V2 lokal yang diaudit | `6c645e5cdf84d47d86a7e142c6e5679ba7bd25f2` |
 | Release staging yang sedang aktif | `6cb518f7d16b4451f393c9107f4a2b66ae98b533` |
 
-Pemilihan baseline kode telah ditanyakan. Data tetap dari staging terlepas dari pilihan kode. Jangan menganggap source lokal identik dengan release server. Manifest dependency saat ini mendeskripsikan source lokal.
+Pengguna memilih kode lokal terbaru sebagai baseline adopsi, sementara data tetap dari staging. Baseline yang sudah diaudit dan dicatat pada manifest adalah SHA lokal di atas. Perubahan kode setelah baseline ini harus dicatat dan diaudit sebagai delta sebelum diadopsi. Source lokal tidak dianggap identik dengan release server.
 
 ## Data default tenant
 
@@ -61,7 +61,7 @@ Database menghasilkan 324 referensi media pada field terpilih: 322 lokal dan 2 U
 | Referensi berupa route API, bukan file langsung | 2 |
 | URL eksternal Drive | 2; akses/file belum diverifikasi |
 
-Referensi file yang tidak ditemukan berasal dari path `data/temp` pada folder legacy atau release lama. Pemeriksaan tidak membuktikan video hilang dari seluruh storage atau backup; hanya tidak ditemukan pada path tercatat dan lokasi temp aktif yang diperiksa. Lokasi arsip lain telah ditanyakan kepada pengguna.
+Referensi file yang tidak ditemukan berasal dari path `data/temp` pada folder legacy atau release lama. Pemeriksaan tidak membuktikan video hilang dari seluruh storage atau backup; hanya tidak ditemukan pada path tercatat dan lokasi temp aktif yang diperiksa. Pengguna belum mengetahui lokasi arsip lain dan meminta kondisi ini dicatat sebagai gap migrasi dahulu.
 
 Ukuran 32,8 MiB **bukan** total kapasitas migrasi: tidak termasuk file tidak ditemukan, hasil route API, URL eksternal, maupun dependency yang belum diidentifikasi. Hash yang ada pada laporan missing adalah hash string path untuk pelacakan; bukan checksum konten file.
 
@@ -91,10 +91,10 @@ Tes aman tanpa provider:
 
 ## Gate dan tindak lanjut
 
-Audit dan baseline operasional dapat direview sekarang. Checklist induk Fase 0 belum dicentang penuh sampai pilihan baseline kode ditutup. Gap media dapat diterima sebagai daftar pekerjaan fase migrasi hanya setelah arah penanganannya dikonfirmasi; tidak menandai media lengkap.
+Audit, baseline operasional dan pilihan kode telah dikonfirmasi. Fase 0 ditutup; gap media dibawa sebagai pekerjaan wajib pada fase migrasi. Penutupan Fase 0 tidak berarti media lengkap, database tujuan tersedia, atau import apply sudah siap.
 
-1. Konfirmasi baseline kode lokal terbaru atau release staging aktif.
-2. Konfirmasi apakah ada arsip video sumber lain; jika tidak diketahui, catat gap dan cegah status siap media pada objek terkait.
+1. Gunakan baseline kode lokal terbaru yang diaudit; lakukan delta audit jika source berubah.
+2. Pertahankan gap 199 referensi media pada manifest; cegah status siap media pada objek terkait. Jika lokasi arsip ditemukan kemudian, lakukan verifikasi lanjutan sebelum memperbarui status.
 3. Siapkan database CF Studio sebelum fase DB/import apply; tidak perlu hak CREATE DATABASE pada akun sumber.
 4. Fase berikutnya menyempurnakan mockup empat tab dan detail brand Preset/Visual Identity, bukan menjalankan produksi atau migrasi final.
 
