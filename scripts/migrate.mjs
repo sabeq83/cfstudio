@@ -1,0 +1,7 @@
+import {readFile,readdir} from 'node:fs/promises';
+import {getPool,transaction} from '../lib/db-pg.js';
+import {assertSeparateDatabases} from '../lib/runtime-config.js';
+if(!process.argv.includes('--apply')){console.log('Dry-run: migrasi tersedia. Gunakan --apply setelah database khusus CF Studio diverifikasi.');process.exit(0);}
+if(!process.env.SOURCE_DATABASE_URL)throw new Error('SOURCE_DATABASE_URL wajib untuk memverifikasi database terpisah.');
+assertSeparateDatabases(process.env.SOURCE_DATABASE_URL,process.env.DATABASE_URL);
+try{await transaction(async db=>{await db.query("SELECT pg_advisory_xact_lock(hashtext('cfstudio_migrations'))");const forbidden=await db.query("SELECT to_regclass('public.product_extractions') AS legacy");if(forbidden.rows[0].legacy)throw new Error('LEGACY_DATABASE_DETECTED');await db.query('CREATE TABLE IF NOT EXISTS cf_schema_migrations(name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())');for(const name of (await readdir(new URL('../db/migrations/',import.meta.url))).filter(x=>x.endsWith('.sql')).sort()){const done=await db.query('SELECT 1 FROM cf_schema_migrations WHERE name=$1',[name]);if(done.rowCount)continue;await db.query(await readFile(new URL('../db/migrations/'+name,import.meta.url),'utf8'));await db.query('INSERT INTO cf_schema_migrations(name) VALUES($1)',[name]);console.log('Applied '+name);}});}finally{await getPool().end();}

@@ -1,0 +1,6 @@
+import pg from 'pg';
+import {domainTables} from '../lib/import-service.js';
+if(!process.env.SOURCE_DATABASE_URL||!process.env.SOURCE_TENANT_ID)throw new Error('SOURCE_DATABASE_URL dan SOURCE_TENANT_ID wajib.');
+if(process.env.SOURCE_SCHEMA!=='staging')throw new Error('Sumber yang diotorisasi hanya schema staging.');
+const c=new pg.Client({connectionString:process.env.SOURCE_DATABASE_URL,connectionTimeoutMillis:8000});
+try{await c.connect();await c.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');const t=await c.query('SELECT id FROM staging.tenants WHERE id=$1',[process.env.SOURCE_TENANT_ID]);if(!t.rowCount)throw new Error('TENANT_NOT_FOUND');const counts={};for(const [domain,table] of Object.entries(domainTables)){counts[domain]=Number((await c.query(`SELECT count(*) AS n FROM staging."${table}" WHERE tenant_id=$1`,[process.env.SOURCE_TENANT_ID])).rows[0].n);}const presets=await c.query("SELECT setting_value FROM staging.tenant_settings WHERE tenant_id=$1 AND setting_key='operator_presets_json'",[process.env.SOURCE_TENANT_ID]);counts.preset=Object.keys(JSON.parse(presets.rows[0]?.setting_value||'{}')).length;console.log(JSON.stringify({schema:'staging',readOnly:true,counts},null,2));await c.query('ROLLBACK');}finally{await c.end();}

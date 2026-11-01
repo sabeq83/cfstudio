@@ -1,0 +1,2 @@
+import {readConfig,assertSeparateDatabases} from '../lib/runtime-config.js';
+try{const c=readConfig();if(process.env.SOURCE_DATABASE_URL)assertSeparateDatabases(process.env.SOURCE_DATABASE_URL,c.databaseUrl);console.log(JSON.stringify({configured:true,productionDispatch:c.productionDispatch,publishingDispatch:c.publishingDispatch}));}catch(e){console.log(JSON.stringify({configured:false,code:e.code||'INVALID_CONFIG'}));process.exitCode=1;}

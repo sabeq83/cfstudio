@@ -1,0 +1,312 @@
+/* MAKNA Flow semantic theme system. Keep color decisions here, not in pages. */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --radius: 12px;
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sidebar-w: 260px;
+  --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --canvas: #080c14;
+  --sidebar: #0c121e;
+  --surface: #101827;
+  --surface-raised: #162235;
+  --surface-interactive: #1c2a40;
+  --surface-hover: #22334b;
+  --input-bg: #0c1422;
+  --overlay-subtle: rgba(0, 0, 0, 0.24);
+  --overlay-backdrop: rgba(2, 6, 14, 0.76);
+  --text-primary: #f4f7fb;
+  --text-secondary: #b6c2d2;
+  --text-muted: #8290a5;
+  --text-disabled: #66758a;
+  --border-subtle: #26354a;
+  --border-strong: #3c506b;
+  --action-primary: #2dd4bf;
+  --action-primary-hover: #5eead4;
+  --on-action-primary: #042f2e;
+  --link: #67e8f9;
+  --link-hover: #a5f3fc;
+  --status-info: #60a5fa;
+  --status-info-soft: rgba(96, 165, 250, 0.14);
+  --status-success: #4ade80;
+  --status-success-soft: rgba(74, 222, 128, 0.14);
+  --status-warning: #fbbf24;
+  --status-warning-soft: rgba(251, 191, 36, 0.14);
+  --status-danger: #fb7185;
+  --status-danger-soft: rgba(251, 113, 133, 0.14);
+  --status-neutral: #a78bfa;
+  --status-neutral-soft: rgba(167, 139, 250, 0.14);
+  --focus-ring: #a78bfa;
+  --shadow-card: 0 12px 34px rgba(0, 0, 0, 0.24);
+  --shadow-modal: 0 26px 80px rgba(0, 0, 0, 0.52);
+  --platform-google: #8ab4f8;
+  --platform-facebook: #60a5fa;
+  --platform-youtube: #ef4444;
+
+  /* Compatibility aliases while page-level literals are migrated. */
+  --bg-primary: var(--canvas);
+  --bg-secondary: var(--surface);
+  --bg-card: var(--surface);
+  --bg-card-hover: var(--surface-hover);
+  --bg-glass: var(--surface-interactive);
+  --border: var(--border-subtle);
+  --border-color: var(--border-subtle);
+  --border-hover: var(--border-strong);
+  --accent: var(--action-primary);
+  --accent-color: var(--action-primary);
+  --accent-light: var(--action-primary-hover);
+  --accent-glow: rgba(45, 212, 191, 0.18);
+  --accent-dark: #0f766e;
+  --accent-rgb: 45, 212, 191;
+  --success: var(--status-success);
+  --success-light: var(--status-success);
+  --success-glow: var(--status-success-soft);
+  --warning: var(--status-warning);
+  --danger: var(--status-danger);
+  --danger-glow: var(--status-danger-soft);
+  --info: var(--status-info);
+  --shadow: var(--shadow-card);
+  --shadow-lg: var(--shadow-modal);
+  --bg: var(--canvas);
+  --bg-app: var(--canvas);
+  --bg-main: var(--canvas);
+  --bg-dark: var(--canvas);
+  --bg-panel: var(--surface);
+  --bg-input: var(--input-bg);
+  --text: var(--text-primary);
+  --text-color: var(--text-primary);
+  --text-normal: var(--text-secondary);
+  --btn-primary-bg: var(--action-primary);
+  --brand-blue-bg: var(--status-info-soft);
+  --brand-blue-border: var(--status-info);
+  --brand-blue-text: var(--status-info);
+  --brand-blue-glow: var(--status-info-soft);
+  --brand-red-bg: var(--status-danger-soft);
+  --brand-red-border: var(--status-danger);
+  --brand-red-text: var(--status-danger);
+  --brand-red-glow: var(--status-danger-soft);
+  --brand-green-bg: var(--status-success-soft);
+  --brand-green-border: var(--status-success);
+  --brand-green-text: var(--status-success);
+  --brand-green-glow: var(--status-success-soft);
+  --btn-clean-photo-text: var(--on-action-primary);
+  --btn-gen-photo-text: var(--on-action-primary);
+  --btn-enrich-text: var(--on-action-primary);
+
+  /* Tombol Re-Enrich AI (Biru/Info) */
+  --btn-enrich-bg: var(--status-info-soft);
+  --btn-enrich-border: color-mix(in srgb, var(--status-info) 30%, transparent);
+  --btn-enrich-text: var(--status-info);
+
+  /* Tombol Re-Gen Photo (Orange/Warning) */
+  --btn-photo-bg: var(--status-warning-soft);
+  --btn-photo-border: color-mix(in srgb, var(--status-warning) 30%, transparent);
+  --btn-photo-text: var(--status-warning);
+
+  /* Tombol Gen Photo Baru/Belum Ada (Ungu/Neutral) */
+  --btn-photo-neutral-bg: var(--status-neutral-soft);
+  --btn-photo-neutral-border: color-mix(in srgb, var(--status-neutral) 30%, transparent);
+  --btn-photo-neutral-text: var(--status-neutral);
+
+  /* Tombol Bulk Actions (Teks Putih Kontras di atas Solid Gradient) */
+  --btn-bulk-enrich-bg: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
+  --btn-bulk-enrich-text: #ffffff;
+  --btn-bulk-photo-bg: linear-gradient(135deg, #ffa502 0%, #ff7f50 100%);
+  --btn-bulk-photo-text: #ffffff;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --canvas: #f2f5f8;
+  --sidebar: #ffffff;
+  --surface: #ffffff;
+  --surface-raised: #f7f9fc;
+  --surface-interactive: #edf2f7;
+  --surface-hover: #e6edf5;
+  --input-bg: #ffffff;
+  --overlay-subtle: rgba(30, 41, 59, 0.08);
+  --overlay-backdrop: rgba(15, 23, 42, 0.54);
+  --text-primary: #152033;
+  --text-secondary: #40506a;
+  --text-muted: #66758a;
+  --text-disabled: #8794a6;
+  --border-subtle: #d8e0ea;
+  --border-strong: #aebccd;
+  --action-primary: #087f73;
+  --action-primary-hover: #06665d;
+  --on-action-primary: #ffffff;
+  --link: #075ea8;
+  --link-hover: #064b86;
+  --status-info: #1d63b7;
+  --status-info-soft: #e8f1fc;
+  --status-success: #177a43;
+  --status-success-soft: #e6f5ec;
+  --status-warning: #925c08;
+  --status-warning-soft: #fff3d7;
+  --status-danger: #b4233d;
+  --status-danger-soft: #fdebef;
+  --status-neutral: #6548bd;
+  --status-neutral-soft: #f0ecfb;
+  --focus-ring: #6d4ed6;
+  --shadow-card: 0 12px 34px rgba(31, 45, 61, 0.09);
+  --shadow-modal: 0 26px 80px rgba(31, 45, 61, 0.22);
+  --platform-google: #185abc;
+  --platform-facebook: #1769c2;
+  --platform-youtube: #c81e1e;
+  --accent-glow: rgba(8, 127, 115, 0.14);
+  --accent-dark: #06665d;
+  --accent-rgb: 8, 127, 115;
+}
+
+html,
+body { background: var(--canvas); color: var(--text-primary); }
+
+body,
+button,
+input,
+textarea,
+select { color: var(--text-primary); }
+
+a { color: var(--link); }
+a:hover { color: var(--link-hover); }
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--focus-ring) 72%, transparent);
+  outline-offset: 2px;
+}
+
+.sidebar { background: var(--sidebar); border-color: var(--border-subtle); }
+.card,
+.modal,
+.modal-content,
+[role='dialog'] { background-color: var(--surface); border-color: var(--border-subtle); color: var(--text-primary); }
+
+.modal-overlay,
+.dialog-overlay,
+[data-modal-overlay='true'] { background: var(--overlay-backdrop); }
+
+.modal-header,
+.modal-footer { border-color: var(--border-subtle); }
+
+.form-input,
+.form-select,
+input:not([type='checkbox']):not([type='radio']):not([type='file']),
+textarea,
+select {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+}
+
+input::placeholder,
+textarea::placeholder { color: var(--text-muted); opacity: 1; }
+
+.btn-primary {
+  background: var(--action-primary);
+  border-color: var(--action-primary);
+  color: var(--on-action-primary);
+}
+.btn-primary:hover { background: var(--action-primary-hover); border-color: var(--action-primary-hover); }
+.btn-secondary { background: var(--surface-interactive); border-color: var(--border-subtle); color: var(--text-primary); }
+.btn-danger { background: var(--status-danger-soft); border-color: var(--status-danger); color: var(--status-danger); }
+.btn-success { background: var(--status-success-soft); border-color: var(--status-success); color: var(--status-success); }
+
+/* Harmonized actions used by ContentFlow cards and dialogs. */
+.content-action {
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  color: var(--text-primary);
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, transform .18s ease;
+}
+.content-action:hover:not(:disabled) { transform: translateY(-1px); }
+.content-action-cloud { background: var(--status-info-soft); border-color: var(--status-info); color: var(--status-info); }
+.content-action-cloud:hover { background: color-mix(in srgb, var(--status-info-soft) 72%, var(--status-info) 28%); color: var(--status-info); }
+.content-action-drive { background: var(--status-success-soft); border-color: var(--status-success); color: var(--status-success); }
+.content-action-drive:hover { background: color-mix(in srgb, var(--status-success-soft) 72%, var(--status-success) 28%); color: var(--status-success); }
+.content-action-download { background: var(--action-primary); border-color: var(--action-primary); color: var(--on-action-primary); }
+.content-action-download:hover:not(:disabled) { background: var(--action-primary-hover); border-color: var(--action-primary-hover); color: var(--on-action-primary); }
+.content-action-neutral { background: var(--status-neutral-soft); border-color: var(--status-neutral); color: var(--status-neutral); }
+.content-action-success { background: var(--status-success-soft); border-color: var(--status-success); color: var(--status-success); }
+.content-action:disabled { background: var(--surface-interactive); border-color: var(--border-subtle); color: var(--text-disabled); cursor: not-allowed; box-shadow: none; transform: none; }
+.content-action-compact { min-height: 30px; box-sizing: border-box; display: flex !important; align-items: center; justify-content: center; line-height: 1.2; }
+
+.contentflow-view-tabs { border-bottom: 1px solid var(--border-subtle); }
+.contentflow-view-tab { background: var(--surface); border: 1px solid var(--border-subtle); color: var(--text-secondary); }
+.contentflow-view-tab:hover { background: var(--surface-hover); border-color: var(--border-strong); color: var(--text-primary); }
+.contentflow-view-tab-active { background: var(--status-info-soft); border-color: var(--status-info); color: var(--status-info); }
+.contentflow-view-tab-active:hover { background: var(--status-info-soft); color: var(--status-info); }
+.contentflow-video-thumbnail { background: linear-gradient(135deg, var(--surface-raised), var(--surface-interactive)); border: 1px solid var(--border-subtle); }
+.contentflow-video-id { background: color-mix(in srgb, var(--surface) 88%, transparent); border: 1px solid var(--status-info); color: var(--status-info); }
+.contentflow-production-date { display: inline-flex; align-items: center; background: var(--surface); border: 1px solid var(--border-strong); color: var(--text-secondary); box-shadow: 0 2px 8px var(--overlay-subtle); }
+[data-theme='light'] .contentflow-production-date { background: #f7f9fc; border-color: #aebccd; color: #40506a; }
+.contentflow-compact-filter { width: 180px; min-width: 0; }
+.contentflow-compact-filter input,
+.contentflow-compact-filter select { box-sizing: border-box; max-width: 100%; }
+.contentflow-platform-chip { background: var(--surface-raised); border: 1px solid var(--border-strong); color: var(--text-secondary); }
+.contentflow-status-unpublished { background: var(--surface-interactive); border: 1px solid var(--border-strong); color: var(--text-secondary); }
+.contentflow-brand-tab { background: var(--surface-interactive); border: 1px solid var(--border-strong); color: var(--text-secondary); }
+.contentflow-brand-tab:hover { background: var(--surface-hover); border-color: var(--status-info); color: var(--text-primary); }
+.contentflow-brand-tab-active { background: var(--status-success-soft); border: 1px solid var(--status-success); color: var(--status-success); box-shadow: 0 0 0 1px color-mix(in srgb, var(--status-success) 18%, transparent); }
+.contentflow-brand-tab-active:hover { background: var(--status-success-soft); border-color: var(--status-success); color: var(--status-success); }
+.contentflow-release-date { width: 168px; max-width: 100%; box-sizing: border-box; color-scheme: inherit; }
+[data-theme='light'] button.contentflow-brand-tab-active,
+[data-theme='light'] button.contentflow-brand-tab-active:hover { color: #0b5d38; background: #dff3e7; border-color: #177a43; }
+.sidebar-brand-subtab { background: var(--surface-interactive); border-left: 3px solid transparent; color: var(--text-secondary); }
+.sidebar-brand-subtab:hover { background: var(--surface-hover); color: var(--text-primary); }
+.sidebar-brand-subtab-active { background: var(--status-success-soft); border-left-color: var(--status-success); color: var(--status-success); box-shadow: 0 0 0 1px color-mix(in srgb, var(--status-success) 14%, transparent); }
+.sidebar-brand-subtab-active:hover { background: var(--status-success-soft); color: var(--status-success); }
+[data-theme='light'] a.sidebar-brand-subtab-active,
+[data-theme='light'] a.sidebar-brand-subtab-active:hover { background: #dff3e7; border-left-color: #177a43; color: #0b5d38; }
+
+/* User Management table surfaces remain legible in both themes. */
+.user-table-shell { background: var(--surface); border: 1px solid var(--border-subtle); box-shadow: var(--shadow-card); }
+.user-table-head { background: var(--surface-raised); color: var(--text-secondary); }
+.user-table-row { background: var(--surface); border-bottom: 1px solid var(--border-subtle); transition: background-color .15s ease; }
+.user-table-row:hover { background: var(--surface-hover); }
+.user-role-admin { background: var(--status-info-soft); border: 1px solid var(--status-info); color: var(--status-info); }
+.user-role-user { background: var(--surface-interactive); border: 1px solid var(--border-strong); color: var(--text-secondary); }
+.user-brand-badge { background: var(--status-neutral-soft); border: 1px solid color-mix(in srgb, var(--status-neutral) 45%, transparent); color: var(--status-neutral); }
+
+.text-danger { color: var(--status-danger); }
+.status-pending,
+.status-warning { color: var(--status-warning); background: var(--status-warning-soft); }
+.status-success,
+.status-completed { color: var(--status-success); background: var(--status-success-soft); }
+.status-error,
+.status-failed { color: var(--status-danger); background: var(--status-danger-soft); }
+.status-info,
+.status-running { color: var(--status-info); background: var(--status-info-soft); }
+
+/* Native controls and browser-owned dropdown popups must match the active scheme. */
+option { background: var(--surface); color: var(--text-primary); }
+
+/* Reusable theme control. */
+.theme-toggle {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm, 8px);
+  background: var(--surface-interactive);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: .85rem;
+  font-weight: 650;
+}
+.theme-toggle:hover { background: var(--surface-hover); border-color: var(--border-strong); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}

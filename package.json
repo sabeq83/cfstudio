@@ -1,0 +1,22 @@
+{
+  "name": "cf-studio",
+  "version": "3.0.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --webpack --hostname 127.0.0.1 -p 3100",
+    "build": "next build --webpack",
+    "start": "next start --hostname 127.0.0.1 -p 3100",
+    "test": "node --test tests/*.test.mjs",
+    "db:migrate": "node scripts/migrate.mjs",
+    "verify:environment": "node scripts/verify-environment.mjs",
+    "inventory:source": "node scripts/inventory-source.mjs",
+    "worker": "node scripts/worker.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.3",
+    "pg": "8.22.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}
