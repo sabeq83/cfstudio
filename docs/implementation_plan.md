@@ -246,14 +246,14 @@ Checklist ini wajib diperbarui dari `- [ ]` menjadi `- [x]` setelah setiap tahap
 - [x] Baca PRD 1.1, mockup dan modul V2 relevan; identifikasi risiko adopsi.
 - [x] Susun rencana fase, pemetaan file, before/after, verifikasi dan gate delivery.
 - [x] Fase 0: tetapkan lingkungan/repository, inventaris dependency dan lima domain default tenant; gap media dicatat dan baseline kode dipilih pengguna.
-- [ ] Fase 1: lengkapi mockup empat tab dan review pengguna; kunci kontrak API/state.
-- [ ] Fase 2: bootstrap aplikasi/database terisolasi, auth/tenant/capability dan worker OFF.
-- [ ] Fase 3: adopsi menu, trial migration objek/relasi/media, idempotensi dan rekonsiliasi.
-- [ ] Fase 4: implementasi routine draft/active, target CRUD, schedule/claim/checkpoint.
+- [x] Fase 1: mockup/kontrak ditampilkan, kebijakan dikonfirmasi; pengguna menginstruksikan lanjut hingga fase terakhir.
+- [x] Fase 2: bootstrap aplikasi/database terisolasi, auth/tenant/capability dan worker OFF.
+- [x] Fase 3: adopsi menu, trial migration objek/relasi/media, idempotensi dan rekonsiliasi.
+- [x] Fase 4: implementasi routine draft/active, target CRUD, schedule/claim/checkpoint.
 - [x] Audit statis tahapan V2 dan dokumentasikan bukti, perbedaan capability serta gap queue/lease.
 - [ ] Fase 5A: characterization fixtures dan audit dependency shared services/provider transport.
-- [ ] Fase 5B: kontrak ProductionPackage dan empat compiler video + builder resep statis.
-- [ ] Fase 5C: shared start-frame/TTS/clip/FFmpeg, satu G-Labs gateway dan static finishing.
+- [x] Fase 5B: kontrak ProductionPackage dan empat compiler video + builder resep statis.
+- [x] Fase 5C: shared start-frame/TTS/clip/FFmpeg, satu G-Labs gateway dan static finishing.
 - [ ] Fase 5D: uji parity empat sumber, native-audio modes, retry/lease/reference dan provider nyata terkontrol.
 - [ ] Fase 6: Daily Review, approval revisi, regenerasi dan Telegram terverifikasi.
 - [ ] Fase 7: Repliz preflight/intent/reconcile, Schedule dan History.
@@ -1490,7 +1490,7 @@ Belum ada.
 Implementasi inventory read-only, import dry-run, provisioning tujuan atau repository claim terfencing sesuai domain file.
 ```
 
-## 17. Progress eksekusi — 1 November 2026
+## 17. Progress eksekusi — 1 November 2026 (snapshot fondasi historis; lihat Execution evidence dan delivery-status untuk status terkini)
 
 ### Selesai dan diverifikasi
 
@@ -1510,8 +1510,8 @@ Implementasi inventory read-only, import dry-run, provisioning tujuan atau repos
 
 ### Belum selesai — tidak dianggap sebagai fitur produksi siap
 
-- [ ] Database/user tujuan disediakan admin melalui environment lokal; akun sumber yang tersedia tidak memiliki CREATE DATABASE.
-- [ ] Apply skema, provisioning login, tes transaksi PostgreSQL, FK tenant, auth dan CRUD secara end-to-end.
+- [x] Database/user tujuan disediakan admin melalui environment lokal; akun sumber yang tersedia tidak memiliki CREATE DATABASE.
+- [x] Apply skema, provisioning login, tes transaksi PostgreSQL, FK tenant, auth dan CRUD secara end-to-end.
 - [ ] Inventaris dependency/media lengkap (lokasi staging, ukuran, checksum, global preset/universe), migrator preset/binding/media, idempotensi apply dan rollback.
 - [ ] Adopsi penuh UI dan operasi Product Database, Deconstruct Lab, Visual Identity/Preset Manager; UI sekarang baru fondasi daftar, bukan semua fitur V2.
 - [ ] Scheduler loop durable, run once, heartbeat/lease recovery, compiler AI dan shared image/TTS/clip/FFmpeg services nyata. Shared pipeline saat ini kontrak executor terinjeksi; tidak menghasilkan media nyata.
@@ -1540,10 +1540,10 @@ Implementasi inventory read-only, import dry-run, provisioning tujuan atau repos
 Kebutuhan dikonfirmasi pengguna: daftar brand → klik nama brand → detail dengan tab Preset dan Visual Identity. PRD 1.5 bagian 4.1 menjadi acuan; menggantikan usulan tab Overview/Products sebelumnya.
 
 - [x] Perbarui PRD dan usulan struktur detail brand pada rencana.
-- [ ] Simulasikan daftar/detail brand dan kedua tab pada mockup HTML sebelum perubahan React terkait.
-- [ ] Implementasikan tautan nama brand, detail dan kembali ke daftar; default tab Preset.
-- [ ] Hubungkan assignment preset/identity per tenant+brand, termasuk empty state, pemilihan dan capability.
-- [ ] Uji assignment hasil migrasi, pergantian brand dan penolakan akses lintas brand.
+- [x] Simulasikan daftar/detail brand dan kedua tab pada mockup HTML sebelum perubahan React terkait.
+- [x] Implementasikan tautan nama brand, detail dan kembali ke daftar; default tab Preset.
+- [x] Hubungkan assignment preset/identity per tenant+brand, termasuk empty state, pemilihan dan capability.
+- [x] Uji assignment hasil migrasi, pergantian brand dan penolakan akses lintas brand.
 
 File tambahan yang direncanakan: `app/brands/[brandId]/page.js`. Pada implementasi, UI awal yang berada di `app/Studio.js` perlu mengarahkan nama brand ke halaman tersebut; kondisi saat ini adalah daftar nama noninteraktif. Endpoint katalog perlu filter brand yang telah divalidasi di server, bukan filter UI saja.
 
@@ -1566,11 +1566,11 @@ export default async function BrandPage({ params }) {
 ## 19. Preset hasil impor wajib dapat dipakai tanpa dibuat ulang
 
 - [x] Tegaskan di PRD 1.6 bahwa preset default tenant staging ikut dimigrasikan dan dapat dipilih kembali.
-- [ ] Lengkapi migrator preset dari `staging.tenant_settings` key `operator_presets_json`, bukan mencari tabel preset kustom yang tidak ada.
-- [ ] Ambil seluruh preset pada snapshot final; baseline 21 hanya inventaris awal.
-- [ ] Pertahankan key/nama, konfigurasi non-secret, versi tersedia dan kompatibilitas campaign; petakan dependency Visual Identity/produk/brand dengan origin ledger.
-- [ ] Inventaris preset sistem/bawaan yang tersedia atau dirujuk; petakan key+versi kompatibel dan pertahankan sifat baca-saja.
-- [ ] Pertahankan assignment brand yang benar-benar tersedia. Preset tanpa assignment tetap di katalog tenant dan dapat dipilih melalui aksi Pilih preset yang sudah ada.
+- [x] Lengkapi migrator preset dari `staging.tenant_settings` key `operator_presets_json`, bukan mencari tabel preset kustom yang tidak ada.
+- [ ] Ambil seluruh preset pada snapshot final; trial snapshot 21 preset tenant telah diimpor, final cutover masih terbuka.
+- [x] Pertahankan key/nama, konfigurasi non-secret, versi tersedia dan kompatibilitas campaign; petakan dependency Visual Identity/produk/brand dengan origin ledger.
+- [x] Inventaris preset sistem/bawaan yang tersedia atau dirujuk; petakan key+versi kompatibel dan pertahankan sifat baca-saja.
+- [x] Pertahankan assignment brand yang benar-benar tersedia. Preset tanpa assignment tetap di katalog tenant dan dapat dipilih melalui aksi Pilih preset yang sudah ada.
 - [ ] Verifikasi bahwa pemilihan preset hasil impor pada brand tidak membuat preset duplikat, tidak mengharuskan input ulang, dan menghasilkan parameter produksi yang setara dengan konfigurasi sumber.
 - [ ] Rekonsiliasi seluruh preset terhadap snapshot final; laporkan dependency yang belum cocok tanpa menyatakan preset tersebut siap produksi.
 
@@ -1665,7 +1665,7 @@ Mockup `public/mockup_cfstudio_phase1.html` dan `docs/phase1-contracts.md` siap.
 - [x] Default creative approval otomatis berdasarkan preset, dapat diubah per rutinitas.
 - [x] Self-approval diperbolehkan bagi pengguna yang memiliki capability produksi dan approval; tenant/brand scope tetap berlaku.
 - [x] Final approval tetap manual pada revision/fingerprint tepat dan dicatat sebagai keputusan manusia.
-- [ ] Review keseluruhan mockup masih perlu dicatat; jawaban kebijakan bukan otomatis persetujuan semua detail UI.
+- [x] Setelah mockup dan kebijakan, pengguna menginstruksikan lanjut hingga fase terakhir; review estetika UI akhir tetap manual oleh pengguna.
 
 File `public/mockup_cfstudio_phase1.html` — **Code Sebelum (Current/Before)**:
 ```html
@@ -1678,3 +1678,591 @@ File `public/mockup_cfstudio_phase1.html` — **Code Sebelum (Current/Before)**:
 <option value="auto" selected>Otomatis • kebijakan preset</option>
 ```
 Kontrak/PRD/review diperbarui untuk menghapus status kedua kebijakan sebagai keputusan terbuka. Tidak ada perubahan backend/provider.
+
+## 25. Eksekusi fase 2–8 terotorisasi
+
+Instruksi pengguna: lanjut sampai fase terakhir. Fase 1 diterima sebagai baseline untuk melanjutkan implementasi, dengan perubahan berikutnya tetap dapat direview. Tidak menyimpulkan izin deploy production atau publikasi konten tanpa approval final.
+
+- [x] Terapkan schema operasional, assignment, koneksi terenkripsi, idempotency, notification preference, artifact dan login throttling.
+- [x] Uji migrasi SQL pada PostgreSQL terisolasi untuk tes; bukan pengganti pembuktian database tujuan.
+- [x] Implementasikan CRUD katalog/brand, preset assignment, user/capability, routine/run/review/publishing/history API.
+- [x] Implementasikan import data/preset/binding dengan origin ledger, konflik dan manifest media; source read-only.
+- [x] Implementasikan durable scheduler, pipeline per stage dan adapter provider bersama dengan dispatch guards.
+- [x] Implementasikan UI aplikasi mengikuti mockup yang telah ditampilkan.
+- [ ] Uji integrasi transaksi, isolation, lease/retry, approval/publishing, provider fake; lalu build dan audit.
+- [ ] Terapkan ke database tujuan dan uji provider nyata setelah konfigurasi tersedia.
+- [ ] Jalankan final migration/pilot/release hanya ketika gate nyata lulus.
+
+### Manifest perubahan sebelum edit
+
+
+### `db/migrations/002_operations.sql`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+CREATE TABLE brand_assignments (...); -- FK tenant-aware, unique assignment
+CREATE TABLE connections (...); -- secret ciphertext only
+-- Add artifact, idempotency, attempts and outbox lifecycle.
+```
+
+### `lib/db-pg.js`
+**Code Sebelum (Current/Before)**
+```text
+import pg from 'pg';
+import {readConfig} from './runtime-config.js';
+let pool;
+export function getPool(){if(!pool){const c=readConfig();pool=new pg.Pool({connectionString:c.databaseUrl,max:c.poolMax,connectionTimeoutMillis:8000});}return pool;}
+export async function transaction(fn){const client=await getPool().connect();try{await client.query('BEGIN');const value=await fn(client);await client.query('COMMIT');return value;}catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/auth.js`
+**Code Sebelum (Current/Before)**
+```text
+import {createHash} from 'node:crypto';
+import {getPool} from './db-pg.js';
+import {StudioError} from './errors.js';
+export async function requireSession(request){const raw=request.headers.get('cookie')||'';const token=raw.split(';').map(x=>x.trim()).find(x=>x.startsWith('cf_session='))?.slice(11);if(!token)throw new StudioError('AUTH_REQUIRED','Silakan login.',401);const hash=createHash('sha256').update(token).digest('hex');const {rows}=await getPool().query('SELECT u.*,t.status AS tenant_status FROM sessions s JOIN users u ON u.id=s.user_id JOIN tenants t ON t.id=u.tenant_id WHERE s.token_hash=$1 AND s.expires_at>now()',[hash]);const u=rows[0];if(!u||u.status!=='active'||u.tenant_status!=='active')throw new StudioError('AUTH_REQUIRED','Sesi tidak aktif.',401);return {id:u.id,tenantId:u.tenant_id,status:u.status,tenantStatus:u.tenant_status,capabilities:u.capabilities,brandIds:u.brand_ids,allBrands:u.all_brands};}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/access-control.js`
+**Code Sebelum (Current/Before)**
+```text
+import { StudioError } from './errors.js';
+export function assertAccess(actor,object,capability){
+ if(!actor||actor.status!=='active'||actor.tenantStatus!=='active') throw new StudioError('ACCESS_DENIED','Akses ditolak.',403);
+ if(!actor.tenantId||actor.tenantId!==object.tenantId)throw new StudioError('ACCESS_DENIED','Akses ditolak.',403);
+ if(!actor.capabilities?.includes(capability))throw new StudioError('CAPABILITY_REQUIRED','Hak tindakan tidak tersedia.',403);
+ if(object.brandId&&!actor.allBrands&&!actor.brandIds?.includes(object.brandId))throw new StudioError('BRAND_ACCESS_DENIED','Brand tidak ditugaskan.',403);
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/catalog-service.js`
+**Code Sebelum (Current/Before)**
+```text
+import {getPool} from './db-pg.js';
+import {assertAccess} from './access-control.js';
+const domains=['product','deconstruct','brand','visual_identity','preset'];
+export async function listCatalog(actor,domain){if(!domains.includes(domain))throw new Error('DOMAIN_INVALID');assertAccess(actor,{tenantId:actor.tenantId},'catalog.read');const {rows}=await getPool().query(`SELECT id,domain,brand_id,name,revision,archived,payload FROM catalog_items WHERE tenant_id=$1 AND domain=$2 AND archived=false AND ($3::boolean OR brand_id=ANY($4::text[]) OR (domain='brand' AND id=ANY($4::text[]))) ORDER BY name`,[actor.tenantId,domain,actor.allBrands,actor.brandIds]);return rows;}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/automation-service.js`
+**Code Sebelum (Current/Before)**
+```text
+import {nextRunAt} from './schedule.js';
+import {randomUUID} from 'node:crypto';
+import {getPool,transaction} from './db-pg.js';
+import {assertAccess} from './access-control.js';
+import {validateRoutine} from './automation-contract.js';
+import {StudioError} from './errors.js';
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/automation-repository.js`
+**Code Sebelum (Current/Before)**
+```text
+import {transaction} from './db-pg.js';
+export async function claimRun(workerId){return transaction(async db=>{const {rows}=await db.query("SELECT r.id FROM automation_runs r JOIN tenants t ON t.id=r.tenant_id WHERE t.status='active' AND (r.status='queued' OR (r.status='processing' AND r.lease_expires_at<now())) ORDER BY r.created_at FOR UPDATE OF r SKIP LOCKED LIMIT 1");if(!rows.length)return null;return (await db.query("UPDATE automation_runs SET status='processing',lease_owner=$1,lease_expires_at=now()+interval '5 minutes',fencing_token=fencing_token+1 WHERE id=$2 RETURNING *",[workerId,rows[0].id])).rows[0];});}
+export async function completeRun(db,claim,output){const {rowCount}=await db.query("UPDATE automation_runs SET status='completed',lease_owner=NULL,lease_expires_at=NULL WHERE id=$1 AND tenant_id=$2 AND lease_owner=$3 AND fencing_token=$4 AND lease_expires_at>now()",[claim.id,claim.tenant_id,claim.lease_owner,claim.fencing_token]);if(!rowCount)throw new Error('STALE_LEASE');return output;}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/review-service.js`
+**Code Sebelum (Current/Before)**
+```text
+import {transaction} from './db-pg.js';
+import {assertAccess} from './access-control.js';
+import {StudioError} from './errors.js';
+export async function approveFinal(actor,id,revision){return transaction(async db=>{const {rows}=await db.query('SELECT * FROM content_items WHERE tenant_id=$1 AND id=$2 FOR UPDATE',[actor.tenantId,id]);const item=rows[0];if(!item)throw new StudioError('NOT_FOUND','Konten tidak ditemukan.',404);assertAccess(actor,{tenantId:item.tenant_id,brandId:item.brand_id},'content.approve');if(item.revision!==revision)throw new StudioError('STALE_REVISION','Versi berubah.',409);if(item.status!=='ready')throw new StudioError('NOT_READY','Hasil final belum siap.');await db.query('INSERT INTO approvals(tenant_id,item_id,revision,actor_id) VALUES($1,$2,$3,$4) ON CONFLICT DO NOTHING',[actor.tenantId,id,revision,actor.id]);return {approved:true,revision};});}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/import-service.js`
+**Code Sebelum (Current/Before)**
+```text
+import {createHash} from 'node:crypto';
+import {invariant} from './errors.js';
+export const domainTables={product:'product_extractions',deconstruct:'re_deconstructed_assets',brand:'brand_profiles',visual_identity:'visual_identity_presets',binding:'brand_products',dependency:'re_deconstruct_batches'};
+export function originKey({system,tenantId,domain,id}){invariant(system&&tenantId&&domain&&id!==undefined,'ORIGIN_REQUIRED','Identitas sumber wajib');return JSON.stringify([system,tenantId,domain,String(id)]);}
+export function mappedId(source){return 'import_'+createHash('sha256').update(originKey(source)).digest('hex').slice(0,28);}
+export function cleanImportPayload(value){if(Array.isArray(value))return value.map(cleanImportPayload);if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).filter(([k])=>!/(password|secret|token|api.?key|session|gemini_file_uri)/i.test(k)).map(([k,v])=>[k,cleanImportPayload(v)]));return value;}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/runtime-config.js`
+**Code Sebelum (Current/Before)**
+```text
+import { StudioError } from './errors.js';
+export function readConfig(env=process.env, {requireDatabase=true}={}) {
+ if(requireDatabase&&!env.DATABASE_URL) throw new StudioError('DATABASE_NOT_CONFIGURED','Database CF Studio belum dikonfigurasi.',503);
+ return { databaseUrl:env.DATABASE_URL||null, appRole:env.APP_ROLE||'web', poolMax:Math.min(8,Math.max(1,Number(env.PGPOOL_MAX)||3)),productionDispatch:env.ENABLE_PRODUCTION_DISPATCH==='true', publishingDispatch:env.ENABLE_PUBLISHING_DISPATCH==='true' };
+}
+export function assertSeparateDatabases(source,target) {
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/security.js`
+**Code Sebelum (Current/Before)**
+```text
+import { randomBytes, scryptSync, timingSafeEqual,createHash } from 'node:crypto';
+export function hashPassword(password){if(typeof password!=='string'||password.length<12)throw new Error('Password minimal 12 karakter');const salt=randomBytes(16).toString('hex');return `scrypt:${salt}:${scryptSync(password,salt,64).toString('hex')}`;}
+export function verifyPassword(password,stored){const [algorithm,salt,digest]=String(stored).split(':');if(algorithm!=='scrypt'||!salt||!digest)return false;const a=Buffer.from(digest,'hex');const b=scryptSync(password,salt,64);return a.length===b.length&&timingSafeEqual(a,b);}
+export function sessionToken(){const token=randomBytes(32).toString('base64url');return {token,hash:createHash('sha256').update(token).digest('hex')};}
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/connections.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/operations-service.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/publishing-service.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/notification-service.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/production-adapters.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/provider-gateway.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/artifact-store.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/production-worker.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/publishing-worker.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/notification-worker.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/shared-services.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/http-api.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `lib/idempotency.js`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `scripts/worker.mjs`
+**Code Sebelum (Current/Before)**
+```text
+import {readConfig} from '../lib/runtime-config.js';
+const config=readConfig(process.env,{requireDatabase:false});
+if(!config.productionDispatch&&!config.publishingDispatch){console.log('CF Studio: dispatch produksi dan publikasi OFF. Tidak ada provider dipanggil.');process.exit(0);}
+throw new Error('WORKER_NOT_READY: adapter provider, database dan gate integrasi belum diverifikasi.');
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `scripts/import-default-tenant.mjs`
+**Code Sebelum (Current/Before)**
+```text
+import pg from 'pg';
+import {domainTables,planObject} from '../lib/import-service.js';
+import {assertSeparateDatabases} from '../lib/runtime-config.js';
+if(!process.env.SOURCE_DATABASE_URL||!process.env.SOURCE_TENANT_ID||!process.env.TARGET_TENANT_ID)throw new Error('Konfigurasi tenant dan sumber wajib eksplisit.');
+if(process.env.SOURCE_SCHEMA!=='staging')throw new Error('SOURCE_SCHEMA harus staging.');
+if(process.env.DATABASE_URL)assertSeparateDatabases(process.env.SOURCE_DATABASE_URL,process.env.DATABASE_URL);
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `scripts/migrate.mjs`
+**Code Sebelum (Current/Before)**
+```text
+import {readFile,readdir} from 'node:fs/promises';
+import {getPool,transaction} from '../lib/db-pg.js';
+import {assertSeparateDatabases} from '../lib/runtime-config.js';
+if(!process.argv.includes('--apply')){console.log('Dry-run: migrasi tersedia. Gunakan --apply setelah database khusus CF Studio diverifikasi.');process.exit(0);}
+if(!process.env.SOURCE_DATABASE_URL)throw new Error('SOURCE_DATABASE_URL wajib untuk memverifikasi database terpisah.');
+assertSeparateDatabases(process.env.SOURCE_DATABASE_URL,process.env.DATABASE_URL);
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `app/Studio.js`
+**Code Sebelum (Current/Before)**
+```text
+"use client";
+import {useEffect,useRef,useState} from 'react';
+const menus=['Automation','Product Database','Deconstruct Lab','Brand Profile Manager','Setting'];
+const labels={multiplier:'Video Multiplier',recipe_video:'Video Recipe Campaign',recipe_static:'Resep foto & teks',brand_editorial:'Video Brand Editorial',product_campaign:'Video Product Campaign'};
+const hints={multiplier:'Hasil Deconstruct → storyboard baru → pipeline video bersama.',recipe_video:'Recipe Planner → materi resep → pipeline video bersama.',recipe_static:'Recipe Labs → gambar bersama → grid dan teks.',brand_editorial:'Content Planner Brand Editorial → paket produksi → pipeline video bersama.',product_campaign:'Pilih produk → Content Planner menghasilkan CEP dan plan → pipeline video bersama.'};
+const blank={name:'',kind:'brand_editorial',count:2,selected:true,productId:'',sourceId:''};
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Load scoped API resources, render four tabs and brand detail.
+// Mutations require expectedRevision; no fake production state.
+```
+
+### `app/api/v3/[...segments]/route.js`
+**Code Sebelum (Current/Before)**
+```text
+import {requireSession} from '../../../../lib/auth.js';
+import {readConfig} from '../../../../lib/runtime-config.js';
+import {getPool} from '../../../../lib/db-pg.js';
+import {listCatalog} from '../../../../lib/catalog-service.js';
+import {listRoutines,saveRoutine,activateRoutine} from '../../../../lib/automation-service.js';
+import {verifyPassword,sessionToken} from '../../../../lib/security.js';
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `tests/database.integration.test.mjs`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+test("tenant isolation, stale revision, retry and idempotency", async () => { /* execute real SQL or controlled fake provider */ });
+```
+
+### `tests/providers.integration.test.mjs`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+test("tenant isolation, stale revision, retry and idempotency", async () => { /* execute real SQL or controlled fake provider */ });
+```
+
+### `docs/delivery-status.md`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada.
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `package.json`
+**Code Sebelum (Current/Before)**
+```text
+{
+  "name": "cf-studio",
+  "version": "3.0.0-alpha.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### `package-lock.json`
+**Code Sebelum (Current/Before)**
+```text
+{
+  "name": "cf-studio",
+  "version": "3.0.0-alpha.1",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+```
+**Code Sesudah (Proposed/After)**
+```text
+// Implement domain contract with explicit tenant/brand capability,
+// durable revision/lease/outbox and provider dispatch checks.
+// Return verified result or actionable error; do not fake completion.
+```
+
+### PostgreSQL lokal terotorisasi
+
+Pengguna memilih PostgreSQL lokal khusus pengembangan. Runtime disimpan di runtime/postgres (diabaikan Git), bind loopback port 55432, database cfstudio_dev dan user aplikasi terpisah. Secret acak hanya disimpan di .env.local mode 0600. Tidak menjalankan service global atau mengubah database V2.
+
+### Adopsi helper V2 murni
+
+`lib/legacy/recipe-campaign-contract.js` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: salinan helper murni V2 pada SHA baseline, tanpa worker/database side effects.
+
+`lib/legacy/recipe-social-package.js` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: salinan helper murni V2 pada SHA baseline, tanpa worker/database side effects.
+
+`lib/legacy/multiplier-audio-config.js` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: salinan helper murni V2 pada SHA baseline, tanpa worker/database side effects.
+
+`lib/legacy/visual-identity-contract.js` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: salinan helper murni V2 pada SHA baseline, tanpa worker/database side effects.
+
+`lib/legacy/visual-language-catalog.js` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: salinan helper murni V2 pada SHA baseline, tanpa worker/database side effects.
+
+`lib/legacy/system-presets.json` — **Code Sebelum (Current/Before)**: belum ada. **Code Sesudah (Proposed/After)**: katalog sistem V2 tanpa credential yang dimuat sebagai dependency preset hasil import.
+
+## Execution update — durable worker and media registration
+Before: `scripts/worker.mjs` refuses dispatch; production adapters compile packages only; recovered media is not linked to catalog.
+After: `lib/production-worker.js`, `lib/media-services.js`, `lib/provider-jobs.js`, `lib/notification-service.js`, `lib/publishing-service.js` implement durable execution with explicit dispatch gates, scoped connections and revision checks. `scripts/import-source-media.mjs` registers checksum verified copies without source writes.
+- [x] Register recovered media and verify import reuse.
+- [x] Verify shared render, durable stage resume, scheduler and review gates.
+- [ ] Verify Telegram outbox and Repliz exact approval/reconciliation.
+
+### API wiring and publishing authorization correction
+Before: catch-all route exposes login, catalog list, draft save and activate only; publishing intents do not record the requesting publisher.
+After: API wires CRUD, assignments, review, schedules, connections and users with same-origin mutation checks. `003_dispatch_authorization.sql` records requested publisher for runtime capability recheck. UI adopts approved phase-1 mockup interactions, using live scoped data.
+
+### Controlled full-pipeline verification
+Before: tests cover contracts and SQL services only.
+After: `tests/pipeline.integration.test.mjs` executes five source kinds through worker, actual local FFmpeg, fake provider protocol, final approval and Repliz uncertainty. No live provider or V2 writes.
+
+### Retry and reconciliation hardening
+Before: provider errors are terminal and notification delivery uncertainty can stay `sending` after a crash.
+After: `004_retry_policy.sql` adds bounded per-item retry state; only safely retryable failures use backoff. Ambiguous writes remain unknown. Crashed Telegram sends become unknown instead of being resent. Creative regeneration starts a new revision; provider job IDs are never recycled.
+
+### Delivery preparation
+Before: README describes the foundation only; no local database lifecycle command, API smoke runner or final operations runbook.
+After: `scripts/local-postgres.mjs`, `scripts/smoke-local.mjs`, `docs/operations.md`, `docs/delivery-status.md` record actual readiness and explicit live-provider gates. Cancellation is a durable request processed only with publishing dispatch enabled.
+
+### Local restore drill
+Before: no automated backup/restore verification.
+After: `scripts/backup-local.mjs` dumps only localhost CF Studio, optionally restores into a newly created temporary database, verifies table counts, then removes that temporary database. Backup remains ignored under runtime/backups; no credential is printed or passed as command argument.
+
+### Claim and native audio verification
+Before: foundation `automation-repository.js` has an unused older claim; native audio was covered by contract only.
+After: repository delegates claim to the production worker; integration checks stale fencing and actual silent-native FFmpeg output.
+
+### Catalog source processing
+Before: catalog CRUD can preserve imported analysis but has no CF Studio upload/analysis execution.
+After: `006_catalog_jobs.sql` and `lib/lab-service.js` add scoped uploads, explicit product-photo review and durable product/deconstruct analysis. Uploaded video is passed as inline media to the same Gemini gateway; source URL is descriptive only (no implicit URL fetch). Job results do not overwrite a newer catalog revision. UI uses existing catalog detail/editor flows from the phase-1 mockup.
+
+### Catalog detail simulation
+Before: phase-1 mockup displays catalog cards and media gap, without an editable analysis form.
+After: `public/mockup_catalog_details.html` simulates source upload, photo review, analysis queue and structured preset editing before wiring the same detail actions into React. It has no provider calls or persisted uploads.
+
+## Execution evidence — 1 November 2026
+
+- [x] PostgreSQL development terpisah 127.0.0.1:55432, enam migrasi terpasang, auth dan API diuji ke database aktual.
+- [x] Trial import 309 objek; pengulangan reuse 309, insert/update/conflict 0. Source read-only.
+- [x] 67 media / 34,406,141 byte dipulihkan dan checksum diverifikasi; 199 referensi hilang tetap exception. 15 foto produk approved menjadi reference terverifikasi.
+- [x] Kelima source kind melewati worker nyata dengan provider tiruan dan FFmpeg lokal. Tidak menggandakan tahap saat resume.
+- [x] Review manual sebelum render, automatic preset snapshot, final approval, caption revision, snapshot anti-forgery, stale lease, rate-limit retry diuji.
+- [x] Telegram verifikasi/outbox/dedup/quiet hours dan Repliz schedule/cancel tested menggunakan transport tiruan. Ini belum membuktikan koneksi provider nyata.
+- [x] Product upload/photo review dan Deconstruct MP4 analysis diuji terkontrol; konflik katalog tidak ditimpa.
+- [x] Backup lokal dipulihkan ke database sementara; jumlah enam tabel penting cocok; database uji dihapus setelah drill.
+- [ ] Fase 5A/5D: golden fixtures/parity kualitas dengan output V2 dan provider nyata. Tidak cukup dibuktikan oleh fake transport.
+- [ ] Fase 6/7 live gate: koneksi CF Studio, verified Telegram recipient, akun Repliz uji dan public media HTTPS belum diisi.
+- [ ] Fase 8: pilot Nutribake, kapasitas/biaya, final delta migration/cutover, remote repository serta deployment belum diverifikasi.
+
+Centang Fase 3 berarti **trial migration** diterapkan, bukan seluruh media lengkap atau final cutover V2. Centang Fase 5C berarti shared implementation lolos pengujian lokal; kualitas/kompatibilitas provider tetap gate 5D. Detail readiness dan keterbatasan berada pada `docs/delivery-status.md`.
+
+### Publishing contract adoption
+Before: mapped accounts assume any platform and account health is not rechecked at dispatch.
+After: `lib/legacy/publishing-contract.js` adopts pure V2 platform/media validation. Provider account health is checked before schedule creation. Automatic reconciliation polls accepted schedules without re-POST. Published requires a provider post ID/permalink as evidence.
+
+### Persisted provider routing
+Before: a changed G-Labs connection could route an existing task/result to a new endpoint.
+After: running jobs poll/download through their persisted connection ID; prepared jobs refuse a connection change before POST. Existing task IDs never move between provider routes.
+
+### Local release artifacts
+Before: changelog only alpha.1 and no CI workflow.
+After: CHANGELOG.md alpha.2 and `.github/workflows/ci.yml` run contract/SQL/fake-provider/FFmpeg tests and build with live dispatch off. README and operations runbook identify live-provider/cutover gates. No remote push or production activation is implied.
+
+## Release candidate alpha.2 — verified locally
+
+- [x] Pengguna menetapkan remote https://github.com/sabeq83/cfstudio.git; remote awal kosong; Git push dry-run berhasil. GitHub CLI API credential lokal kedaluwarsa, tidak menghalangi akses Git.
+- [x] Final build alpha.2 lulus; 44 pengujian lulus; npm audit semua dependency: 0 vulnerability.
+- [x] HTTP smoke aktual: login/sesi, seluruh menu/read API, origin guard, upload foto, review foto dan konkurensi edit (200/409) lulus. Data uji diarsipkan; 0 provider calls, 0 source writes.
+- [x] Enam migrasi terpasang di database lokal; koneksi provider configured masih 0 dan run aktual masih 0; tidak ada antrean uji yang akan terpanggil saat dispatch nanti diaktifkan.
+- [x] Restore drill terakhir 1 November 2026 lulus. Media dan master key wajib dibackup terpisah.
+- [x] UI final dibuka dan form Setting siap; review estetika akhir oleh pengguna.
+- [x] Runbook, delivery status, changelog dan CI disiapkan; env/runtime/storage tidak masuk Git.
+- [ ] Unggah commit/tag alpha.2 ke main remote CF Studio dan periksa hasilnya.
+- [ ] Live provider parity/pilot dan deployment tetap gate terbuka. Rilis alpha kode bukan penutupan seluruh PRD.

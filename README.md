@@ -1,13 +1,20 @@
 # CF Studio V3
 
-Fondasi aplikasi baru berbasis mesin MAKNA Flow V2 (belum seluruh PRD selesai). Status implementasi aktual terdapat di docs/implementation_plan.md.
+Aplikasi pengembangan lokal berbasis kontrak MAKNA Flow V2: lima menu, Automation empat tab, lima sumber produksi, satu pipeline render bersama, review dan integrasi Telegram/Repliz.
 
-## Lokal
+Buka `http://127.0.0.1:3100`. Status jujur implementasi dan gate live ada di [delivery status](docs/delivery-status.md); panduan menjalankan, koneksi dan backup ada di [operations](docs/operations.md).
 
-`npm ci`, `npm test`, `npm run dev` (port 3100). Preview HTML: `/mockup_automation.html`.
+```sh
+npm ci
+npm run db:local -- status
+npm run build
+npm run start
+npm test
+npm run smoke:local
+```
 
-Database khusus PostgreSQL wajib dikonfigurasi dengan DATABASE_URL. Sumber import hanya schema staging melalui SOURCE_DATABASE_URL dan SOURCE_TENANT_ID eksplisit. Tidak menyalin env V2 ke repo ini. Worker/dispatch provider default OFF. UI development tidak menjadi bukti integrasi provider atau migrasi selesai.
+PostgreSQL development terpisah pada loopback port 55432. Akun dan credential hanya di `.env.local` atau koneksi Settings terenkripsi. Worker dijalankan terpisah dengan `npm run worker`; dispatch default OFF.
 
-`npm run db:migrate` hanya menulis ke database tujuan terkonfigurasi setelah verifikasi isolasi. `npm run inventory:source` hanya membaca sumber. Jangan commit laporan berisi data katalog privat.
+Trial migration: 309 objek, termasuk 21 preset tenant lama dan 2 sistem. 67 media pulih; 199 referensi sumber masih hilang. Import ulang memakai origin ledger dan melindungi perubahan tujuan.
 
-Verifikasi awal: 20 tes kontrak lulus, build lulus, npm audit bersih. Database tujuan/provider belum terhubung. Daftar fitur belum selesai tercatat eksplisit di dokumen rencana.
+Pengujian lokal mencakup SQL, tenant/capability, durabilitas, lima jalur dengan provider tiruan dan FFmpeg nyata. Integrasi provider hidup, parity kualitas V2, pilot, final cutover dan deployment belum dinyatakan lulus. Tidak ada credential V2 yang digunakan oleh adapter CF Studio secara otomatis.

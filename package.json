@@ -1,6 +1,6 @@
 {
   "name": "cf-studio",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -9,14 +9,20 @@
     "start": "next start --hostname 127.0.0.1 -p 3100",
     "test": "node --test tests/*.test.mjs",
     "db:migrate": "node scripts/migrate.mjs",
-    "verify:environment": "node scripts/verify-environment.mjs",
+    "verify:environment": "node --env-file-if-exists=.env.local scripts/verify-environment.mjs",
     "inventory:source": "node scripts/inventory-source.mjs",
-    "worker": "node scripts/worker.mjs"
+    "worker": "node --env-file-if-exists=.env.local scripts/worker.mjs",
+    "db:local": "node scripts/local-postgres.mjs",
+    "smoke:local": "node --env-file=.env.local scripts/smoke-local.mjs"
   },
   "dependencies": {
     "next": "16.4.3",
     "pg": "8.22.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.14",
+    "prettier": "3.9.10"
   }
 }

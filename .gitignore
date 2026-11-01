@@ -6,3 +6,5 @@ coverage/
 reports/
 *.log
 .DS_Store
+runtime/
+storage/

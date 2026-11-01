@@ -2058,5 +2058,37 @@
     "dataSource": "staging default_tenant",
     "confirmedBy": "user",
     "deltaAuditRequiredOnSourceChange": true
-  }
+  },
+  "adoptedPureHelpers": [
+    {
+      "source": "lib/recipe-campaign-contract.js",
+      "target": "lib/legacy/recipe-campaign-contract.js",
+      "sha256": "a5fe0576d205cc1a645db1cfcb27c9db3f5349e55e36a81f50a5e737068f2ead"
+    },
+    {
+      "source": "lib/recipe-social-package.js",
+      "target": "lib/legacy/recipe-social-package.js",
+      "sha256": "6693b15ce0b20266d35d2f2bbf788a36222ac2d23581ed2e7fd780be48b89096"
+    },
+    {
+      "source": "lib/multiplier-audio-config.js",
+      "target": "lib/legacy/multiplier-audio-config.js",
+      "sha256": "6e0d2b6877a640ea4cbf07bf5d8e5e519b80ddfa1047bf593a09b43e2cb55e21"
+    },
+    {
+      "source": "lib/visual-identity-contract.js",
+      "target": "lib/legacy/visual-identity-contract.js",
+      "sha256": "e743f04fd5e821fe1fe507134a99bd607f6e0b2eb0bd7927c96225b23de83bb4"
+    },
+    {
+      "source": "lib/visual-language-catalog.js",
+      "target": "lib/legacy/visual-language-catalog.js",
+      "sha256": "107386601fd390f2d8c82d1d20e4e4b0859be50dd917f653d98ef482ac62bad2"
+    },
+    {
+      "source": "lib/publishing-contract.js",
+      "target": "lib/legacy/publishing-contract.js",
+      "sha256": "ca7dd8eaba79d512cb7665ca35f39c1961c282a1871891a88f73e6a44fed5a9f"
+    }
+  ]
 }
