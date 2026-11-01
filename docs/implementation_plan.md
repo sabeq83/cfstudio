@@ -55,7 +55,7 @@ Temuan berasal dari inspeksi kode, bukan audit database atau verifikasi layanan 
 
 ### Fase 1 — Mockup seluruh flow dan kontrak
 
-- Perluas mockup HTML standalone yang sudah ada agar menampilkan tepat empat tab Automation; tab History saat ini belum ada pada mockup.
+- Perluas mockup HTML standalone yang sudah ada agar menampilkan tepat empat tab Automation; gunakan mockup Fase 1 yang memodelkan History sebagai timeline event.
 - Lengkapi state draf/aktif/revisi belum diterapkan, lima jalur, CEP otomatis, creative review, final review, kalender, riwayat dan keadaan gagal.
 - Tambahkan simulasi role/capability, konteks tenant/brand, media hilang dan konflik import pada materi review bila diperlukan.
 - Tunjukkan mockup untuk review pengguna sebelum menulis/mengubah komponen React terkait, sesuai SOP.
@@ -1626,3 +1626,36 @@ Audit literal imports/hash dan inspeksi SSH baca-saja dengan JSON tersaring; tan
 Skrip ini untuk inventory. Daftar path media sementara tidak masuk Git. Tidak ada mutasi sumber.
 
 Fase 0 ditutup setelah jawaban pengguna: kode lokal terbaru menjadi baseline adopsi, data tetap staging; 199 referensi file yang belum ditemukan dicatat sebagai gap migrasi. Checklist ini tidak menyatakan migrasi apply atau kelengkapan media selesai. Fase 1 belum dimulai dalam pembaruan keputusan ini.
+
+## 23. Eksekusi Fase 1 — mockup terpadu dan kontrak
+
+- [x] Buat mockup standalone terpisah untuk lima menu dan tepat empat tab Automation.
+- [x] Simulasikan draft/active revision, lima jalur, dua lapis review, Telegram error, Schedule dan History.
+- [x] Simulasikan daftar brand → detail Preset / Visual Identity, pilihan preset hasil impor dan media gap.
+- [x] Tetapkan kontrak API, state transition, error taxonomy dan matriks capability.
+- [x] Verifikasi alur kritis secara singkat dan tampilkan mockup kepada pengguna.
+- [x] Catat keputusan UI yang sudah terkonfirmasi vs keputusan yang masih perlu review; jangan menganggap ditampilkan berarti disetujui.
+
+### `public/mockup_cfstudio_phase1.html`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada; mockup_automation.html sebelumnya belum memodelkan seluruh menu, history dan active revision secara utuh.
+```
+**Code Sesudah (Proposed/After)**
+```text
+Standalone mockup berbasis semantic tokens dengan state simulasi terpisah untuk revision, approval, intent provider, audit dan assignment brand; tanpa panggilan API/AI/publishing.
+```
+
+### `docs/phase1-contracts.md`, `docs/phase1-review.md`
+**Code Sebelum (Current/Before)**
+```text
+Kontrak API/state dan daftar keputusan review Fase 1 belum tersedia sebagai dokumen khusus.
+```
+**Code Sesudah (Proposed/After)**
+```text
+Kontrak versioned, capability, idempotency, expected revision, transaksi, transition, incident/outbox, error code dan acceptance scenarios; keputusan belum disetujui ditandai eksplisit.
+```
+
+### Status hasil Fase 1
+
+Mockup `public/mockup_cfstudio_phase1.html` dan `docs/phase1-contracts.md` siap. Ringkasan pemeriksaan dan keputusan tertunda ada pada `docs/phase1-review.md`. Gate utama Fase 1 tetap menunggu review pengguna dan pilihan creative default/self-approval; tidak dianggap selesai hanya karena prototype ditampilkan. Tidak ada perubahan React/backend/DB/provider pada pengerjaan fase ini.
