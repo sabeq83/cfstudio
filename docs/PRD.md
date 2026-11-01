@@ -1,6 +1,6 @@
 # PRD — CF Studio V3
 
-**Versi dokumen:** 1.4
+**Versi dokumen:** 1.5
 **Tanggal:** 1 November 2026
 **Status:** Baseline implementasi; eksekusi diotorisasi pengguna, keputusan terbuka tetap mengikuti gate teknis
 **Basis produk:** MAKNA Flow V2
@@ -79,7 +79,23 @@ Waktu selesai produksi bergantung pada antrean dan provider; jam mulai bukan jam
 | Brand Profile Manager | Kelola profil brand, audiens, arahan komunikasi, produk terkait, Visual Identity, dan Preset |
 | Setting | Integrasi, pengaturan tenant, pengguna/izin, notifikasi, dan status koneksi sesuai kewenangan |
 
-Brand Profile Manager memiliki area Overview, Products, Visual Identity, dan Preset. Penamaan ini merupakan usulan struktur di dalam menu, bukan tambahan tab Automation.
+### 4.1. Brand Profile Manager — daftar dan detail per brand
+
+Halaman awal Brand Profile Manager menampilkan **daftar brand** yang dapat diakses pengguna. Nama brand merupakan tautan/tombol menuju halaman detail brand tersebut.
+
+Alur wajib: **Brand Profile Manager → daftar brand → klik nama brand → detail brand dengan tab Preset dan Visual Identity**.
+
+- Detail menampilkan identitas/nama brand yang sedang dipilih dan navigasi kembali ke daftar brand.
+- Tab detail berurutan: **Preset**, lalu **Visual Identity**. Default saat pertama membuka detail adalah Preset.
+- Tab Preset menampilkan dan mengelola preset yang terkait brand tersebut, termasuk versi, assignment dan pilihan preset aktif sesuai capability pengguna.
+- Tab Visual Identity menampilkan dan mengelola identitas visual yang terkait brand tersebut, termasuk assignment dan pilihan identity aktif sesuai capability pengguna.
+- Katalog tenant/sistem yang boleh dipilih dapat tersedia melalui aksi tambah/pilih dalam tab. Tidak menampilkan seluruh assignment brand lain seolah-olah milik brand aktif.
+- Profil dasar, audiens, arahan komunikasi dan relasi produk tetap dapat dikelola melalui aksi Edit Brand atau area informasi profil. Tidak membuat tab Overview/Products sebagai tab utama detail tanpa perubahan kebutuhan yang disepakati.
+- Setiap query/mutasi memeriksa tenant, brand yang dipilih, dan capability di server. Mengubah URL brand tidak membuka akses brand yang tidak ditugaskan.
+- Preset/identity dari migrasi tetap mempertahankan relasi asal; data tenant yang belum mempunyai assignment tidak otomatis dikaitkan ke seluruh brand. Tampilkan belum terhubung dan sediakan pemilihan eksplisit.
+- Brand tanpa preset/identity mempunyai empty state dengan aksi tambah/pilih sesuai izin. Viewer hanya dapat membaca.
+
+Kedua tab ini milik detail brand dan terpisah dari empat tab Automation.
 
 Preset menyimpan konfigurasi produksi yang dapat dipakai ulang. Preset sistem bersifat baca saja bagi pengguna tenant; pengguna dapat membuat salinan tenant/brand. Perubahan preset membuat versi baru dan tidak mengubah batch yang sedang berjalan.
 
@@ -423,7 +439,8 @@ Daftar ini adalah kandidat hasil inspeksi, bukan jaminan seluruh modul siap dipi
 18. Error pertama pada setiap tahap yang dicakup masuk outbox tanpa menunggu batch selesai; pesan membedakan jalur, tahap, dampak, retry dan tindakan, serta menaut ke detail yang berizin.
 19. Retry berulang tidak membanjiri Telegram; eskalasi gagal permanen dan pemulihan menghasilkan pembaruan insiden. Quiet hours, penerima lintas brand dan sanitasi secret diuji.
 20. Crash/heartbeat timeout dideteksi monitor terpisah; kegagalan Telegram dicatat dan dicoba ulang tanpa menghentikan produksi atau memicu loop notifikasi.
-21. Semua tab dapat digunakan pada light/dark mode dan layar mobile untuk review serta penjadwalan.
+21. Brand Profile Manager membuka daftar brand; klik nama membuka detail brand dengan tab Preset dan Visual Identity. Pergantian brand menampilkan assignment yang benar, empty state tersedia, dan akses brand lain tetap ditolak server.
+22. Semua tab dapat digunakan pada light/dark mode dan layar mobile untuk review serta penjadwalan.
 
 ## 17. Tahapan delivery yang disarankan
 

@@ -1,7 +1,7 @@
 # Implementation Plan — CF Studio V3
 
 **Tanggal:** 1 November 2026
-**Basis:** PRD versi 1.4 (`sot/cf-studio-v3/PRD.md`)
+**Basis:** PRD versi 1.5 (`sot/cf-studio-v3/PRD.md`)
 **Revisi:** 1.1 — diperjelas setelah audit pipeline produksi bersama.
 **Status:** Eksekusi dimulai. Fondasi aplikasi lokal terverifikasi; migrasi apply dan provider belum berjalan.
 
@@ -78,7 +78,7 @@ Temuan berasal dari inspeksi kode, bukan audit database atau verifikasi layanan 
 ### Fase 3 — Menu adopsi dan trial migration
 
 - Adopsi Product Database dan Deconstruct Lab dengan service/API/UI yang diperlukan.
-- Adopsi Brand Profile Manager dengan Products, Visual Identity dan Preset; pisahkan preset tenant dari preset sistem baca-saja.
+- Adopsi Brand Profile Manager sebagai daftar brand. Klik nama membuka detail brand dengan tab Preset (default) dan Visual Identity. Profil/produk melalui Edit Brand/area informasi; bukan tab utama tambahan. Pisahkan preset tenant dari preset sistem baca-saja dan validasi assignment per brand.
 - Buat migrator: inventory → plan/dry-run → snapshot/export → import dependencies/objects → media → relink → reconcile.
 - Tentukan urutan berdasarkan graph relasi aktual. Relasi siklik ditangani dua tahap: objek dasar dulu, kemudian binding/reference.
 - Gunakan origin key unik per sistem+tenant+domain+ID sumber. Simpan import batch, pemetaan ID, hash/revisi sumber dan konflik tujuan.
@@ -629,7 +629,8 @@ Belum ada di aplikasi CF Studio baru. Sumber V2 tidak diubah oleh pembuatan file
 
 ```jsx
 export default function BrandsPage() {
-  return <BrandWorkspace sections={["Overview", "Products", "Visual Identity", "Preset"]} />;
+  return <BrandList onSelectBrand={openBrandDetail} />;
+  // Detail brand: <BrandDetail tabs={["Preset", "Visual Identity"]} />
 }
 ```
 
@@ -1533,3 +1534,31 @@ Implementasi inventory read-only, import dry-run, provisioning tujuan atau repos
 2. Jalankan migration dry-run/apply pada tujuan dan siapkan admin dengan password dari environment, tanpa menampilkan nilainya.
 3. Tes transaksi/isolation dan lanjutkan migrator relasi/media sebelum menampilkan katalog sebagai siap diproduksi.
 4. Lanjutkan adapter materi AI dan shared render services dengan fake provider dahulu, kemudian integrasi terkontrol.
+
+## 18. Koreksi kebutuhan — navigasi Brand Profile Manager
+
+Kebutuhan dikonfirmasi pengguna: daftar brand → klik nama brand → detail dengan tab Preset dan Visual Identity. PRD 1.5 bagian 4.1 menjadi acuan; menggantikan usulan tab Overview/Products sebelumnya.
+
+- [x] Perbarui PRD dan usulan struktur detail brand pada rencana.
+- [ ] Simulasikan daftar/detail brand dan kedua tab pada mockup HTML sebelum perubahan React terkait.
+- [ ] Implementasikan tautan nama brand, detail dan kembali ke daftar; default tab Preset.
+- [ ] Hubungkan assignment preset/identity per tenant+brand, termasuk empty state, pemilihan dan capability.
+- [ ] Uji assignment hasil migrasi, pergantian brand dan penolakan akses lintas brand.
+
+File tambahan yang direncanakan: `app/brands/[brandId]/page.js`. Pada implementasi, UI awal yang berada di `app/Studio.js` perlu mengarahkan nama brand ke halaman tersebut; kondisi saat ini adalah daftar nama noninteraktif. Endpoint katalog perlu filter brand yang telah divalidasi di server, bukan filter UI saja.
+
+### `app/brands/[brandId]/page.js`
+
+**Code Sebelum (Current/Before)**
+```text
+Belum ada halaman detail brand di fondasi aplikasi.
+```
+
+**Code Sesudah (Proposed/After)**
+```jsx
+export default async function BrandPage({ params }) {
+  const { brandId } = await params;
+  const brand = await requireAuthorizedBrand(brandId);
+  return <BrandDetail brand={brand} tabs={["Preset", "Visual Identity"]} />;
+}
+```
