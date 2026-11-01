@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.0.0-alpha.4 — 2 November 2026
+- Tema terang menjadi default sejak HTML awal, termasuk halaman login; tombol ganti tema tetap tersedia.
+
 ## 3.0.0-alpha.3 — 1 November 2026
 - Settings khusus Gemini pool, MiniMax, G-Labs dan Repliz + Google Drive; konfigurasi bot Telegram tetap tersedia.
 - Pool tenant terenkripsi dengan anggaran project/key, reservasi atomik, cooldown persisten dan pemeriksaan tersamarkan; planner/creative/analisis/TTS memakai gateway bersama.

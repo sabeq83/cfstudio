@@ -2323,3 +2323,19 @@ After: also checks authenticated Settings pool/provider/Google status routes wit
 - Live OAuth consent, provider compatibility, public download limits and Repliz consumption require CF Studio credentials and remain pilot gates.
 
 Release `v3.0.0-alpha.3` points to `b0854f39881b8ba19769ef7eb03669aea8e70bca`. Remote main/tag verified at github.com/sabeq83/cfstudio. GitHub Actions [41320861832](https://github.com/sabeq83/cfstudio/actions/runs/41320861832) and [41320861800](https://github.com/sabeq83/cfstudio/actions/runs/41320861800) completed/success for the release code. No production deployment.
+
+## Default light theme — 2 November 2026
+
+## Execution Task List
+- [x] Show standalone Settings mockup with existing light tokens.
+- [x] Set root HTML theme to light; retain existing theme toggle.
+- [x] Build, verify local initial theme, release and sync CF Studio.
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| public/mockup_settings_v3.html | `data-theme="dark"` | `data-theme="light"`, existing semantic tokens |
+| app/layout.js | `<html lang="id">` | `<html lang="id" data-theme="light">` |
+| package.json, package-lock.json, app/api/health/route.js | alpha.3 | alpha.4 |
+| CHANGELOG.md | Settings release | Record default light theme |
+
+Alpha.4: build passed; actual HTTP 200 root HTML contains `data-theme="light"`; health version alpha.4. Existing semantic light palette and theme toggle unchanged. Release synchronized only to CF Studio remote.
