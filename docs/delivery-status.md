@@ -60,3 +60,5 @@ Empat panel khusus, bot Telegram, tenant Gemini pool, default provider, G-Labs p
 Konfigurasi layanan/OAuth nyata belum diisi; dispatch tetap OFF. Pilot nyata dan gate fase sebelumnya tetap terbuka.
 
 Alpha.3 penutupan lokal: 62/62 tes, build, API aktual termasuk Settings, pemeriksaan tampilan empat panel, npm audit 0 vulnerability, backup/restore dan concurrency PostgreSQL lulus. Server lokal diperbarui pada port 3100. Jumlah impor tidak berubah.
+
+Rilis `v3.0.0-alpha.3` / kode `b0854f39881b8ba19769ef7eb03669aea8e70bca` telah diunggah dan tag remote diverifikasi. CI [41320861832](https://github.com/sabeq83/cfstudio/actions/runs/41320861832) dan [41320861800](https://github.com/sabeq83/cfstudio/actions/runs/41320861800) completed/success.
