@@ -2351,3 +2351,10 @@ Alpha.4: build passed; actual HTTP 200 root HTML contains `data-theme="light"`; 
 | public/mockup_gemini_pool_v2.html | Absent | V2-style summary, progress, key rows, single/bulk import, simulated health, archive/restore and separate model defaults. No network or credential persistence. |
 
 Mockup HTTP 200 and JavaScript syntax verified. Controlled in-memory checks cover bulk validation/dedup, archive/restore, pause, single input, audit, theme and reset. Browser bulk/invalid archive flow verified. Application React and provider settings unchanged.
+
+## Gemini mockup revision — remove project groups
+User requests V2 parity: remove project grouping entirely from mockup; use per-key local caps and pool summary. Before: public/mockup_gemini_pool_v2.html contains project controls/model. After: same file has key-only controls/counters. Main application unchanged.
+
+## Execution Task List
+- [x] Remove project UI/state and verify standalone interactions.
+- [x] Show updated mockup and sync CF Studio repository.
