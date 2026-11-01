@@ -1575,3 +1575,54 @@ export default async function BrandPage({ params }) {
 - [ ] Rekonsiliasi seluruh preset terhadap snapshot final; laporkan dependency yang belum cocok tanpa menyatakan preset tersebut siap produksi.
 
 Tidak diperlukan desain ulang preset dari nol. Import apply saat ini belum tersedia dan masih menunggu tahap migrasi relasi/media serta database tujuan, sebagaimana dicatat pada progress eksekusi.
+
+## 20. Eksekusi Fase 0 — audit baseline lengkap
+
+Baseline disetujui pengguna: pengembangan lokal port 3100, storage media terpisah dari V2, login awal akun CF Studio baru dengan role mapping V2. Remote/deployment host ditetapkan sebelum rilis. Sumber tetap staging default tenant, database tujuan khusus.
+
+- [x] Konfirmasi baseline operasional tersebut.
+- [x] Refresh snapshot inventory, status arsip/duplikasi, foreign references dan dependency preset.
+- [x] Audit referensi media, jumlah/ukuran file lokal atau server sumber serta pengecualian.
+- [x] Catat source SHA, closure dependency, callback/provider/storage dan status proses sumber read-only.
+- [x] Jalankan baseline tes mesin yang aman tanpa provider dan catat kegagalan sebagai temuan.
+- [x] Tulis decision log, gap, adoption manifest dan laporan gate Fase 0.
+
+### `scripts/phase0-audit.mjs`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada audit lengkap Fase 0; inventory awal hanya menghitung tabel utama.
+```
+**Code Sesudah (Proposed/After)**
+```javascript
+await source.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+const report = await auditTenantGraphStatusesAndMedia(source, verifiedTenant);
+await source.query('ROLLBACK');
+await writeSanitizedReport(report);
+```
+
+### `docs/phase0-report.md`, `docs/phase0-inventory.json`, `docs/phase0-decisions.md`
+**Code Sebelum (Current/Before)**
+```text
+Belum ada laporan fase 0 lengkap.
+```
+**Code Sesudah (Proposed/After)**
+```text
+Bukti baseline, hitungan/relasi/media, keputusan terkonfirmasi, gap, tes dan status gate; tanpa credential/payload privat.
+```
+
+### Skrip bukti tambahan Fase 0
+
+File: `scripts/phase0-dependency-audit.py`, `scripts/phase0-server-inspect.py`.
+
+**Code Sebelum (Current/Before)**
+```text
+Tool audit lokal sementara; belum disimpan di repository CF Studio.
+```
+**Code Sesudah (Proposed/After)**
+```text
+Audit literal imports/hash dan inspeksi SSH baca-saja dengan JSON tersaring; tanpa secret, startup worker atau perubahan layanan.
+```
+
+Skrip ini untuk inventory. Daftar path media sementara tidak masuk Git. Tidak ada mutasi sumber.
+
+Fase 0: pekerjaan audit di atas selesai dengan gap yang dinyatakan pada docs/phase0-report.md; gate pilihan baseline kode dan penanganan missing media menunggu jawaban pengguna. Fase berikutnya belum dimulai pada turn ini.

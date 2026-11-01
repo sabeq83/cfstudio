@@ -1,0 +1,941 @@
+{
+  "capturedAt": "2026-11-01T03:09:41.804Z",
+  "sourceSchema": "staging",
+  "tenantId": "default_tenant",
+  "readOnly": true,
+  "tables": {
+    "product_extractions": {
+      "count": 27,
+      "statuses": {
+        "extraction_status": {
+          "completed": 24,
+          "failed": 3
+        },
+        "photo_status": {
+          "approved": 15,
+          "needs_review": 12
+        }
+      },
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "input_source",
+        "is_url",
+        "product_name",
+        "product_description",
+        "unique_selling_point",
+        "target_audience",
+        "pain_point_solved",
+        "key_visuals_extracted",
+        "raw_response",
+        "created_at",
+        "category",
+        "tags",
+        "photo_url",
+        "source_url",
+        "affiliate_link",
+        "raw_description",
+        "scraped_image_url",
+        "raw_photo_url",
+        "clean_photo_url",
+        "cleaned_photo_url",
+        "t2i_prompt",
+        "generated_photo_url",
+        "active_photo",
+        "is_in_packaging",
+        "packaging_type",
+        "i2v_action_prompt",
+        "extraction_status",
+        "glabs_task_id",
+        "clean_photo_t2i_prompt",
+        "product_truth",
+        "geometric_truth",
+        "tenant_id",
+        "page",
+        "packaging_status",
+        "packaging_notes",
+        "import_status",
+        "enrichment_status",
+        "photo_status",
+        "photo_provider",
+        "photo_task_id",
+        "photo_error",
+        "enrichment_error",
+        "enrichment_reviewed_at",
+        "photo_reviewed_at",
+        "normalized_source_url",
+        "raw_photo_sha256",
+        "updated_at"
+      ]
+    },
+    "re_deconstructed_assets": {
+      "count": 202,
+      "statuses": {
+        "status": {
+          "deconstructed": 197,
+          "failed": 5
+        }
+      },
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "batch_id",
+        "source_url",
+        "original_caption",
+        "local_video_path",
+        "gemini_file_uri",
+        "original_storyboard_json",
+        "product_ideas_json",
+        "viral_pattern_summary",
+        "status",
+        "error_message",
+        "tags",
+        "created_at",
+        "tenant_id",
+        "niche",
+        "queued_at",
+        "deconstructed_at",
+        "updated_at",
+        "page_source",
+        "core_problem",
+        "core_solution",
+        "target_audience_pain_point"
+      ]
+    },
+    "re_deconstruct_batches": {
+      "count": 9,
+      "statuses": {
+        "status": {
+          "completed": 9
+        }
+      },
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "batch_name",
+        "target_recommendation_count",
+        "status",
+        "total_videos",
+        "processed_videos",
+        "created_at",
+        "tenant_id"
+      ]
+    },
+    "brand_profiles": {
+      "count": 7,
+      "statuses": {},
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "brand_name",
+        "tone_of_voice",
+        "visual_signature",
+        "color_palette",
+        "forbidden_elements",
+        "brand_slogan_or_cta",
+        "raw_guideline_text",
+        "guideline_filename",
+        "created_at",
+        "storage_provider",
+        "nextcloud_target_folder",
+        "drive_target_folder",
+        "drive_glabs_folder_id",
+        "webhook_host",
+        "webhook_port",
+        "webhook_api_key",
+        "tenant_id",
+        "nextcloud_parent_folder",
+        "drive_parent_folder",
+        "editorial_brand_context",
+        "editorial_content_goal",
+        "editorial_content_pillars_json"
+      ]
+    },
+    "visual_identity_presets": {
+      "count": 6,
+      "statuses": {
+        "status": {
+          "active": 6
+        }
+      },
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "tenant_id",
+        "preset_key",
+        "label",
+        "description",
+        "config_json",
+        "status",
+        "version",
+        "created_by",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "brand_products": {
+      "count": 23,
+      "statuses": {
+        "is_active": {
+          "true": 22,
+          "false": 1
+        }
+      },
+      "duplicateNames": 0,
+      "columns": [
+        "id",
+        "tenant_id",
+        "brand_profile_id",
+        "product_id",
+        "affiliate_link",
+        "tracking_code",
+        "landing_page_url",
+        "product_name_override",
+        "cta_override",
+        "notes",
+        "is_active",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  },
+  "foreignKeys": [],
+  "presetDependencies": [
+    {
+      "presetKey": "nutribake_kampanye_produk_0704",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "dapurbotani_produk_7klip_4s",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "dapurbotani_produk_7klip_4s",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "nutribake_recipe_15klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "nutribake_recipe_15klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "waysiyasi_15klip",
+      "field": "visual_identity_preset_id",
+      "reference": "way_siyasi_editorial_system",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "system identity"
+    },
+    {
+      "presetKey": "waysiyasi_15klip",
+      "field": "visual_identity_preset_id",
+      "reference": "way_siyasi_editorial_system",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "system identity"
+    },
+    {
+      "presetKey": "siasate_sehat_15_klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "siasate_sehat_15_klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "sasyahouse_8klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "sasyahouse_8klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "sasyahouse_8klip_02",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_sasya_mul6jkxw",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "nutribake_8_klip_omni",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "siasat_sehat_8_klip_omni",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "dapur_botani_8_klip",
+      "field": "visual_identity_preset_id",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "habitfolk_8_klip_omni",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_habitfolk_macro_craft",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "habitfold_t2v_8_klip",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_habitfolk_macro_craft",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "habitfold_t2v_8_klip",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_habitfolk_macro_craft",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "nutribake_new_vi",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_nutribake_modern_pastry",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "dapur_botani_new_vi",
+      "field": "visual_identity_preset_id",
+      "reference": "vi_dapurbotani_apothecary_3d",
+      "matchesTenantIdentity": true,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "tenant identity"
+    },
+    {
+      "presetKey": "visual_identity:indonesiamale_premium_watch",
+      "field": "preset_key",
+      "reference": "commercial_product_cinematic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:indonesiamale_premium_watch",
+      "field": "preset_key",
+      "reference": "soft_studio_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:indonesiamale_premium_watch",
+      "field": "preset_key",
+      "reference": "smart_casual_luxury",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:indonesiamale_premium_watch",
+      "field": "preset_key",
+      "reference": "luxury_lounge_interior",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:sasyahouse_modern_muslimah_lifestyle",
+      "field": "preset_key",
+      "reference": "cinematic_realistic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:sasyahouse_modern_muslimah_lifestyle",
+      "field": "preset_key",
+      "reference": "window_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:sasyahouse_modern_muslimah_lifestyle",
+      "field": "preset_key",
+      "reference": "terracotta_amber",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:sasyahouse_modern_muslimah_lifestyle",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:habitfolk_satisfying_macro_craft",
+      "field": "preset_key",
+      "reference": "culinary_cinematic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:habitfolk_satisfying_macro_craft",
+      "field": "preset_key",
+      "reference": "window_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:habitfolk_satisfying_macro_craft",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:habitfolk_satisfying_macro_craft",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:dapurbotani_apothecary_3d",
+      "field": "preset_key",
+      "reference": "culinary_cinematic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:dapurbotani_apothecary_3d",
+      "field": "preset_key",
+      "reference": "window_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:dapurbotani_apothecary_3d",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:dapurbotani_apothecary_3d",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:nutribake_modern_pastry",
+      "field": "preset_key",
+      "reference": "culinary_cinematic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:nutribake_modern_pastry",
+      "field": "preset_key",
+      "reference": "window_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:nutribake_modern_pastry",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:nutribake_modern_pastry",
+      "field": "preset_key",
+      "reference": "modern_kitchen",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:siasatsehat_clinical_biohack_3d",
+      "field": "preset_key",
+      "reference": "commercial_product_cinematic",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:siasatsehat_clinical_biohack_3d",
+      "field": "preset_key",
+      "reference": "window_daylight",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "style/catalog selector"
+    },
+    {
+      "presetKey": "visual_identity:siasatsehat_clinical_biohack_3d",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    },
+    {
+      "presetKey": "visual_identity:siasatsehat_clinical_biohack_3d",
+      "field": "preset_key",
+      "reference": "custom",
+      "matchesTenantIdentity": false,
+      "matchesTenantBrand": false,
+      "matchesTenantProduct": false,
+      "classification": "custom override selector; preserve visual_overrides_json"
+    }
+  ],
+  "media": {
+    "references": 324,
+    "localReferences": 322,
+    "externalReferences": 2,
+    "externalHosts": {
+      "drive.google.com": 2
+    },
+    "uniqueLocalPaths": 268
+  },
+  "findings": [],
+  "tenantStatus": "active",
+  "bindingIntegrity": {
+    "total": 23,
+    "missingBrand": 0,
+    "missingProduct": 0
+  },
+  "deconstructBatchIntegrity": {
+    "missingBatch": 0
+  },
+  "presets": {
+    "count": 21,
+    "parseValid": true,
+    "storage": "tenant_settings.operator_presets_json"
+  },
+  "providerSettings": {
+    "storage_provider": "nextcloud",
+    "webhook_image_model": "nano_banana_pro",
+    "webhook_video_model": "veo_31_lite"
+  },
+  "contentFingerprints": {
+    "product_extractions": "853f07b3b53bfb7f22932ea3be95f61149a1883e0a9393a526ca2296ad462a2f",
+    "re_deconstructed_assets": "58c899a927dbcadd58394e8c2bb08edc2ff0ba220bb78a7a7319aeeab866d3a6",
+    "re_deconstruct_batches": "b5be16835b4ca744b7683f4eec06f658678e3e6e867a670dc0d7d645465a24b7",
+    "brand_profiles": "bb813593fc7ae20d5e16eab3f87ee898a30733c03856bf5c3c8bfdff0d5daae3",
+    "visual_identity_presets": "db81384a525c3bbd55be6e2c3e970a529c3172261c1961f011bc3f6557b9dec3",
+    "brand_products": "8ff40015e3c0c2014131ac738537030e04b8dd61b9e287b11efec1f4313e5832"
+  },
+  "systemPresets": {
+    "operator": [
+      {
+        "key": "brand_editorial_campaign",
+        "label": "Brand Editorial Campaign"
+      },
+      {
+        "key": "product_campaign",
+        "label": "Product Campaign"
+      }
+    ],
+    "visualIdentity": [
+      {
+        "key": "way_siyasi_editorial_system",
+        "version": 1
+      },
+      {
+        "key": "hands_only_muslimah_sage_kitchen",
+        "version": 1
+      },
+      {
+        "key": "hands_only_southeast_asian_male",
+        "version": 1
+      },
+      {
+        "key": "hands_only_caucasian_male_caramel",
+        "version": 1
+      },
+      {
+        "key": "stylized_3d_muslimah_emerald",
+        "version": 1
+      },
+      {
+        "key": "mascot_herbal_ginger_guardian",
+        "version": 1
+      }
+    ],
+    "universe": [
+      {
+        "key": "pawville_pet_story",
+        "version": 1
+      },
+      {
+        "key": "herbal_grove",
+        "version": 1
+      },
+      {
+        "key": "kitchen_town",
+        "version": 1
+      },
+      {
+        "key": "rumah_rapi",
+        "version": 1
+      },
+      {
+        "key": "jejak_peradaban_islam",
+        "version": 1
+      },
+      {
+        "key": "general_clay_story",
+        "version": 1
+      }
+    ]
+  },
+  "roles": [
+    {
+      "role": "superadmin",
+      "status": "active",
+      "count": 1
+    },
+    {
+      "role": "user",
+      "status": "active",
+      "count": 1
+    },
+    {
+      "role": "admin",
+      "status": "active",
+      "count": 1
+    }
+  ],
+  "deconstructDuplicateSourceUrlGroups": 0,
+  "presetSelectorAudit": [
+    {
+      "presetKey": "nutribake_editorial_puret2v",
+      "selectors": []
+    },
+    {
+      "presetKey": "dapurbotani_editorial_v1",
+      "selectors": []
+    },
+    {
+      "presetKey": "siasatsehat_editorial_v1",
+      "selectors": []
+    },
+    {
+      "presetKey": "siasat_sehat_01",
+      "selectors": []
+    },
+    {
+      "presetKey": "nutribake_hybrid_kp_4c_01",
+      "selectors": []
+    },
+    {
+      "presetKey": "dapurbotani_kampanye_produk_4_klip",
+      "selectors": []
+    },
+    {
+      "presetKey": "nutribake_kampanye_produk_02",
+      "selectors": []
+    },
+    {
+      "presetKey": "nutribake_kampanye_produk_0704",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "dapurbotani_produk_7klip_4s",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        },
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "nutribake_recipe_15klip",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        },
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "waysiyasi_15klip",
+      "selectors": [
+        {
+          "selector": "way_siyasi_editorial_system",
+          "path": "visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        },
+        {
+          "selector": "way_siyasi_editorial_system",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "siasate_sehat_15_klip",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        },
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "sasyahouse_8klip",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        },
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "sasyahouse_8klip_02",
+      "selectors": [
+        {
+          "selector": "vi_sasya_mul6jkxw",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "nutribake_8_klip_omni",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "siasat_sehat_8_klip_omni",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "dapur_botani_8_klip",
+      "selectors": [
+        {
+          "selector": "custom",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": true,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "habitfolk_8_klip_omni",
+      "selectors": [
+        {
+          "selector": "vi_habitfolk_macro_craft",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "habitfold_t2v_8_klip",
+      "selectors": [
+        {
+          "selector": "vi_habitfolk_macro_craft",
+          "path": "visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        },
+        {
+          "selector": "vi_habitfolk_macro_craft",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "nutribake_new_vi",
+      "selectors": [
+        {
+          "selector": "vi_nutribake_modern_pastry",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    },
+    {
+      "presetKey": "dapur_botani_new_vi",
+      "selectors": [
+        {
+          "selector": "vi_dapurbotani_apothecary_3d",
+          "path": "visual_swap.visual_identity_preset_id",
+          "hasOverride": false,
+          "hasInline": false
+        }
+      ]
+    }
+  ],
+  "explicitPresetBrandReferences": 0
+}

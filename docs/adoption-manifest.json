@@ -1,566 +1,2056 @@
 {
   "sourceRoot": "/Users/sabeqmmursyid/_contentflow-staging",
-  "sourceEnvironment": "staging",
+  "localSourceSha": "6c645e5cdf84d47d86a7e142c6e5679ba7bd25f2",
   "sourceReadOnly": true,
+  "seedFiles": [
+    "lib/re-multiplier-worker.js",
+    "lib/scheduler-processors.js",
+    "lib/webhook-client.js",
+    "lib/video-studio-processor.js",
+    "lib/recipe-planner-engine.js",
+    "lib/recipe-production-adapter.js",
+    "lib/content-planner-engine.js",
+    "lib/visual-identity-repository.js",
+    "lib/visual-identity-system-presets.js",
+    "lib/operator-presets.js",
+    "lib/universe-presets.js",
+    "lib/start-frame-worker.js",
+    "lib/pillar-start-frame-service.js",
+    "lib/pillar-stage-execution-service.js",
+    "lib/auth.js",
+    "lib/tenant-admin.js",
+    "lib/repliz-client.js",
+    "lib/content-automation-worker.js",
+    "lib/content-automation-notification-worker.js",
+    "instrumentation.js",
+    "scripts/glabs-worker.js"
+  ],
+  "moduleCount": 177,
   "files": [
     {
-      "path": "lib/re-multiplier-worker.js",
-      "sha256": "2e436c670ac57568c40807a1fc7a636b3e06e2cca9944013d0a4f7b0c5d2053d",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./gemini.js",
-        "./prompts.js",
-        "./json-parser.js",
-        "./minimax-tts.js",
-        "./webhook-client.js",
-        "./tenant-context.js",
-        "fs",
-        "path",
-        "./tenant-context.js",
-        "./url-scraper.js",
-        "./prompts.js",
-        "./json-parser.js",
-        "./url-scraper.js",
-        "./campaign-product-binding.js",
-        "./tenant-context.js",
-        "./visual-override-resolver.js",
-        "./json-parser.js",
-        "./tiktok-compliance-service.js",
-        "./gemini-8s-tts.js",
-        "child_process",
-        "./db.js",
-        "./cloud-naming-helper.js",
-        "child_process",
-        "./video-studio-processor.js",
-        "./cloud-naming-helper.js",
-        "./contentflow-ingest.js",
-        "fs",
-        "path",
-        "./nextcloud-helper.js",
-        "./cloud-naming-helper.js"
-      ]
+      "path": "instrumentation.js",
+      "sha256": "956d3ec8e7a5a0be0ea00acd9f7b778ab464c5bd9ff274c739dfd3bab34de850",
+      "dependencies": [
+        "lib/agent-automation-contract.js",
+        "lib/agent-automation-worker.js",
+        "lib/campaign-scheduler.js",
+        "lib/console-hook.js",
+        "lib/content-automation-notification-worker.js",
+        "lib/content-automation-worker.js",
+        "lib/contentflow-studio-worker.js",
+        "lib/db.js",
+        "lib/operator-content-worker.js",
+        "lib/publishing-worker.js",
+        "lib/scheduler.js",
+        "lib/start-frame-worker.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/scheduler-processors.js",
-      "sha256": "c28f12ef15d161479ae61901e140b0b3c0e26af5c00edb5d87688bff01b8fa58",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./gemini.js",
-        "./naming-helper.js",
-        "googleapis",
-        "./google-auth.js",
-        "./visual-override-resolver.js",
-        "./product-repository.js",
-        "fs",
-        "path",
-        "./db.js",
-        "Riset RE",
-        "./video-downloader.js",
-        "./db.js",
-        "./export-builder.js",
-        "uuid",
-        "path",
-        "./json-parser.js",
-        "./db.js",
-        "./prompts.js",
-        "./gemini.js",
-        "uuid",
-        "./export-builder.js",
-        "./db.js",
-        "./video-downloader.js",
-        "./db.js",
-        "./nextcloud-helper.js",
-        "./drive-uploader.js",
-        "./json-parser.js",
-        "./db.js",
-        "./prompts.js",
-        "uuid",
-        "./export-builder.js",
-        "./db.js",
-        "./gemini.js",
-        "./json-parser.js",
-        "./db.js",
-        "./prompts.js",
-        "uuid",
-        "./export-builder.js",
-        "./gemini.js",
-        "./video-downloader.js",
-        "./db.js",
-        "path",
-        "uuid",
-        "./db.js",
-        "./error-logger.js",
-        "./json-parser.js",
-        "./db.js",
-        "./prompts.js",
-        "./gemini.js",
-        "./export-builder.js",
-        "./drive-uploader.js",
-        "uuid",
-        "./db.js",
-        "./google-auth.js",
-        "./db.js",
-        "./db.js",
-        "./video-downloader.js",
-        "./prompts.js",
-        "./gemini.js",
-        "./minimax-tts.js",
-        "./tiktok-compliance-service.js",
-        "./webhook-client.js",
-        "fs",
-        "path",
-        "./sheets-autopilot-worker.js",
-        "./db.js",
-        "./nextcloud-helper.js",
-        "./drive-uploader.js",
-        "./error-logger.js",
-        "./webhook-client.js",
-        "./db.js",
-        "./drive-uploader.js",
-        "path",
-        "fs",
-        "./nextcloud-helper.js",
-        "./webhook-client.js",
-        "./db.js",
-        "./url-scraper.js",
-        "./prompts.js",
-        "./gemini.js",
-        "./json-parser.js",
-        "path",
-        "fs",
-        "./url-scraper.js",
-        "./db.js",
-        "./minimax-tts.js",
-        "./gemini.js",
-        "./audio-helper.js",
-        "path",
-        "fs",
-        "./gemini-tts-batch.js",
-        "child_process",
-        "./audio-helper.js",
-        "./gemini-8s-tts.js",
-        "./error-logger.js",
-        "./db.js",
-        "./webhook-client.js",
-        "path",
-        "fs",
-        "./db.js",
-        "./minimax-tts.js",
-        "./gemini-8s-tts.js",
-        "./gemini-tts-batch.js",
-        "./error-logger.js",
-        "./webhook-client.js",
-        "./video-studio-processor.js",
-        "./nextcloud-helper.js",
-        "./drive-uploader.js",
-        "./google-auth.js",
-        "googleapis",
-        "./error-logger.js",
-        "googleapis",
-        "./google-auth.js",
-        "./file-path-resolver.js",
-        "./db-pg.js",
-        "./webhook-client.js",
-        "./error-logger.js",
-        "./db.js",
-        "./video-studio-processor.js",
-        "googleapis",
-        "./google-auth.js",
-        "path",
-        "fs",
-        "./drive-uploader.js",
-        "./drive-uploader.js",
-        "./error-logger.js",
-        "./nextcloud-helper.js",
-        "./nextcloud-helper.js",
-        "./export-builder.js",
-        "./drive-uploader.js",
-        "./export-builder.js",
-        "./google-auth.js",
-        "googleapis",
-        "./sheets-autopilot-worker.js",
-        "./contentflow-ingest.js",
-        "./error-logger.js",
-        "./db.js",
-        "googleapis",
-        "./google-auth.js",
-        "path",
-        "./db.js",
-        "fs",
-        "./facebook-helper.js",
-        "./db.js",
-        "./error-logger.js",
-        "./re-recomm-engine.js",
-        "./db.js",
-        "./gemini.js",
-        "./prompts.js",
-        "./json-parser.js",
-        "./error-logger.js",
-        "./db.js",
-        "./url-scraper.js",
-        "./prompts.js",
-        "./gemini.js",
-        "@google/generative-ai",
-        "./json-parser.js",
-        "path",
-        "fs",
-        "./db.js",
-        "uuid",
-        "./db.js",
-        "uuid",
-        "./error-logger.js",
-        "./json-parser.js",
-        "./db.js",
-        "./prompts.js",
-        "./gemini.js",
-        "@google/generative-ai",
-        "path",
-        "./recipe-production-adapter.js",
-        "./db.js",
-        "./db.js",
-        "./kb-loader.js",
-        "./universe-manifests.js",
-        "./content-world-contract.js",
-        "./gemini.js",
-        "./ai-directive.js",
-        "./cartoon-continuity-validator.js",
-        "./minimax-tts.js",
-        "./tiktok-compliance-service.js",
-        "./webhook-client.js",
-        "path",
-        "fs",
-        "./opc-start-frame-request.js",
-        "./opc-start-frame-audit.js",
-        "./universe-manifests.js",
-        "./cartoon-reference-resolver.js",
-        "./start-frame-storage.js",
-        "./glabs-image-lane-service.js",
-        "./pillar-start-frame-service.js",
-        "./pillar-start-frame-service.js",
-        "./google-auth.js",
-        "googleapis",
-        "./google-auth.js",
-        "./drive-uploader.js",
-        "./export-builder.js",
-        "./nextcloud-helper.js",
-        "fs",
-        "./drive-uploader.js",
-        "./drive-uploader.js",
-        "fs",
-        "./db.js",
-        "./sheets-autopilot-worker.js",
-        "./db.js",
-        "./error-logger.js",
-        "./db.js",
-        "./minimax-tts.js",
-        "./gemini.js",
-        "path",
-        "fs",
-        "./gemini-tts-batch.js",
-        "child_process",
-        "./audio-helper.js",
-        "./audio-helper.js",
-        "./gemini-8s-tts.js",
-        "./gemini-8s-tts.js",
-        "./error-logger.js",
-        "./db.js",
-        "./webhook-client.js",
-        "path",
-        "fs",
-        "./drive-uploader.js",
-        "./file-path-resolver.js",
-        "./db-pg.js",
-        "./webhook-client.js",
-        "./opc-start-frame-request.js",
-        "./opc-start-frame-audit.js",
-        "./error-logger.js",
-        "./db.js",
-        "./video-studio-processor.js",
-        "googleapis",
-        "./google-auth.js",
-        "path",
-        "fs",
-        "./drive-uploader.js",
-        "./drive-uploader.js",
-        "./sheets-autopilot-worker.js",
-        "./nextcloud-helper.js",
-        "./nextcloud-helper.js",
-        "./export-builder.js",
-        "./drive-uploader.js",
-        "./export-builder.js",
-        "./sheets-autopilot-worker.js",
-        "./contentflow-ingest.js",
-        "./error-logger.js",
-        "./db.js",
-        "googleapis",
-        "./google-auth.js",
-        "path",
-        "./db.js",
-        "fs",
-        "./facebook-helper.js",
-        "./db.js",
-        "./error-logger.js",
-        "./db.js",
-        "./url-scraper.js",
-        "path",
-        "fs",
-        "./db.js",
-        "./json-parser.js",
-        "./db.js",
-        "./gemini.js",
-        "@google/generative-ai",
-        "path",
-        "fs",
-        "./db.js",
-        "./db.js",
-        "./db.js",
-        "./prompts.js",
-        "./tiktok-compliance-service.js",
-        "./error-logger.js",
-        "./db.js",
-        "./minimax-tts.js",
-        "./gemini-8s-tts.js",
-        "path",
-        "fs",
-        "./db.js",
-        "./error-logger.js",
-        "./db.js",
-        "./webhook-client.js",
-        "path",
-        "fs",
-        "./drive-uploader.js",
-        "./drive-uploader.js",
-        "./file-path-resolver.js",
-        "./webhook-client.js",
-        "./error-logger.js",
-        "./db.js",
-        "./video-studio-processor.js",
-        "path",
-        "fs",
-        "./nextcloud-helper.js",
-        "./export-builder.js",
-        "./drive-uploader.js",
-        "./export-builder.js",
-        "./error-logger.js",
-        "./db.js",
-        "googleapis",
-        "./google-auth.js",
-        "path",
-        "./db.js",
-        "fs",
-        "./error-logger.js",
-        "./url-scraper.js",
-        "./db.js",
-        "./prompts.js",
-        "./gemini.js",
-        "@google/generative-ai",
-        "./json-parser.js",
-        "uuid",
-        "path",
-        "fs",
-        "sharp",
-        "./bg-remover.js",
-        "./webhook-client.js",
-        "./db.js",
-        "./tenant-context.js",
-        "./video-downloader.js",
-        "./gemini.js",
-        "./prompts.js",
-        "./json-parser.js",
-        "path",
-        "./db.js",
-        "./campaign-scheduler.js",
-        "./campaign-scheduler.js",
-        "./db.js",
-        "./gemini.js",
-        "@google/generative-ai",
-        "./json-parser.js",
-        "./culinary-sequence-engine.js",
-        "./facebook-helper.js",
-        "./db.js",
-        "./db.js",
-        "./webhook-client.js",
-        "path",
-        "fs",
-        "./db.js",
-        "./recipe-grid-helper.js",
-        "./nextcloud-helper.js",
-        "path",
-        "fs",
-        "./google-auth.js",
-        "googleapis",
-        "./sheets-autopilot-worker.js",
-        "./facebook-helper.js",
-        "./contentflow-ingest.js",
-        "./facebook-helper.js",
-        "path",
-        "fs",
-        "./db.js",
-        "path",
-        "fs",
-        "./db.js"
-      ]
+      "path": "lib/affiliate-resolver.js",
+      "sha256": "10575f295fbdb0346f6a078b4fdbe627fe7218434ac13bdc86e89127ebcae3b2",
+      "dependencies": [
+        "lib/db-pg.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/webhook-client.js",
-      "sha256": "a3652ce02d3c9bbdc76763ab1496dd1f2e8e3e82f6e75bbe70c997078fbc2b47",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./prompts.js",
-        "./queue.js",
-        "./tenant-context.js",
-        "./base64-image-reference.js",
-        "http",
-        "https",
-        "child_process",
-        "./db.js",
-        "fs",
-        "path",
-        "./db.js"
-      ]
+      "path": "lib/agent-automation-contract.js",
+      "sha256": "e49e4ffb30669a99ad9520c2533b8cf4bdc83e27d9b2b9a906ff48c3bf38f310",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/video-studio-processor.js",
-      "sha256": "36d929de7ace958ad0068161b6b51f03850356a6a849b7876666e973b485030f",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "fluent-ffmpeg",
-        "path",
-        "fs",
-        "./ffprobe-path.js",
-        "./youtube-studio-narration-profiles.js",
-        "./db.js",
-        "./db.js",
-        "./smart-sync-engine.js"
-      ]
+      "path": "lib/agent-automation-repository.js",
+      "sha256": "8feefc711692d87a6017592013dc357d4f02b0a90662ef5eb5eb64f9a38d7f25",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/recipe-planner-engine.js",
-      "sha256": "a7951a861a82ae7dc87e50d9f1dd0f946696bc726ed687f2615feaff5496374e",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./gemini.js",
-        "uuid",
-        "./tenant-context.js",
-        "./recipe-campaign-contract.js",
-        "./content-planner-contract.js",
-        "jsonrepair"
-      ]
+      "path": "lib/agent-automation-worker.js",
+      "sha256": "21823377337db7c19f2cf4fb76039dca969a78e03ac0324bd7500217dfd39015",
+      "dependencies": [
+        "lib/agent-automation-repository.js",
+        "lib/agent-publishing-service.js",
+        "lib/db-pg.js",
+        "lib/hermes-callback-token.js",
+        "lib/hermes-client.js",
+        "lib/operator-content-worker.js",
+        "lib/operator-job-service.js",
+        "lib/structured-logger.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/recipe-production-adapter.js",
-      "sha256": "04c2bb368b31e1d3a2a90ee1e11bde142d99c539bde8837c8549c3a2ad8e65ea",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./gemini.js",
-        "jsonrepair",
-        "./recipe-social-package.js",
-        "./recipe-campaign-contract.js",
-        "./visual-override-resolver.js"
-      ]
+      "path": "lib/agent-publishing-service.js",
+      "sha256": "44d527c8a50f402b85f8da384c65f11153076a23542503f49254d2ae88e2dcc2",
+      "dependencies": [
+        "lib/agent-automation-contract.js",
+        "lib/db-pg.js",
+        "lib/publishing-repository.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/content-planner-engine.js",
-      "sha256": "838c7bedccb121eefbf0dcee1118c8dd16796dd48106691127f37019fa8f8c71",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./db.js",
-        "./gemini.js",
-        "./kb-loader.js",
-        "./google-auth.js",
-        "googleapis",
-        "uuid",
-        "crypto",
-        "./contentflow-client.js",
-        "./prompts.js",
-        "./content-planner-contract.js",
-        "./content-world-contract.js",
-        "./content-planner-research-repository.js",
-        "./research-to-planner-adapter.js",
-        "./research-claim-validator.js",
-        "./tenant-context.js",
-        "./content-planner-consumption.js",
-        "jsonrepair",
-        "./recipe-planner-engine.js",
-        "./db.js",
-        "./campaign-product-binding.js",
-        "./tenant-context.js",
-        "./db-pg.js",
-        "./google-auth.js",
-        "./recipe-planner-engine.js"
-      ]
+      "path": "lib/ai-directive.js",
+      "sha256": "b5765874244c15282a7ec36824ba9202dda5b56a6ba9f3b12216c9f1f17d4123",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/visual-identity-contract.js",
-      "sha256": "e743f04fd5e821fe1fe507134a99bd607f6e0b2eb0bd7927c96225b23de83bb4",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "./visual-language-catalog.js"
-      ]
+      "path": "lib/ai-token-meter.js",
+      "sha256": "19259a1b9da24226808c7eadeeb64b50ad5ee4599374e8465aa38ed8bc534a7f",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
-      "path": "lib/operator-content-contract.js",
-      "sha256": "d78b464d27a7e26b460c71d883e952e7e8caf8070cfd46731a574287ecb2acfb",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "crypto",
-        "./content-planner-contract.js",
-        "./operator-presets.js",
-        "./hermes-research-contract.js",
-        "./agent-automation-contract.js",
-        "./words-per-clip-presets.js"
-      ]
-    },
-    {
-      "path": "lib/brand-product-repository.js",
-      "sha256": "822b57da38b8ca82fd76621e00fd1d1cbc09483eecbbb573fea4dc89c46fd953",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "crypto",
-        "./db-pg.js",
-        "./tenant-context.js"
-      ]
-    },
-    {
-      "path": "lib/tenant-context.js",
-      "sha256": "93cd12a2963023fbf49c4f2d5d9cb6fb59c9a28ff29ac82cc876cdc31e6877f9",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "async_hooks"
-      ]
+      "path": "lib/audio-helper.js",
+      "sha256": "293cfd6f3488d119555c69d4f1b5c57aa4a9a6840b3fb834e6d1063fee8c69ef",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
     },
     {
       "path": "lib/auth.js",
       "sha256": "89204e12a97ee3dffee2be7e9011ca778ebe6575e31348c0b35594b361921de2",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "crypto",
-        "./db.js",
-        "./db-pg.js",
-        "./schema/user-schema.js",
-        "./tenant-context.js"
-      ]
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/schema/user-schema.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling",
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/base64-image-reference.js",
+      "sha256": "468e6e72711a2e4491689d0a73367f1dd3c8f47076b41145f31edbcac1331790",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/bg-remover.js",
+      "sha256": "ee55b16e7ec95696337a033cd338bef0b46db9b763f2a35c826665c64b333d36",
+      "dependencies": [],
+      "risks": [
+        "subprocess execution"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/brand-editorial-defaults.js",
+      "sha256": "18b9cdfb367deab7ab70e590ef4e9ebb04f9833206605a536913ddaa552a852f",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/brand-product-repository.js",
+      "sha256": "822b57da38b8ca82fd76621e00fd1d1cbc09483eecbbb573fea4dc89c46fd953",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-configuration/index.js",
+      "sha256": "d15d1a4fbd9cd237cf0221d37db77c58b37d5881de9470fa5b77f9779ae5b009",
+      "dependencies": [
+        "lib/campaign-configuration/multiplier.js",
+        "lib/campaign-configuration/pillar.js",
+        "lib/campaign-configuration/re.js",
+        "lib/campaign-configuration/recipe.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-configuration/multiplier.js",
+      "sha256": "e7081179675f988e500d80482d9fbaa8bcfd05b86d50765c46fb62fb565a00be",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-configuration/pillar.js",
+      "sha256": "b3024b659cf2aa1c628cbe008d165bd9a92d8e498db95e564608eb7fb4150750",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-configuration/re.js",
+      "sha256": "3be75c6babe388ce5e88cc97ca2625606ba1f148a18ec021733fa74bc67740f4",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-configuration/recipe.js",
+      "sha256": "57058967dbd98bf98109c2d36cb91ed042bbbf9396f7e9be25f59fd9db1e8117",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-product-binding.js",
+      "sha256": "5ef8094d02d07ea41257f64827662eff6c5f187bb7fbbd2dc2c301170bc98c4c",
+      "dependencies": [
+        "lib/affiliate-resolver.js",
+        "lib/db-pg.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-scheduler.js",
+      "sha256": "4137bd2fc351f0841a25677b1d789ec38d6cd1828bc8bee73001dd71c26d5cef",
+      "dependencies": [
+        "lib/cloud-naming-helper.js",
+        "lib/console-hook.js",
+        "lib/content-automation-contentflow.js",
+        "lib/contentflow-ingest.js",
+        "lib/db.js",
+        "lib/gemini-8s-tts.js",
+        "lib/gemini.js",
+        "lib/id-generator.js",
+        "lib/json-parser.js",
+        "lib/minimax-tts.js",
+        "lib/nextcloud-helper.js",
+        "lib/node-config.js",
+        "lib/pillar-stage-execution-service.js",
+        "lib/product-bulk-worker.js",
+        "lib/prompts.js",
+        "lib/re-multiplier-worker.js",
+        "lib/scheduler-processors.js",
+        "lib/sheets-autopilot-worker.js",
+        "lib/smart-sync-engine.js",
+        "lib/tenant-context.js",
+        "lib/tiktok-compliance-service.js",
+        "lib/video-studio-processor.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "database coupling",
+        "background timer",
+        "subprocess execution",
+        "image provider",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/campaign-submission-service.js",
+      "sha256": "bc36a875aaf043ac6989a428d825b700e9f02abbc3065775425a8e9743c521aa",
+      "dependencies": [
+        "lib/campaign-configuration/re.js",
+        "lib/campaign-product-binding.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/id-generator.js",
+        "lib/tenant-context.js",
+        "lib/visual-override-resolver.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/cartoon-continuity-validator.js",
+      "sha256": "e867333417b4a7e2f2485440d2252fcaf110fe2021d869f28c9302db92f23229",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/cartoon-reference-resolver.js",
+      "sha256": "d3de6ca5cdd90930ee3b904f49a7f6f10466b0f133e4608beb66316007bd1599",
+      "dependencies": [
+        "lib/universe-manifests.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/cdp-helper.js",
+      "sha256": "371e8f338f4ac65e01d37a46c54878b4b764a5f3bdb6538c9f8a58888230bbd7",
+      "dependencies": [],
+      "risks": [
+        "subprocess execution"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/cloud-naming-helper.js",
+      "sha256": "a2c8a72ca00704bd33127a92535b394a05026e787ec18a8a8180f004547b7561",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/console-hook.js",
+      "sha256": "7a49750c2936a5dbc765d0dc5b1d8988bba67a3775598f68def47355c6c72816",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-contentflow.js",
+      "sha256": "b2d0c1cc678afa58ad1857f0d7848ccd427699a4a122f5b753db3a4e9e6c55fb",
+      "dependencies": [
+        "lib/contentflow-ingest.js",
+        "lib/db.js",
+        "lib/pillar-stage-execution-service.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-event-service.js",
+      "sha256": "b532191747d645fddc8750de7fcf1b7ffc20f107b7e4de62c541c042dc439eca",
+      "dependencies": [
+        "lib/content-automation-events.js",
+        "lib/content-automation-repository.js",
+        "lib/db-pg.js",
+        "lib/notification-outbox-repository.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-events.js",
+      "sha256": "23a95e838ba520600ae489e4c64e047a3e12a3c8ef73e4268fb4358f5ecc7fd5",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-feature-flags.js",
+      "sha256": "551483b14de6656d689fb37fcf997e0e48d385ea02a0fe8e61a204cc438e21db",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-missed-runs.js",
+      "sha256": "2a227541478da27a9ed8ad95b41fe9860dc6201d4f0c5f0c600831b5bb4bc230",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-notification-worker.js",
+      "sha256": "590aab9f5c0800181af0e784cee521d227a91411083f64c13a51056675a5bd0b",
+      "dependencies": [
+        "lib/content-automation-quiet-hours.js",
+        "lib/content-automation-retry.js",
+        "lib/encrypted-secret.js",
+        "lib/notification-outbox-repository.js",
+        "lib/notification-providers/telegram.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-product-snapshot.js",
+      "sha256": "6d00a3a4457e3c8d0fffa9e05748df8b93513b4e6ea801cd273488f37e986440",
+      "dependencies": [
+        "lib/brand-product-repository.js",
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-quiet-hours.js",
+      "sha256": "da913aa08605bb46e09b8ddd8c668a5b950f21df764cae3c082620eef64de2b3",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-repository.js",
+      "sha256": "8c4d8fb38e98e27fba56581b0d58df307c3471fa200e33eb1a9c4fa2cefda598",
+      "dependencies": [
+        "lib/content-automation-missed-runs.js",
+        "lib/content-automation-schedule.js",
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-retry.js",
+      "sha256": "bc664bcc0129175b1653baf7a99df5856c8d5b42517144919788162d48d75fa2",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-schedule.js",
+      "sha256": "7d8a815db2ce9c799509ab45a73d84ecd8e9ec0c967d4bcc9de79646b07b9003",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-automation-worker.js",
+      "sha256": "702524cc139db2d30b88fa06a6289b25796ca7d64a4c6f08bf44a401a37fbeca",
+      "dependencies": [
+        "lib/agent-automation-repository.js",
+        "lib/content-automation-feature-flags.js",
+        "lib/content-automation-product-snapshot.js",
+        "lib/content-automation-repository.js",
+        "lib/content-automation-retry.js",
+        "lib/notification-outbox-repository.js",
+        "lib/operator-job-service.js",
+        "lib/structured-logger.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-format-constants.js",
+      "sha256": "8bbb3046058ae5b024e02fc2c5a812c977e13ed703c2a7ec355fbd3fd71da0d7",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-planner-consumption.js",
+      "sha256": "0d5fb9b0ca3909d0d4a024d173f31a89d65edd5b45812a92f178a30ffa035e0a",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-planner-contract.js",
+      "sha256": "fdd5254e197345159aefdfa6d98f22ab32ce4716d089ba71b55ac4a1761ed591",
+      "dependencies": [
+        "lib/brand-editorial-defaults.js",
+        "lib/recipe-campaign-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-planner-engine.js",
+      "sha256": "838c7bedccb121eefbf0dcee1118c8dd16796dd48106691127f37019fa8f8c71",
+      "dependencies": [
+        "lib/campaign-product-binding.js",
+        "lib/content-planner-consumption.js",
+        "lib/content-planner-contract.js",
+        "lib/content-planner-research-repository.js",
+        "lib/content-world-contract.js",
+        "lib/contentflow-client.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/google-auth.js",
+        "lib/kb-loader.js",
+        "lib/prompts.js",
+        "lib/recipe-planner-engine.js",
+        "lib/research-claim-validator.js",
+        "lib/research-to-planner-adapter.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-planner-research-repository.js",
+      "sha256": "70b314e705b6a443f6194aa3cf6b547785281ccde6ef8df546b1e0dcd78c0e4e",
+      "dependencies": [
+        "lib/db-pg.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/content-world-contract.js",
+      "sha256": "2a5a579ed38333bbff379e5ac2a80d274f77006c4e52cc87b4a2d01170972371",
+      "dependencies": [
+        "lib/db.js",
+        "lib/universe-manifests.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-client.js",
+      "sha256": "7e6452eec508745e300ac9e5b0180986cf971b3375e9294601aae92692ddbb77",
+      "dependencies": [
+        "lib/db.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-ingest.js",
+      "sha256": "51fa3bdec099476a3f0f463a21bacca40eb66e878687b429619d1034f9dec8fe",
+      "dependencies": [
+        "lib/affiliate-resolver.js",
+        "lib/contentflow-client.js",
+        "lib/db.js",
+        "lib/id-generator.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-repository.js",
+      "sha256": "c05c18afe83a728046399d3d9f51cde2395289eeb2bfa5e4187623d3763e0150",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-adapters.js",
+      "sha256": "5652c576153aaa2752cf0207805f665bbc002e5b4059ad1fa70eeeec488d08a9",
+      "dependencies": [
+        "lib/campaign-configuration/index.js",
+        "lib/campaign-submission-service.js",
+        "lib/contentflow-studio-manifest.js",
+        "lib/db-pg.js",
+        "lib/pillar-campaign-ingest.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-contract.js",
+      "sha256": "fc9fbb91be27ef35f17bf3eed0fde7b388c8cd7fb7f862624e51f585767dc936",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-manifest.js",
+      "sha256": "25d3c2f6b8f9efb14a6ed3ef811c14cb759d4eecab41726339640009121ecd07",
+      "dependencies": [
+        "lib/campaign-configuration/multiplier.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-publishing.js",
+      "sha256": "02c00d47d0c01cca70195381ed4817aad281dc5c9379cbe24f0fa0283443a6f1",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/publishing-service.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-repository.js",
+      "sha256": "a8b6aa6c5fd7d8698785d7202e9299e43e3ba30a5bec2aad8d1a74ca4fa91f90",
+      "dependencies": [
+        "lib/contentflow-studio-contract.js",
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/contentflow-studio-worker.js",
+      "sha256": "6ace44891682ccdd5be1c271457b968148a6e8487511b2766383e8163d02d7ae",
+      "dependencies": [
+        "lib/contentflow-studio-adapters.js",
+        "lib/contentflow-studio-publishing.js",
+        "lib/contentflow-studio-repository.js",
+        "lib/db-pg.js"
+      ],
+      "risks": [
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/core/GridCoordinates.js",
+      "sha256": "a44b3a485a505180166afbc34a7a337487ada757968fa4218c89212cf52d65bd",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/culinary-sequence-engine.js",
+      "sha256": "9f7bd23052b26fa0b89bd539712c4f16ee9b23629c8fcc5eecc19e5e2b7d7720",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/db-pg.js",
+      "sha256": "b409bf33d5ffdcad1976a863cf69ab966716b7b90f7d34a87c2869e922cedd23",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/db.js",
+      "sha256": "db645492718831726d6ddf6e227ca2fea1d83b61404c625590056daa1114103a",
+      "dependencies": [
+        "lib/campaign-scheduler.js",
+        "lib/contentflow-repository.js",
+        "lib/db-pg.js",
+        "lib/operator-presets.js",
+        "lib/product-repository.js",
+        "lib/schema/user-schema.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling",
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/demographic-constants.js",
+      "sha256": "49062e0747ab0b54a09e02397d28a9f394f995f2573e334719736e813ebfc573",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/drive-uploader.js",
+      "sha256": "88ec78f71fb1d35cae6c1d3ca2e7e221b8854e20c54faa6fd8f1cf6211f64cc2",
+      "dependencies": [
+        "lib/db.js",
+        "lib/google-auth.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/encrypted-secret.js",
+      "sha256": "7fdca0a5f17931a0d43045024efc8eaeef67aa8989a8dd563763caa8a9374183",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/error-logger.js",
+      "sha256": "7c7ec99bc09cd0504422f6f2c5a1c0818923f91ffe20474cc4b7c9d461a3e8b0",
+      "dependencies": [
+        "lib/db.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/export-builder.js",
+      "sha256": "59e9989a2f2dcabe5c5f92d63703b7593cc82be30ea5ba4ae141d5572acb0c21",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/facebook-helper.js",
+      "sha256": "214f3fe07655d934f45194883795e1d86d24b763bbdf0b536bcd75b71a211af9",
+      "dependencies": [
+        "lib/db.js",
+        "lib/meta-publisher.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/ffprobe-path.js",
+      "sha256": "bccdbe603338783c7e8b69fb82e17d135f8c212f5f23a8d9e9d4abbdbe05e699",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/file-path-resolver.js",
+      "sha256": "53a857eb93a682ae8270249b2bcda28e23cf6501fdb4327ac79fbc36abadafeb",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/gemini-8s-tts.js",
+      "sha256": "7147f9f6e3bcfb597acd9fefd23467749cd1523071819930609836e67c93d322",
+      "dependencies": [
+        "lib/audio-helper.js",
+        "lib/gemini.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/gemini-tts-batch.js",
+      "sha256": "eaf0767cd46df81d5e2cc6c1f076719e5267929f8b837f5aa28f18ac921161d5",
+      "dependencies": [
+        "lib/audio-helper.js",
+        "lib/gemini.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/gemini.js",
+      "sha256": "55fdeaf2018105d1c64543e08797d46f68fe33390be13acd76aea481dc490eb4",
+      "dependencies": [
+        "lib/ai-token-meter.js",
+        "lib/db.js",
+        "lib/kb-stitcher.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/glabs-image-lane-service.js",
+      "sha256": "2ce7bdad9faed3a0557065c92f742008cff82b211700cb1b8323c75090507d1f",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/tenant-context.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/google-auth.js",
+      "sha256": "06bdececb874b03a2eda710fc9a8b392280fb93df625338eb963351e887bafb1",
+      "dependencies": [
+        "lib/db.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/hermes-callback-token.js",
+      "sha256": "4907cc65c5e0f1878499927782c8c0270f49b2f3ab4ced4a55bdf250e2628259",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/hermes-client.js",
+      "sha256": "5b6243f85cbf173170ba91ad4d1cd98844ed13b4320e20d17ab2f8f0780a4660",
+      "dependencies": [
+        "lib/structured-logger.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/hermes-research-contract.js",
+      "sha256": "7343e123e298d1bf5e433d9b11a3c06605e8a787d92377bcb71af2fbb970f394",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/id-generator.js",
+      "sha256": "7d494cb320a183c717c7db1b77b9f99aace109c29e350fb0cf62e028461b3a13",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/json-parser.js",
+      "sha256": "02805c8ec93ec2f983d48ff4e7980015a728e8da2eb433b03c760fb841ce7e1b",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/kb-loader.js",
+      "sha256": "83484398b919dbbff3aee97058ccfacd73ec48ea06bd598dd7d1c71f2f1c591a",
+      "dependencies": [
+        "lib/kb-routing.js",
+        "lib/universe-manifests.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/kb-routing.js",
+      "sha256": "297525c3c6b5a411daed0aac6ea7b1a655b841cb6165c6346d90290f7cfb68e6",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/kb-stitcher.js",
+      "sha256": "fdd4218ed51cf361186deab7a2211fa3e5741d4a2f4c0cb78a28a41b60339775",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/kb/dynamic-story-curve.js",
+      "sha256": "d6db1d6b754a1a247d80f92de2b0ca5874a0ec68eeba40a2f42ead723658ac14",
+      "dependencies": [
+        "lib/kb-loader.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/meta-publisher.js",
+      "sha256": "82eda61e3b0f615957ac09c091b3138f28c7e5dd4aac6e47e913c8f8f57ccd60",
+      "dependencies": [
+        "lib/publishing-contract.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/minimax-tts.js",
+      "sha256": "ac0dbeb42163b88f4a906ab02274e288f80dd345d607b37a63397504802abb05",
+      "dependencies": [
+        "lib/db.js",
+        "lib/voice-constants.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/naming-helper.js",
+      "sha256": "2e20d5e4aa2b1a02eaf70f90d3cea4ac386d3572616eae18ca6270485c0bec4c",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/nextcloud-helper.js",
+      "sha256": "51f1c3d65fa50d9ff0b8d29cc957affbf650db0b4478574b05b2c03cad27fd6d",
+      "dependencies": [
+        "lib/db.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/node-config.js",
+      "sha256": "bc93f5a584536a223665d2056ef898e08291380be6c10857a42abad2bcc796e8",
+      "dependencies": [
+        "lib/db.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/notification-outbox-repository.js",
+      "sha256": "03cfa308f35ecab8ac6928e23ad75ace10b938ad677ae0e6deac295c699c7e5a",
+      "dependencies": [
+        "lib/content-automation-quiet-hours.js",
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/notification-providers/telegram.js",
+      "sha256": "6582ddf09a4ef3fdabf225684105ebcda98fe571a808df7c35524e510e8eb224",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/opc-product-lineage-contract.js",
+      "sha256": "4f8662495dcdbd6841a738490b9f5e077fd6bc5e74f621dcb5d17d6d121ce011",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/opc-product-lineage.js",
+      "sha256": "3e52efbd5103280c9d03a2ab62a8077005f20b2fda18ca31123af4071e0a036f",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/opc-product-lineage-contract.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/opc-start-frame-audit.js",
+      "sha256": "e93fdad85a4b72cc2461c91f6c7894b195fa1609ebfd55f576a321435aae5786",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/opc-start-frame-contract.js",
+      "sha256": "698c38b6e8fbb91728fb79bcdbbf525f91c8ea43d6fb47fd8951756ca370d536",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/opc-start-frame-request.js",
+      "sha256": "ab15a7f4f834ea838207e627cbae00bf20b7d780a007eda901189f10fe4d21ce",
+      "dependencies": [
+        "lib/base64-image-reference.js",
+        "lib/cartoon-reference-resolver.js",
+        "lib/db.js",
+        "lib/opc-start-frame-contract.js",
+        "lib/product-reference-resolver.js",
+        "lib/product-repository.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/operator-content-contract.js",
+      "sha256": "d78b464d27a7e26b460c71d883e952e7e8caf8070cfd46731a574287ecb2acfb",
+      "dependencies": [
+        "lib/agent-automation-contract.js",
+        "lib/content-planner-contract.js",
+        "lib/hermes-research-contract.js",
+        "lib/operator-presets.js",
+        "lib/words-per-clip-presets.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/operator-content-worker.js",
+      "sha256": "ab3a749dcafcf78524c5d87e373fa495fa8526b0539c8c2745d8d426c75cffb8",
+      "dependencies": [
+        "lib/content-planner-consumption.js",
+        "lib/content-planner-engine.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/operator-review-artifact.js",
+        "lib/pillar-campaign-approval.js",
+        "lib/pillar-campaign-ingest.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling",
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/operator-job-service.js",
+      "sha256": "f760ab1ad9385848aeb615f2408039850b3c986eb71f42bbf295f906019dcdd2",
+      "dependencies": [
+        "lib/db.js",
+        "lib/operator-content-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/operator-presets.js",
+      "sha256": "faefea73263b2ed2b983c399c530fa863e7403cee7a0d6858691a47ebcb15ffd",
+      "dependencies": [
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/operator-review-artifact.js",
+      "sha256": "1d248a27a483aff9bb52cdfc0d52fd31572d459234c3ce73e47cc49154545578",
+      "dependencies": [
+        "lib/db.js",
+        "lib/export-builder.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/pillar-campaign-approval.js",
+      "sha256": "b8d049a03255c408ef0e574021a60973f509dcb37aa74cbeb869955316aadff1",
+      "dependencies": [
+        "lib/content-automation-event-service.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/pillar-campaign-ingest.js",
+      "sha256": "7bf9d791d86573c1738b7c17f380f41eb82988810c0d15aca267bab8735010fe",
+      "dependencies": [
+        "lib/campaign-product-binding.js",
+        "lib/campaign-scheduler.js",
+        "lib/content-planner-consumption.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/id-generator.js",
+        "lib/opc-product-lineage.js",
+        "lib/product-reference-resolver.js",
+        "lib/tenant-context.js",
+        "lib/visual-override-resolver.js",
+        "lib/words-per-clip-presets.js"
+      ],
+      "risks": [
+        "database coupling",
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/pillar-stage-contract.js",
+      "sha256": "0087683bb87af11f9a7f522d5881068189b306730d2a1bd24e3b790c0282684b",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/pillar-stage-execution-service.js",
+      "sha256": "c5de6cad6b36a1002767fa8afc7855abdfb94854f2f478175e7679e9f15ac79c",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/pillar-stage-contract.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/pillar-start-frame-service.js",
+      "sha256": "e85faa3acf54b2c3d849db48acfff48ad790e9eccc44b1d119b5d46db2da784d",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/opc-start-frame-contract.js",
+        "lib/start-frame-contract.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/playwright-scraper.js",
+      "sha256": "60ac72cd1d2c1adb9867870fd0c1eff70ad370cd309351a5aa89143bbea7ce08",
+      "dependencies": [
+        "lib/cdp-helper.js",
+        "lib/db.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-bulk-worker.js",
+      "sha256": "733f6c6511a1c972cf10a223010af0b13462d0901e2770f61058e356efc70b38",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/product-image-storage.js",
+        "lib/product-photo-providers/gemini.js",
+        "lib/product-photo-providers/glabs.js",
+        "lib/product-photo-service.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-image-storage.js",
+      "sha256": "23a9b245f53acfb88379aa8d5f9656b066cc4e3d415324cc59c821c9164685bf",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-photo-providers/gemini.js",
+      "sha256": "e0f47056b8ca11f599c5bd0e51af3f7edbfcee78fbf1cc789e9ba1a7f8ef2c51",
+      "dependencies": [
+        "lib/db.js",
+        "lib/gemini.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-photo-providers/glabs.js",
+      "sha256": "a50052c8cee5ea5dbe1470a5f514feb73706fed168194f1f763ae8928cc94a8e",
+      "dependencies": [
+        "lib/db.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "image provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-photo-service.js",
+      "sha256": "d78d7800815678791707b317bb1560331b60078a1df04d7c3b31f031fb0b7faa",
+      "dependencies": [
+        "lib/db.js",
+        "lib/product-image-storage.js",
+        "lib/product-photo-providers/gemini.js",
+        "lib/product-photo-providers/glabs.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-reference-resolver.js",
+      "sha256": "87b83341786777dbce0868bf646e462f385b03259b757bcfbdf061cec507f3b7",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-repository.js",
+      "sha256": "f6dd04cf52327a724e41caf4ad9e8380aef43a3f8e3ad8fd169c9bc17e1f7207",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/product-sanitizer.js",
+      "sha256": "195c8e6b445948d74c00e90c381f96c2b708d54c48100f6e495200afce14688f",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/prompt-instructions.js",
+      "sha256": "17b1a1b175a2f3c005586c20dd9398169e4c2d872a8dc9251d26180743f1b0a5",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/prompts.js",
+      "sha256": "abfc1483e8e60e05014dbce6e68f7b1475b31c6c3dc435a7d469813a9a54ca7a",
+      "dependencies": [
+        "lib/content-format-constants.js",
+        "lib/demographic-constants.js",
+        "lib/kb-routing.js",
+        "lib/kb/dynamic-story-curve.js",
+        "lib/product-sanitizer.js",
+        "lib/prompt-instructions.js",
+        "lib/visual-identity-allocator.js",
+        "lib/words-per-clip-presets.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-contract.js",
+      "sha256": "ca7dd8eaba79d512cb7665ca35f39c1961c282a1871891a88f73e6a44fed5a9f",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-drive-staging.js",
+      "sha256": "8ee0d342a7e6d68999dfb8106796ddcfe711182da95da458dd8531c6b07c91be",
+      "dependencies": [
+        "lib/db.js",
+        "lib/drive-uploader.js",
+        "lib/google-auth.js",
+        "lib/publishing-repository.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-media-cleanup-worker.js",
+      "sha256": "b714cd54bbf490f9542504c9ce8460e2f79f954d4780a6d93d21846cae901b8d",
+      "dependencies": [
+        "lib/google-auth.js",
+        "lib/node-config.js",
+        "lib/publishing-repository.js"
+      ],
+      "risks": [
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-repository.js",
+      "sha256": "7615173885f31b65f740afed4ac698ef403cbe01300b2c6fae64d7da9111564c",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/publishing-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-service.js",
+      "sha256": "50d44186a7ca4fb6f0dacf396bf46d3c1003a3a1cd856078a58009dbb0d6b670",
+      "dependencies": [
+        "lib/db.js",
+        "lib/db-pg.js",
+        "lib/publishing-contract.js",
+        "lib/publishing-drive-staging.js",
+        "lib/publishing-repository.js",
+        "lib/repliz-client.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/publishing-worker.js",
+      "sha256": "6808801dd0a24641c6ca5f8e8c9dee836f960291fb523eab7e8def19447d25a9",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/drive-uploader.js",
+        "lib/encrypted-secret.js",
+        "lib/meta-publisher.js",
+        "lib/node-config.js",
+        "lib/publishing-contract.js",
+        "lib/publishing-drive-staging.js",
+        "lib/publishing-media-cleanup-worker.js",
+        "lib/publishing-repository.js",
+        "lib/repliz-client.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
     },
     {
       "path": "lib/queue.js",
       "sha256": "9fd9f5d61e4689904c2f5902a7498d7e707b601e3a17f3caa0b444f874618206",
-      "status": "audit-only-not-activated",
-      "imports": [
-        "bullmq",
-        "./redis.js"
-      ]
+      "dependencies": [
+        "lib/redis.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/re-multiplier-worker.js",
+      "sha256": "2e436c670ac57568c40807a1fc7a636b3e06e2cca9944013d0a4f7b0c5d2053d",
+      "dependencies": [
+        "lib/campaign-product-binding.js",
+        "lib/cloud-naming-helper.js",
+        "lib/contentflow-ingest.js",
+        "lib/db.js",
+        "lib/gemini-8s-tts.js",
+        "lib/gemini.js",
+        "lib/json-parser.js",
+        "lib/minimax-tts.js",
+        "lib/nextcloud-helper.js",
+        "lib/prompts.js",
+        "lib/tenant-context.js",
+        "lib/tiktok-compliance-service.js",
+        "lib/url-scraper.js",
+        "lib/video-studio-processor.js",
+        "lib/visual-override-resolver.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "database coupling",
+        "subprocess execution",
+        "image provider",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/re-recomm-engine.js",
+      "sha256": "84265686a8036d94e9417557d57cacd617d01c2df0265fd5a425c02ce2235f2b",
+      "dependencies": [
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/json-parser.js",
+        "lib/prompts.js",
+        "lib/video-downloader.js"
+      ],
+      "risks": [
+        "database coupling",
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/recipe-campaign-contract.js",
+      "sha256": "a5fe0576d205cc1a645db1cfcb27c9db3f5349e55e36a81f50a5e737068f2ead",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/recipe-grid-helper.js",
+      "sha256": "93f353d70746687740816a58f9f9a8b6f64c0a96fd987232105f8325e0152473",
+      "dependencies": [
+        "lib/core/GridCoordinates.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/recipe-planner-engine.js",
+      "sha256": "a7951a861a82ae7dc87e50d9f1dd0f946696bc726ed687f2615feaff5496374e",
+      "dependencies": [
+        "lib/content-planner-contract.js",
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/recipe-campaign-contract.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/recipe-production-adapter.js",
+      "sha256": "04c2bb368b31e1d3a2a90ee1e11bde142d99c539bde8837c8549c3a2ad8e65ea",
+      "dependencies": [
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/recipe-campaign-contract.js",
+        "lib/recipe-social-package.js",
+        "lib/visual-override-resolver.js"
+      ],
+      "risks": [
+        "database coupling"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/recipe-social-package.js",
+      "sha256": "6693b15ce0b20266d35d2f2bbf788a36222ac2d23581ed2e7fd780be48b89096",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/redis.js",
+      "sha256": "4c10f2e6ab2d5e228c022e16a578773fb3cce40d4051dbd13a4722e52e190373",
+      "dependencies": [],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/reference-asset-contract.js",
+      "sha256": "41777734de7f98b1c97d4faf23b570822c93937b2bd772d139d3df136566c723",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/reference-asset-repository.js",
+      "sha256": "7a076296cdfd4bbf5d59418a80b664606cb955f03c4a49f69fa2f1cd7d7c786c",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/reference-asset-contract.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/repliz-client.js",
+      "sha256": "41d35fb62355996ba098752de0f5c8e17bd41472e76da8e86740693f5d1814a9",
+      "dependencies": [
+        "lib/publishing-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/research-claim-validator.js",
+      "sha256": "568c79bc92e598b0e640ed0a1fc5ce9d03234a59fd1ebcd4f0f94e53314881f1",
+      "dependencies": [
+        "lib/content-planner-contract.js",
+        "lib/research-evidence-policy.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/research-evidence-policy.js",
+      "sha256": "bffb37f55727408a74e45440676f26e1059dd35f13c26d54f5b60035f2710e7a",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/research-to-planner-adapter.js",
+      "sha256": "b791cbb86d6a33795216f7bf8c6dd4e133911d8705897c0bd3f418e5746230ad",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/scheduler-processors.js",
+      "sha256": "c28f12ef15d161479ae61901e140b0b3c0e26af5c00edb5d87688bff01b8fa58",
+      "dependencies": [
+        "lib/ai-directive.js",
+        "lib/audio-helper.js",
+        "lib/bg-remover.js",
+        "lib/campaign-scheduler.js",
+        "lib/cartoon-continuity-validator.js",
+        "lib/cartoon-reference-resolver.js",
+        "lib/content-world-contract.js",
+        "lib/contentflow-ingest.js",
+        "lib/culinary-sequence-engine.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/drive-uploader.js",
+        "lib/error-logger.js",
+        "lib/export-builder.js",
+        "lib/facebook-helper.js",
+        "lib/file-path-resolver.js",
+        "lib/gemini-8s-tts.js",
+        "lib/gemini-tts-batch.js",
+        "lib/gemini.js",
+        "lib/glabs-image-lane-service.js",
+        "lib/google-auth.js",
+        "lib/json-parser.js",
+        "lib/kb-loader.js",
+        "lib/minimax-tts.js",
+        "lib/naming-helper.js",
+        "lib/nextcloud-helper.js",
+        "lib/opc-start-frame-audit.js",
+        "lib/opc-start-frame-request.js",
+        "lib/pillar-start-frame-service.js",
+        "lib/product-repository.js",
+        "lib/prompts.js",
+        "lib/re-recomm-engine.js",
+        "lib/recipe-grid-helper.js",
+        "lib/recipe-production-adapter.js",
+        "lib/sheets-autopilot-worker.js",
+        "lib/start-frame-storage.js",
+        "lib/tenant-context.js",
+        "lib/tiktok-compliance-service.js",
+        "lib/universe-manifests.js",
+        "lib/url-scraper.js",
+        "lib/video-downloader.js",
+        "lib/video-studio-processor.js",
+        "lib/visual-override-resolver.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "database coupling",
+        "subprocess execution",
+        "image provider",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/scheduler.js",
+      "sha256": "4334a9737b29189f07317b6b794aba710ff72861a07c44e589efe8863ce66b6e",
+      "dependencies": [
+        "lib/console-hook.js",
+        "lib/db.js",
+        "lib/scheduler-processors.js",
+        "lib/tenant-context.js",
+        "lib/youtube-studio-production-worker.js",
+        "lib/youtube-studio-publishing-service.js"
+      ],
+      "risks": [
+        "database coupling",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/schema/user-schema.js",
+      "sha256": "162c9384c812f7a3bfc614534941583cc5ea8eeb5ed8b5aade0229887cd32eeb",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/sheets-autopilot-worker.js",
+      "sha256": "ff8ae6c2382beb0843f2094ac9a878ebb2b9e6c697c42e12723eb10e176b6f8d",
+      "dependencies": [
+        "lib/bg-remover.js",
+        "lib/campaign-product-binding.js",
+        "lib/db.js",
+        "lib/drive-uploader.js",
+        "lib/gemini-8s-tts.js",
+        "lib/gemini.js",
+        "lib/google-auth.js",
+        "lib/json-parser.js",
+        "lib/minimax-tts.js",
+        "lib/nextcloud-helper.js",
+        "lib/prompts.js",
+        "lib/tenant-context.js",
+        "lib/url-scraper.js",
+        "lib/video-downloader.js",
+        "lib/video-studio-processor.js",
+        "lib/visual-override-resolver.js",
+        "lib/webhook-client.js",
+        "lib/words-per-clip-presets.js"
+      ],
+      "risks": [
+        "database coupling",
+        "subprocess execution",
+        "image provider",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/smart-sync-engine.js",
+      "sha256": "52871edd3c7823d057ea745b6db54554c5f75b253415dae4ba28b38741b160f0",
+      "dependencies": [
+        "lib/ffprobe-path.js",
+        "lib/video-studio-processor.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/start-frame-contract.js",
+      "sha256": "ae9c19e6b4c69c58b684cc92088e5fbfb638487f3554f045aef22c75b60e1b80",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/start-frame-provider-adapter.js",
+      "sha256": "2e3efff2ba5603c2191446b9d3a79fe13f6c22b5616f60901c1a1c8a22a43285",
+      "dependencies": [
+        "lib/db.js",
+        "lib/glabs-image-lane-service.js",
+        "lib/opc-start-frame-audit.js",
+        "lib/opc-start-frame-request.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "database coupling",
+        "image provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/start-frame-storage.js",
+      "sha256": "72fa0b9aee06a5941c3dcd661670c79ff33a2a63d73c8703729a57d784dfa3fc",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/start-frame-worker.js",
+      "sha256": "958e78add4dafcaae6a4b96aa263fbf5a3df2002aa6e5270a57b80bda60dfc31",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/glabs-image-lane-service.js",
+        "lib/pillar-start-frame-service.js",
+        "lib/start-frame-provider-adapter.js",
+        "lib/start-frame-storage.js",
+        "lib/structured-logger.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "background timer"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/structured-logger.js",
+      "sha256": "51ffebdb98f7874807d24ee90743601189d802948204eda2c8765aa39eb921f0",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/tenant-admin.js",
+      "sha256": "f14da0643e39f8e4a6af978f36183b61d84ff5273fdce69b6610086984094550",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/schema/user-schema.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/tenant-context.js",
+      "sha256": "93cd12a2963023fbf49c4f2d5d9cb6fb59c9a28ff29ac82cc876cdc31e6877f9",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/tiktok-compliance-service.js",
+      "sha256": "4619ec4eb99e8ef1eb87345311b8f5c6af485449b1dfd4581ae6056319e087e3",
+      "dependencies": [
+        "lib/gemini.js",
+        "lib/json-parser.js",
+        "lib/kb-loader.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/universe-manifests.js",
+      "sha256": "3c9b338898bcc48a3fc17bf4cf5a78194cf36acf106d52bc7062aa9946220dd8",
+      "dependencies": [
+        "lib/db.js",
+        "lib/reference-asset-repository.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/universe-presets.js",
+      "sha256": "37601ee18b6b9353f933cff879b1d3770338b5ea1b5e33283ff28aa74eec056c",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/url-scraper.js",
+      "sha256": "fbd9568b99cbcf440089fc7aa4e81f377417e37d8f7167ec67df915bcff6b4b7",
+      "dependencies": [
+        "lib/db.js",
+        "lib/gemini.js",
+        "lib/playwright-scraper.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/video-downloader.js",
+      "sha256": "ab5ba9dd0903d095fc39dfa096547a815104d520c76e748c18c6c6039643bad0",
+      "dependencies": [
+        "lib/db.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/video-studio-processor.js",
+      "sha256": "36d929de7ace958ad0068161b6b51f03850356a6a849b7876666e973b485030f",
+      "dependencies": [
+        "lib/db.js",
+        "lib/ffprobe-path.js",
+        "lib/smart-sync-engine.js",
+        "lib/youtube-studio-narration-profiles.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "subprocess execution"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-identity-allocator.js",
+      "sha256": "bb0a5ebb2d3df63d8556d95a261af2ac7b48827be4515d3ed2ed026f6271051c",
+      "dependencies": [
+        "lib/visual-language-catalog.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-identity-contract.js",
+      "sha256": "e743f04fd5e821fe1fe507134a99bd607f6e0b2eb0bd7927c96225b23de83bb4",
+      "dependencies": [
+        "lib/visual-language-catalog.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-identity-repository.js",
+      "sha256": "6184418d0f75cb431409f0c2f00f926ab6c6ded6d38d8cd46534810c8b50a8fa",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js",
+        "lib/visual-identity-contract.js",
+        "lib/visual-identity-system-presets.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-identity-system-presets.js",
+      "sha256": "ea6de5291c5dee3539981803ab2ef59d611e8eb22ed6c6925d8f959155163050",
+      "dependencies": [
+        "lib/visual-identity-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-language-catalog.js",
+      "sha256": "107386601fd390f2d8c82d1d20e4e4b0859be50dd917f653d98ef482ac62bad2",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/visual-override-resolver.js",
+      "sha256": "75f9b3bf85210e78b87c50e85a5d3a528b4687bfe8e810b34c8a1bc2964b5654",
+      "dependencies": [
+        "lib/prompts.js",
+        "lib/reference-asset-contract.js",
+        "lib/reference-asset-repository.js",
+        "lib/visual-identity-contract.js",
+        "lib/visual-identity-repository.js",
+        "lib/visual-language-catalog.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/voice-constants.js",
+      "sha256": "00b7029120a54879fbc412f392155a687bd12b76aad6d28be38ae8cec4f13a9f",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/webhook-client.js",
+      "sha256": "a3652ce02d3c9bbdc76763ab1496dd1f2e8e3e82f6e75bbe70c997078fbc2b47",
+      "dependencies": [
+        "lib/base64-image-reference.js",
+        "lib/db.js",
+        "lib/prompts.js",
+        "lib/queue.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "image provider",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/words-per-clip-presets.js",
+      "sha256": "6948ac7cfbe158f80a91feec4326d47a84bf82a5dc3f2ff6940807d840ecd37a",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-character-voice-contract.js",
+      "sha256": "09599e2ffa8e6aa4eff8628d96cc332b0b1baa200a16f08fae015c0d49141d4d",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-contract.js",
+      "sha256": "6f49bd8e861002086a9c5363d18feb7eb4f9f0226a09bced5677b882c8e0ea00",
+      "dependencies": [
+        "lib/youtube-studio-narration-profiles.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-generation-profiles.js",
+      "sha256": "4b4bccafe7dbad7e90e1eafcd74c0a1db3ed6736840a08c82b5221677d86fb16",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-narration-profiles.js",
+      "sha256": "67233c23d5f67a21ffb84748762823b105a9c2b04b9325a92e951df8c60a3e55",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-narrative-resolver.js",
+      "sha256": "832857bdf2205c1f267f38eeaff98c7dd33caa66e544b43e6e361c899a442550",
+      "dependencies": [
+        "lib/youtube-studio-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-native-audio-prompt.js",
+      "sha256": "b3587e6b1afa9955d5dcb5f14b20cb999821a26392880017c402c2c93b94c61b",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-production-repository.js",
+      "sha256": "cdc4c745f4d68df9914f3a93d0b9ffe075933567df4962e9fd184a5b79ba3904",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/tenant-context.js",
+        "lib/youtube-studio-contract.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-production-worker.js",
+      "sha256": "23eb82dcc1d32a729b0950ecc6da61447edba951fe52e1aea92171a4d14d831c",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/video-studio-processor.js",
+        "lib/webhook-client.js",
+        "lib/youtube-studio-contract.js",
+        "lib/youtube-studio-generation-profiles.js",
+        "lib/youtube-studio-production-repository.js",
+        "lib/youtube-studio-render-adapter.js",
+        "lib/youtube-studio-repository.js",
+        "lib/youtube-studio-start-frame-adapter.js",
+        "lib/youtube-studio-visual-adapter.js",
+        "lib/youtube-studio-voice-adapter.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-publishing-service.js",
+      "sha256": "526b7d7143bd9df6ff5706d0a1024d99fbbf0e84e4884b0fb6afa89b2dc30db6",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/google-auth.js",
+        "lib/tenant-context.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-render-adapter.js",
+      "sha256": "5cb3ce0febabf907266b68150196f4a2db83e2c13eec6b398afdc505504eb4fa",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/ffprobe-path.js",
+        "lib/video-studio-processor.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-repository.js",
+      "sha256": "25c36899114808625835b3b1e7ded48492a6e10c8bca7b68c3060d22d9967a9c",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/gemini.js",
+        "lib/json-parser.js",
+        "lib/tenant-context.js",
+        "lib/youtube-studio-character-voice-contract.js",
+        "lib/youtube-studio-contract.js",
+        "lib/youtube-studio-generation-profiles.js",
+        "lib/youtube-studio-narrative-resolver.js",
+        "lib/youtube-studio-tts-capabilities.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-start-frame-adapter.js",
+      "sha256": "c0cc9200402537d90b8ad8353c19f302f8718653c22bdc6a67eb66241a8dcff2",
+      "dependencies": [
+        "lib/cartoon-reference-resolver.js",
+        "lib/db-pg.js",
+        "lib/db.js",
+        "lib/webhook-client.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "image provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-tts-capabilities.js",
+      "sha256": "909d9705af1d7abebfc16db95d543baba97ceee4568489edb1dddd916161f92f",
+      "dependencies": [],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-visual-adapter.js",
+      "sha256": "b22f383c83f76c47220979c66c6a012172c335d93cf6775c1cdfd29bf7a09da5",
+      "dependencies": [
+        "lib/db-pg.js",
+        "lib/webhook-client.js",
+        "lib/youtube-studio-native-audio-prompt.js"
+      ],
+      "risks": [
+        "runtime environment",
+        "video provider"
+      ],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "lib/youtube-studio-voice-adapter.js",
+      "sha256": "7d9182a21a378d6719b85503293630b23a3c5fad7dddcb3162e77c52d1ee2dc0",
+      "dependencies": [
+        "lib/audio-helper.js",
+        "lib/gemini.js",
+        "lib/minimax-tts.js"
+      ],
+      "risks": [],
+      "adoption": "audit-only; not copied/activated"
+    },
+    {
+      "path": "scripts/glabs-worker.js",
+      "sha256": "7ab463843e95eee8867e096dca42327272da37a3442ed4cf9459dbbd34091267",
+      "dependencies": [
+        "lib/db.js",
+        "lib/redis.js"
+      ],
+      "risks": [
+        "runtime environment"
+      ],
+      "adoption": "audit-only; not copied/activated"
     }
   ],
-  "excluded": [
-    ".env*",
-    "data",
-    "credentials",
-    "sessions",
-    "active queues"
+  "externalImports": [
+    "@google/generative-ai",
+    "@google/generative-ai/server",
+    "@imgly/background-removal-node",
+    "async_hooks",
+    "bullmq",
+    "child_process",
+    "crypto",
+    "ffprobe-static",
+    "fluent-ffmpeg",
+    "fs",
+    "fs/promises",
+    "googleapis",
+    "http",
+    "https",
+    "ioredis",
+    "jsonrepair",
+    "net",
+    "node:crypto",
+    "node:fs",
+    "node:os",
+    "node:path",
+    "os",
+    "path",
+    "pg",
+    "playwright",
+    "sharp",
+    "stream",
+    "util",
+    "uuid",
+    "webdav",
+    "xlsx"
+  ],
+  "unresolved": [],
+  "notes": [
+    "Static literal imports only; dynamic computed imports require manual audit.",
+    "Shared helpers need tenant-aware repository adapters, not wholesale scheduler copy."
   ]
 }
