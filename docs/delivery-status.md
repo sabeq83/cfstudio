@@ -10,7 +10,7 @@
 | Menu katalog | 5 menu; CRUD arsip; brand → Preset / Visual Identity; reuse existing assignment; upload dan analisis durable |
 | Automation | Empat tab; target lima jenis; draft/active snapshots; run once; timezone; missed slot; claim/heartbeat/fencing |
 | Pipeline | Empat sumber video memakai executor yang sama; Multiplier satu creative call; Recipe/Editorial/Product memakai planner lebih dahulu; CEP output-only |
-| Media | G-Labs gateway/task ledger; source checksum; single/multi voice; MiniMax/Gemini fallback; I2V/T2V/native; FFmpeg dan static grid/text diuji lokal |
+| Media | G-Labs gateway/task ledger; source checksum; single/multi voice dan MiniMax/Gemini fallback diimplementasikan; common I2V/T2V/native, FFmpeg dan static grid/text diuji lokal; parity seluruh variasi tetap gate pilot |
 | Review | Creative manual/auto preset; final manual exact revision; caption edit; regenerate; archive; self-approval dua izin |
 | Telegram | Challenge private chat; scoped recipients; quiet hours; grouped error/escalation/recovery/partial summary; durable outbox; fake transport diuji |
 | Repliz | Explicit account mapping; media/approval preflight; durable intent; cancel; unknown guard; automatic/manual reconciliation; published proof |
@@ -35,11 +35,11 @@ Preset tanpa assignment brand tetap berada di koleksi tenant. Pengguna memilih d
 
 ## Verifikasi
 
-- 44 tes kontrak/SQL/worker/provider tiruan dan FFmpeg lokal lulus pada pemeriksaan terakhir; hasil akhir dirangkum kembali setelah build final.
+- 44 tes kontrak/SQL/worker/provider tiruan dan FFmpeg lokal lulus pada pemeriksaan terakhir; final build dan HTTP smoke aktual juga lulus.
 - Kelima jalur menghasilkan artifact pada pengujian terkontrol, termasuk resep statis tanpa TTS/klip dan native video tanpa audio input.
 - Unknown POST tidak dikirim dua kali, jadwal idempotent, revision approval invalidation, active snapshot anti-forgery, stale fencing, rate-limit retry, route pinning G-Labs dan konflik analisis diuji.
 - HTTP smoke memakai akun lokal/environment tanpa mencetak credential; counts katalog sesuai tabel. Uji mutasi aktual mencakup upload/review foto dan dua edit konkuren (satu berhasil, satu 409); data uji diarsipkan.
-- Final build alpha.2 lulus; npm audit seluruh dependency: 0 vulnerability. Enam migrasi terpasang. Git remote CF Studio dikonfirmasi pengguna dan dry-run push lulus.
+- Final build alpha.2 lulus; npm audit seluruh dependency: 0 vulnerability. Enam migrasi terpasang. Rilis `v3.0.0-alpha.2` / commit `f97fd041985a0e0e207c1c00e8b2ce9efce9da7d` telah diunggah ke main repository CF Studio; SHA dan tag remote diverifikasi. CI GitHub [41280372228](https://github.com/sabeq83/cfstudio/actions/runs/41280372228) completed/success.
 - Source staging read-only; tidak ada panggilan provider hidup, pesan Telegram nyata atau publikasi nyata selama pengujian.
 
 ## Gate yang belum selesai

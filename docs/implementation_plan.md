@@ -2264,5 +2264,7 @@ After: CHANGELOG.md alpha.2 and `.github/workflows/ci.yml` run contract/SQL/fake
 - [x] Restore drill terakhir 1 November 2026 lulus. Media dan master key wajib dibackup terpisah.
 - [x] UI final dibuka dan form Setting siap; review estetika akhir oleh pengguna.
 - [x] Runbook, delivery status, changelog dan CI disiapkan; env/runtime/storage tidak masuk Git.
-- [ ] Unggah commit/tag alpha.2 ke main remote CF Studio dan periksa hasilnya.
+- [x] Commit rilis `f97fd041985a0e0e207c1c00e8b2ce9efce9da7d` dan tag `v3.0.0-alpha.2` terunggah ke main CF Studio; SHA remote/tag peeled cocok. CI GitHub run 41280372228 completed/success.
 - [ ] Live provider parity/pilot dan deployment tetap gate terbuka. Rilis alpha kode bukan penutupan seluruh PRD.
+
+Verifikasi CI rilis: https://github.com/sabeq83/cfstudio/actions/runs/41280372228 . Dokumen verifikasi setelah rilis dapat memajukan main tanpa mengubah kode pada tag alpha.2.
