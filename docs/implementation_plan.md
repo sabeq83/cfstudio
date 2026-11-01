@@ -2339,3 +2339,15 @@ Release `v3.0.0-alpha.3` points to `b0854f39881b8ba19769ef7eb03669aea8e70bca`. R
 | CHANGELOG.md | Settings release | Record default light theme |
 
 Alpha.4: build passed; actual HTTP 200 root HTML contains `data-theme="light"`; health version alpha.4. Existing semantic light palette and theme toggle unchanged. Release synchronized only to CF Studio remote.
+
+## Gemini pool V2-style mockup — 2 November 2026
+
+## Execution Task List
+- [x] Create standalone interactive light/dark mockup using existing semantic tokens.
+- [x] Verify add/bulk/audit/pause/archive/restore interactions and show preview.
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| public/mockup_gemini_pool_v2.html | Absent | V2-style summary, progress, key rows, single/bulk import, simulated health, archive/restore and separate model defaults. No network or credential persistence. |
+
+Mockup HTTP 200 and JavaScript syntax verified. Controlled in-memory checks cover bulk validation/dedup, archive/restore, pause, single input, audit, theme and reset. Browser bulk/invalid archive flow verified. Application React and provider settings unchanged.
