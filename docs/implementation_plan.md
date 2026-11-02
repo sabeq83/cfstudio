@@ -2418,7 +2418,7 @@ Alpha.6: 71 tests/build passed; actual authenticated pool API returns Free Tier 
 - [x] Show standalone one-field mockup with simulated save/change and endpoint failover.
 - [x] Implement shared MiniMax gateway with fixed V2 endpoint allowlist and bounded safe failover; no repeat after ambiguous POST.
 - [x] Simplify Settings to API key only, retain preset/default production config and encrypted key replacement.
-- [ ] Verify fake-provider/ledger/UI/API/build and release only CF Studio.
+- [x] Verify fake-provider/ledger/UI/API/build and release only CF Studio.
 
 | File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
 |---|---|---|
@@ -2434,3 +2434,5 @@ Alpha.6: 71 tests/build passed; actual authenticated pool API returns Free Tier 
 | package.json, package-lock.json, app/api/health/route.js, CHANGELOG.md | alpha.6 | alpha.7 verified release |
 
 Alpha.7 verification: 82 tests passed. Real FFmpeg-generated MP3 survives managed MiniMax failover and is recorded once; fake transport confirms no Gemini calls for unknown/auth/balance failures. Authenticated actual HTTP smoke in a disposable tenant verifies single-field save, whitespace normalization, encrypted replacement, preserved defaults and secret-free connection listing; disposable tenant removed. Build, catalog API smoke, UI one-field inspection, npm audit (0 vulnerabilities) and secret-pattern check passed. No database migration required. Provider dispatch remains OFF and no MiniMax live call was made.
+
+Release v3.0.0-alpha.7 / 387e74c05d7a9bc946e2eb98693be7621ae73753 pushed to CF Studio main; annotated remote tag verified. GitHub Actions [41399962661](https://github.com/sabeq83/cfstudio/actions/runs/41399962661) verification job completed/success including npm test and build. Production not deployed.

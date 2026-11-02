@@ -74,3 +74,5 @@ Rilis v3.0.0-alpha.5 (`f6941761f1e0bf037903f74ee4572196eab2cec2`) telah tersimpa
 Tab satu API key dan rotasi endpoint bersama diimplementasikan. 82 tes lulus termasuk MP3/FFmpeg nyata dengan transport provider tiruan, pemeliharaan default saat mengganti key, unknown ledger, serta tidak ada Gemini fallback pada key salah/saldo habis/hasil ambigu. Tidak ada panggilan MiniMax nyata. Pilot endpoint/key tetap diperlukan; dispatch tetap OFF.
 
 Alpha.7 build, authenticated actual API save/replacement smoke, one-field UI inspection, general catalog smoke and npm audit 0 vulnerability passed. Disposable test tenant was removed; real tenant credentials were not changed. Eight existing migrations remain unchanged.
+
+Rilis v3.0.0-alpha.7 (`387e74c05d7a9bc946e2eb98693be7621ae73753`) tersimpan pada main/tag CF Studio; verifikasi CI [41399962661](https://github.com/sabeq83/cfstudio/actions/runs/41399962661) lulus termasuk tes/build.
