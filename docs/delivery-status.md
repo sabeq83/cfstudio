@@ -88,3 +88,5 @@ Migration 009 adds tenant + normalized worker lanes and per-job spacing. Same-en
 Live worker/key/model generation remains a separate pilot gate. Dispatch stays OFF until explicitly configured; no production deployment is included.
 
 Alpha.8 evidence: 89 tests/build passed; authenticated actual draft diagnostic against local fake worker, catalog HTTP smoke, light-theme UI inspection, migration 009 and pre/post backup restore verified. npm audit reports 0 vulnerabilities. No real G-Labs generation performed.
+
+Release v3.0.0-alpha.8 / 8ddd0d161a4e075082ad6fc97cb835bfc0ab7c8e pushed to CF Studio main; annotated remote tag verified. GitHub Actions [41403253011](https://github.com/sabeq83/cfstudio/actions/runs/41403253011) verification job completed/success including tests and build. Local health reports alpha.8 with all dispatch flags OFF.
