@@ -1155,3 +1155,131 @@ test("Drive public-access failure prevents Repliz POST and keeps content product
     "ready",
   );
 });
+
+test("MiniMax unknown/terminal outcomes stay durable and never invoke Gemini fallback", async () => {
+  const { mediaServices } = await import("../lib/media-services.js");
+  await saveConnection(actor, {
+    kind: "minimax",
+    label: "MiniMax test",
+    config: { baseUrl: "https://api.minimax.io/" },
+    secret: { apiKey: "TEST_MOCK_MINIMAX" },
+  });
+  const item = (
+    await pg.query(
+      "SELECT * FROM content_items WHERE source_kind='brand_editorial' AND production_package IS NOT NULL LIMIT 1",
+    )
+  ).rows[0];
+  const pkg = item.production_package,
+    old = gateway.fetch;
+  try {
+    for (const [revision, behavior, code, status] of [
+      [88, "lost", "PROVIDER_OUTCOME_UNKNOWN", "unknown"],
+      [89, "auth", "PROVIDER_AUTH_FAILED", "failed"],
+      [90, "balance", "MINIMAX_BALANCE_REQUIRED", "failed"],
+    ]) {
+      let calls = 0;
+      gateway.fetch = async (url) => {
+        calls++;
+        assert.ok(String(url).includes("/v1/t2a_v2"));
+        if (behavior === "lost") throw Error("lost");
+        return new Response(
+          JSON.stringify({
+            base_resp: { status_code: behavior === "auth" ? 1004 : 1008 },
+          }),
+          { status: 200 },
+        );
+      };
+      const p = {
+        ...pkg,
+        revision,
+        audio: {
+          ...pkg.audio,
+          provider: "minimax",
+          fallbackProvider: "gemini",
+        },
+        scenes: [{ ...pkg.scenes[0], id: "mm-" + revision }],
+      };
+      const invoke = () => mediaServices(async (stage, fn) => fn()).tts(p);
+      await assert.rejects(invoke, { code });
+      if (status === "unknown") await assert.rejects(invoke, { code });
+      assert.equal(calls, 1);
+      const job = (
+        await pg.query(
+          "SELECT status FROM provider_jobs WHERE item_id=$1 AND revision=$2 AND stage='tts_0'",
+          [item.id, revision],
+        )
+      ).rows[0];
+      assert.equal(job.status, status);
+    }
+  } finally {
+    gateway.fetch = old;
+  }
+});
+
+test("MiniMax successful endpoint failover produces one real MP3 artifact without a Gemini call", async () => {
+  const { mediaServices } = await import("../lib/media-services.js");
+  const mp3 = path.join(dir, "minimax-fixture.mp3");
+  await mediaCommand([
+    "-f",
+    "lavfi",
+    "-i",
+    "anullsrc=r=32000:cl=mono",
+    "-t",
+    "0.3",
+    "-c:a",
+    "libmp3lame",
+    mp3,
+  ]);
+  const bytes = await readFile(mp3),
+    item = (
+      await pg.query(
+        "SELECT * FROM content_items WHERE source_kind='brand_editorial' AND production_package IS NOT NULL LIMIT 1",
+      )
+    ).rows[0],
+    old = gateway.fetch;
+  let calls = 0;
+  try {
+    gateway.fetch = async (url) => {
+      calls++;
+      assert.ok(String(url).includes("/v1/t2a_v2"));
+      return new Response(
+        JSON.stringify(
+          calls === 1
+            ? { base_resp: { status_code: 1024 } }
+            : {
+                base_resp: { status_code: 0 },
+                data: { audio: bytes.toString("hex"), status: 2 },
+              },
+        ),
+      );
+    };
+    const pkg = {
+      ...item.production_package,
+      revision: 91,
+      audio: {
+        ...item.production_package.audio,
+        provider: "minimax",
+        fallbackProvider: "gemini",
+      },
+      scenes: [{ ...item.production_package.scenes[0], id: "mm-success" }],
+    };
+    const outputs = await mediaServices(async (stage, fn) => fn()).tts(pkg);
+    assert.equal(calls, 2);
+    const a = outputs["mm-success"];
+    const audioPath = path.join(dir, "minimax-output.mp3");
+    await writeFile(
+      audioPath,
+      (await loadArtifact(actor.tenantId, a.id)).buffer,
+    );
+    assert.ok((await duration(audioPath)) > 0);
+    const job = (
+      await pg.query(
+        "SELECT status FROM provider_jobs WHERE item_id=$1 AND revision=91 AND stage='tts_0'",
+        [item.id],
+      )
+    ).rows[0];
+    assert.equal(job.status, "completed");
+  } finally {
+    gateway.fetch = old;
+  }
+});

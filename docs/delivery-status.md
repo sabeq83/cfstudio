@@ -1,4 +1,4 @@
-# Status implementasi CF Studio V3 — alpha.5
+# Status implementasi CF Studio V3 — alpha.7
 
 **Tanggal:** 1 November 2026. **Status:** implementasi lokal dan verifikasi terkontrol; belum final production-ready.
 
@@ -69,3 +69,8 @@ UI dan API mengikuti mockup yang disetujui, tanpa Project group/TTS model/timezo
 Alpha.5 verifikasi: 71 tes lulus; build dan API aktual Settings termasuk mutasi tenant sementara lulus; isolasi/concurrency PostgreSQL, delapan migrasi, backup/restore dan npm audit 0 vulnerability lulus. Tampilan aktual tersedia pada port 3100, termasuk Single/Bulk dan Free Tier cache-off. Data uji tenant sementara dibersihkan. Dispatch tetap OFF, koneksi/model/cache nyata tetap gate pilot.
 
 Rilis v3.0.0-alpha.5 (`f6941761f1e0bf037903f74ee4572196eab2cec2`) telah tersimpan pada main/tag CF Studio. CI [41359933695](https://github.com/sabeq83/cfstudio/actions/runs/41359933695) completed/success.
+
+## MiniMax alpha.7
+Tab satu API key dan rotasi endpoint bersama diimplementasikan. 82 tes lulus termasuk MP3/FFmpeg nyata dengan transport provider tiruan, pemeliharaan default saat mengganti key, unknown ledger, serta tidak ada Gemini fallback pada key salah/saldo habis/hasil ambigu. Tidak ada panggilan MiniMax nyata. Pilot endpoint/key tetap diperlukan; dispatch tetap OFF.
+
+Alpha.7 build, authenticated actual API save/replacement smoke, one-field UI inspection, general catalog smoke and npm audit 0 vulnerability passed. Disposable test tenant was removed; real tenant credentials were not changed. Eight existing migrations remain unchanged.

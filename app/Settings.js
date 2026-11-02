@@ -53,7 +53,7 @@ export default function Settings({ actor, api, action }) {
       retentionDays: 14,
       graceDays: 2,
     }),
-    [audio, setAudio] = useState(null),
+    [editingMinimax, setEditingMinimax] = useState(false),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const admin =
@@ -174,91 +174,81 @@ export default function Settings({ actor, api, action }) {
         <>
           <h3>MiniMax AI Configuration</h3>
           <p>
-            Status:{" "}
-            {configured("minimax")
-              ? "credential tersimpan"
-              : "belum dikonfigurasi"}
+            Satu API key untuk produksi suara. Endpoint dipilih otomatis; model
+            dan suara mengikuti preset.
           </p>
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              saveProvider("minimax");
+              const r = await perform(
+                () =>
+                  api("settings/provider", {
+                    kind: "minimax",
+                    secret: { apiKey: forms.minimax.apiKey },
+                  }),
+                "API key MiniMax tersimpan.",
+              );
+              if (r) {
+                field("minimax", "apiKey", "");
+                setEditingMinimax(false);
+              }
             }}
           >
-            <div className="grid">
-              <label>
-                Endpoint
-                <input
-                  type="url"
-                  required
-                  value={forms.minimax.baseUrl}
-                  onChange={(e) => field("minimax", "baseUrl", e.target.value)}
-                />
-              </label>
-              <label>
-                API key baru
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder={
-                    configured("minimax")
-                      ? "Kosongkan untuk mempertahankan key"
-                      : "YOUR_API_KEY_HERE"
-                  }
-                  value={forms.minimax.apiKey}
-                  onChange={(e) => field("minimax", "apiKey", e.target.value)}
-                />
-              </label>
-              <label>
-                Model TTS
-                <input
-                  required
-                  value={forms.minimax.model}
-                  onChange={(e) => field("minimax", "model", e.target.value)}
-                />
-              </label>
-              <label>
-                Voice ID default
-                <input
-                  required
-                  value={forms.minimax.voice}
-                  onChange={(e) => field("minimax", "voice", e.target.value)}
-                />
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={forms.minimax.fallback}
-                  onChange={(e) =>
-                    field("minimax", "fallback", e.target.checked)
-                  }
-                />{" "}
-                Fallback ke Gemini TTS jika kegagalan aman untuk dicoba
-              </label>
-            </div>
+            <label>
+              MiniMax API Key
+              <input
+                type="password"
+                autoComplete="new-password"
+                required={editingMinimax || !configured("minimax")}
+                readOnly={configured("minimax") && !editingMinimax}
+                placeholder={
+                  configured("minimax") && !editingMinimax
+                    ? "API key tersimpan ••••"
+                    : "YOUR_API_KEY_HERE"
+                }
+                value={forms.minimax.apiKey}
+                onChange={(e) => field("minimax", "apiKey", e.target.value)}
+              />
+            </label>
             <div className="actions">
-              <button className="primary" disabled={busy}>
-                Simpan MiniMax
-              </button>
-              <button
-                type="button"
-                disabled={busy || !configured("minimax")}
-                onClick={async () => {
-                  const r = await perform(
-                    () => api("settings/provider-test", { kind: "minimax" }),
-                    "Tes suara selesai.",
-                  );
-                  if (r) setAudio(r.audioUrl);
-                }}
-              >
-                Tes suara pendek • menggunakan API
-              </button>
+              {configured("minimax") && !editingMinimax ? (
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => setEditingMinimax(true)}
+                >
+                  Ganti API key
+                </button>
+              ) : (
+                <>
+                  <button
+                    className="primary"
+                    disabled={busy || !forms.minimax.apiKey.trim()}
+                  >
+                    Simpan MiniMax
+                  </button>
+                  {configured("minimax") && (
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => {
+                        field("minimax", "apiKey", "");
+                        setEditingMinimax(false);
+                      }}
+                    >
+                      Batal
+                    </button>
+                  )}
+                </>
+              )}
             </div>
           </form>
-          {audio && <audio controls src={audio} />}
           <small>
-            Preset dapat menentukan suara, kecepatan dan volume. Timeout dengan
-            hasil belum pasti tidak otomatis dikirim ke provider lain.
+            {configured("minimax")
+              ? "API key tersimpan terenkripsi."
+              : "Belum dikonfigurasi."}{" "}
+            Pergantian endpoint berjalan otomatis saat kegagalan yang aman
+            dicoba ulang.
           </small>
         </>
       )}

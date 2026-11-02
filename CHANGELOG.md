@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0-alpha.7 — 2 November 2026
+- Tab MiniMax menjadi satu input API key dengan simpan/ganti; pengaturan suara tetap mengikuti preset dan default tersimpan.
+- Executor TTS bersama memakai empat endpoint V2 berurutan dengan rotasi terbatas untuk penolakan eksplisit dan kegagalan sebelum koneksi.
+- Key salah, saldo/kuota habis, parameter ditolak dan hasil POST ambigu berhenti tanpa berpindah provider.
+- Pengujian mencakup payload preset, ledger unknown, rotasi endpoint dan artifact MP3 nyata menggunakan transport tiruan.
+
 ## 3.0.0-alpha.6 — 2 November 2026
 - Free Tier menjadi default konfigurasi Gemini baru dan mockup; pilihan Paid Tier yang tersimpan tetap dipertahankan.
 

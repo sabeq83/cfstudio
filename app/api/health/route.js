@@ -4,7 +4,7 @@ export async function GET() {
   return Response.json(
     {
       app: "CF Studio",
-      version: "3.0.0-alpha.6",
+      version: "3.0.0-alpha.7",
       databaseConfigured: Boolean(c.databaseUrl),
       productionDispatch: c.productionDispatch,
       publishingDispatch: c.publishingDispatch,

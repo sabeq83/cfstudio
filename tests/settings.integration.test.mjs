@@ -946,3 +946,33 @@ test("context caches never cross tenant or model boundaries for identical prompt
     2,
   );
 });
+
+test("MiniMax key-only save preserves production defaults, enforces managed endpoint and encrypts replacement", async () => {
+  const before = await resolveConnection("a", null, "minimax");
+  await saveProviderSettings(actor, {
+    kind: "minimax",
+    secret: { apiKey: "TEST_MOCK_MINIMAX_REPLACEMENT" },
+  });
+  const c = await resolveConnection("a", null, "minimax");
+  assert.equal(c.secret.apiKey, "TEST_MOCK_MINIMAX_REPLACEMENT");
+  assert.equal(c.config.model, before.config.model);
+  assert.equal(c.config.voice, before.config.voice);
+  assert.equal(c.config.fallback, before.config.fallback);
+  assert.equal(c.config.baseUrl, "https://api.minimax.io/");
+  await saveProviderSettings(actor, {
+    kind: "minimax",
+    secret: { apiKey: "" },
+  });
+  assert.equal(
+    (await resolveConnection("a", null, "minimax")).secret.apiKey,
+    "TEST_MOCK_MINIMAX_REPLACEMENT",
+  );
+  await assert.rejects(
+    () =>
+      saveProviderSettings(
+        { ...actor, allBrands: false },
+        { kind: "minimax", secret: { apiKey: "TEST_MOCK_DENIED" } },
+      ),
+    { code: "GLOBAL_CONNECTION_DENIED" },
+  );
+});

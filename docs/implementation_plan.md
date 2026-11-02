@@ -2411,3 +2411,26 @@ Release v3.0.0-alpha.5 / f6941761f1e0bf037903f74ee4572196eab2cec2 pushed to CF S
 | package.json, package-lock.json, app/api/health/route.js, CHANGELOG.md | alpha.5 | alpha.6 |
 
 Alpha.6: 71 tests/build passed; actual authenticated pool API returns Free Tier and cache off for current unconfigured tenant. Explicit saved Paid Tier remains paid.
+
+## MiniMax key-only configuration and endpoint rotation — 2 November 2026
+
+## Execution Task List
+- [x] Show standalone one-field mockup with simulated save/change and endpoint failover.
+- [x] Implement shared MiniMax gateway with fixed V2 endpoint allowlist and bounded safe failover; no repeat after ambiguous POST.
+- [x] Simplify Settings to API key only, retain preset/default production config and encrypted key replacement.
+- [ ] Verify fake-provider/ledger/UI/API/build and release only CF Studio.
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| public/mockup_minimax_settings.html | Absent | One API-key field with save/change and local failover simulation |
+| lib/minimax-gateway.js | Absent | Fixed V2 endpoints, bounded safe rotations, normalized errors/audio validation |
+| lib/provider-gateway.js | Single generic MiniMax POST | Route TTS calls through shared MiniMax executor |
+| lib/provider-settings.js | Endpoint/model/voice edits on every save | Key-only saves preserve production defaults and choose managed endpoint |
+| lib/media-services.js | Any known MiniMax error falls back Gemini | Auth/balance/invalid-input errors stop; unknown POST never falls back |
+| app/Settings.js | MiniMax endpoint/model/voice/fallback/test fields | Single API-key save/change form |
+| tests/minimax-gateway.test.mjs | Absent | Rotation limits, terminal errors, unknown outcomes, response integrity, dispatch gate |
+| tests/settings.integration.test.mjs, tests/pipeline.integration.test.mjs | Generic TTS settings tests | Key-only preservation and durable unknown/terminal behavior |
+| docs/PRD.md, docs/operations.md, docs/delivery-status.md | Rich MiniMax settings | Key-only configuration and safe failover contract |
+| package.json, package-lock.json, app/api/health/route.js, CHANGELOG.md | alpha.6 | alpha.7 verified release |
+
+Alpha.7 verification: 82 tests passed. Real FFmpeg-generated MP3 survives managed MiniMax failover and is recorded once; fake transport confirms no Gemini calls for unknown/auth/balance failures. Authenticated actual HTTP smoke in a disposable tenant verifies single-field save, whitespace normalization, encrypted replacement, preserved defaults and secret-free connection listing; disposable tenant removed. Build, catalog API smoke, UI one-field inspection, npm audit (0 vulnerabilities) and secret-pattern check passed. No database migration required. Provider dispatch remains OFF and no MiniMax live call was made.
