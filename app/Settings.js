@@ -1,4 +1,5 @@
 "use client";
+import GlabsSettings from "./GlabsSettings.js";
 import GeminiSettings from "./GeminiSettings.js";
 import { useEffect, useState } from "react";
 const tabs = [
@@ -17,8 +18,8 @@ const defaults = {
   },
   glabs: {
     baseUrl: "",
-    imageModel: "nano_banana_2",
-    videoModel: "veo_31_lite",
+    imageModel: "nano_banana_pro",
+    videoModel: "veo_31_lite_relaxed",
     delayEnabled: true,
     delayMin: 10,
     delayMax: 20,
@@ -253,136 +254,31 @@ export default function Settings({ actor, api, action }) {
         </>
       )}
       {tab === tabs[2] && (
-        <>
-          <h3>G-Labs Webhook Configuration</h3>
-          <p>Satu gateway bersama untuk seluruh jalur produksi.</p>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              saveProvider("glabs");
-            }}
-          >
-            <div className="grid">
-              <label>
-                Endpoint worker
-                <input
-                  required
-                  type="url"
-                  placeholder="http://alamat-worker:port"
-                  value={forms.glabs.baseUrl}
-                  onChange={(e) => field("glabs", "baseUrl", e.target.value)}
-                />
-              </label>
-              <label>
-                API key baru
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder={
-                    configured("glabs")
-                      ? "Kosongkan untuk mempertahankan key"
-                      : "YOUR_API_KEY_HERE"
-                  }
-                  value={forms.glabs.apiKey}
-                  onChange={(e) => field("glabs", "apiKey", e.target.value)}
-                />
-              </label>
-              <label>
-                Model gambar default
-                <input
-                  required
-                  value={forms.glabs.imageModel}
-                  onChange={(e) => field("glabs", "imageModel", e.target.value)}
-                />
-              </label>
-              <label>
-                Model video default
-                <input
-                  required
-                  value={forms.glabs.videoModel}
-                  onChange={(e) => field("glabs", "videoModel", e.target.value)}
-                />
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={forms.glabs.delayEnabled}
-                  onChange={(e) =>
-                    field("glabs", "delayEnabled", e.target.checked)
-                  }
-                />{" "}
-                Aktifkan safety delay
-              </label>
-              <label>
-                Maksimal job berjalan
-                <input
-                  type="number"
-                  min="1"
-                  max="10"
-                  value={forms.glabs.maxConcurrent}
-                  onChange={(e) =>
-                    field("glabs", "maxConcurrent", Number(e.target.value))
-                  }
-                />
-              </label>
-              <label>
-                Jeda minimum (detik)
-                <input
-                  type="number"
-                  min="0"
-                  max="300"
-                  value={forms.glabs.delayMin}
-                  onChange={(e) =>
-                    field("glabs", "delayMin", Number(e.target.value))
-                  }
-                />
-              </label>
-              <label>
-                Jeda maksimum (detik)
-                <input
-                  type="number"
-                  min="0"
-                  max="300"
-                  value={forms.glabs.delayMax}
-                  onChange={(e) =>
-                    field("glabs", "delayMax", Number(e.target.value))
-                  }
-                />
-              </label>
-              <label>
-                Pola start frame
-                <select
-                  value={forms.glabs.t2iPattern}
-                  onChange={(e) => field("glabs", "t2iPattern", e.target.value)}
-                >
-                  <option value="threading">
-                    Threading • kirim bergiliran, pantau bersama
-                  </option>
-                  <option value="sequential">
-                    Sequential • tunggu hasil per scene
-                  </option>
-                </select>
-              </label>
-            </div>
-            <div className="actions">
-              <button className="primary" disabled={busy}>
-                Simpan G-Labs
-              </button>
-              <button
-                type="button"
-                disabled={busy || !configured("glabs")}
-                onClick={() =>
-                  perform(
-                    () => api("settings/provider-test", { kind: "glabs" }),
-                    "Pemeriksaan koneksi G-Labs berhasil.",
-                  )
-                }
-              >
-                Tes koneksi
-              </button>
-            </div>
-          </form>
-        </>
+        <GlabsSettings
+          value={forms.glabs}
+          onChange={(v) => setForms((f) => ({ ...f, glabs: v }))}
+          configured={configured("glabs")}
+          busy={busy}
+          api={api}
+          onSave={async (value) => {
+            const { apiKey, ...config } = value;
+            const result = await perform(
+              () =>
+                api("settings/provider", {
+                  kind: "glabs",
+                  config,
+                  secret: { apiKey },
+                }),
+              "Konfigurasi G-Labs tersimpan.",
+            );
+            if (result)
+              setForms((f) => ({
+                ...f,
+                glabs: { ...result.config, apiKey: "" },
+              }));
+            return result;
+          }}
+        />
       )}
       {tab === tabs[3] && (
         <>

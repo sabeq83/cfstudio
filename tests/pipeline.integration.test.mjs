@@ -1283,3 +1283,139 @@ test("MiniMax successful endpoint failover produces one real MP3 artifact withou
     gateway.fetch = old;
   }
 });
+
+test("Sequential completion persists delay and same worker rotation retains unknown capacity", async () => {
+  const item = (await pg.query("SELECT * FROM content_items LIMIT 1")).rows[0];
+  const conn = await saveConnection(actor, {
+    kind: "glabs",
+    label: "Sequential",
+    config: {
+      baseUrl: "http://sequential.example.test:8765/",
+      delayEnabled: true,
+      delayMin: 15,
+      delayMax: 15,
+      t2iPattern: "sequential",
+      maxConcurrent: 2,
+    },
+    secret: { apiKey: "TEST_MOCK_GLABS" },
+  });
+  const pkg = {
+    tenantId: actor.tenantId,
+    itemId: item.id,
+    revision: item.revision,
+  };
+  let posts = 0;
+  const call = (c, scene) =>
+    providerJob(pkg, c, scene, "start_frames", { test: scene }, async () => {
+      posts++;
+      return { task_id: scene };
+    });
+  await assert.rejects(() => call(conn, "seq-one"), {
+    code: "PIPELINE_PENDING",
+  });
+  await pg.query(
+    "UPDATE glabs_worker_lanes SET next_submit_at=now()-interval '1 hour' WHERE worker=$1",
+    [conn.config.baseUrl],
+  );
+  await assert.rejects(() => call(conn, "seq-two"), {
+    code: "GLABS_PACING_WAIT",
+  });
+  assert.equal(posts, 1);
+  const original = gateway.fetch;
+  gateway.fetch = async (url) =>
+    json(
+      String(url).includes("/status/")
+        ? { status: "completed" }
+        : { output: "done" },
+    );
+  try {
+    await call({ ...conn, secret: { apiKey: "TEST_MOCK_GLABS" } }, "seq-one");
+  } finally {
+    gateway.fetch = original;
+  }
+  const lane = (
+    await pg.query(
+      "SELECT next_submit_at FROM glabs_worker_lanes WHERE tenant_id=$1 AND worker=$2",
+      [actor.tenantId, conn.config.baseUrl],
+    )
+  ).rows[0];
+  assert.ok(new Date(lane.next_submit_at).getTime() > Date.now() + 13000);
+  await assert.rejects(() => call(conn, "seq-two"), {
+    code: "GLABS_PACING_WAIT",
+  });
+  const rotated = await saveConnection(actor, {
+    kind: "glabs",
+    label: "Rotated",
+    config: { ...conn.config, delayEnabled: false },
+    secret: { apiKey: "TEST_MOCK_REPLACEMENT" },
+  });
+  await assert.rejects(() => call(rotated, "seq-three"), {
+    code: "GLABS_PACING_WAIT",
+  });
+  await pg.query(
+    "UPDATE glabs_worker_lanes SET next_submit_at=now()-interval '1 hour' WHERE worker=$1",
+    [conn.config.baseUrl],
+  );
+  await assert.rejects(
+    () =>
+      providerJob(
+        pkg,
+        rotated,
+        "seq-unknown",
+        "start_frames",
+        { test: "unknown" },
+        async () => {
+          posts++;
+          throw Object.assign(Error(), { code: "PROVIDER_OUTCOME_UNKNOWN" });
+        },
+      ),
+    { code: "PROVIDER_OUTCOME_UNKNOWN" },
+  );
+  await assert.rejects(() => call(rotated, "seq-four"), {
+    code: "GLABS_PACING_WAIT",
+  });
+  assert.equal(posts, 2);
+});
+
+test("Threading allows two spaced tasks, blocks third across connection revisions", async () => {
+  const item = (await pg.query("SELECT * FROM content_items LIMIT 1")).rows[0];
+  const config = {
+    baseUrl: "http://threading.example.test:8765/",
+    delayEnabled: false,
+    maxConcurrent: 2,
+    t2iPattern: "threading",
+  };
+  const c = await saveConnection(actor, {
+    kind: "glabs",
+    label: "Threading",
+    config,
+    secret: { apiKey: "TEST_MOCK_KEY" },
+  });
+  const pkg = {
+    tenantId: actor.tenantId,
+    itemId: item.id,
+    revision: item.revision,
+  };
+  let posts = 0;
+  const call = (connection, scene) =>
+    providerJob(pkg, connection, scene, "start_frames", { scene }, async () => {
+      posts++;
+      return { task_id: scene };
+    });
+  await assert.rejects(() => call(c, "thread-one"), {
+    code: "PIPELINE_PENDING",
+  });
+  await assert.rejects(() => call(c, "thread-two"), {
+    code: "PIPELINE_PENDING",
+  });
+  const next = await saveConnection(actor, {
+    kind: "glabs",
+    label: "Threading revision",
+    config,
+    secret: { apiKey: "TEST_MOCK_REPLACE" },
+  });
+  await assert.rejects(() => call(next, "thread-three"), {
+    code: "GLABS_PACING_WAIT",
+  });
+  assert.equal(posts, 2);
+});

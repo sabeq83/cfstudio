@@ -1,3 +1,9 @@
+## 3.0.0-alpha.8 — G-Labs V2 configuration
+- V2-style host/port, model choices, masked key replacement, safety delay and T2I controls.
+- Authorized draft health diagnostics without generation; saved HTTPS/custom models preserved.
+- Stable per-tenant worker lanes across connection revisions and completion-relative Sequential spacing.
+- Migration 009 retains historical jobs/routes and conservatively counts unknown submissions.
+
 # Changelog
 
 ## 3.0.0-alpha.7 — 2 November 2026

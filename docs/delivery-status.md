@@ -76,3 +76,15 @@ Tab satu API key dan rotasi endpoint bersama diimplementasikan. 82 tes lulus ter
 Alpha.7 build, authenticated actual API save/replacement smoke, one-field UI inspection, general catalog smoke and npm audit 0 vulnerability passed. Disposable test tenant was removed; real tenant credentials were not changed. Eight existing migrations remain unchanged.
 
 Rilis v3.0.0-alpha.7 (`387e74c05d7a9bc946e2eb98693be7621ae73753`) tersimpan pada main/tag CF Studio; verifikasi CI [41399962661](https://github.com/sabeq83/cfstudio/actions/runs/41399962661) lulus termasuk tes/build.
+
+
+## G-Labs configuration alpha.8
+G-Labs follows V2 controls: Host/IP, port (8765 for a new connection), masked key replacement, Nano Banana/Veo/Omni model selectors, Safety Delay (10–20 seconds initially), Threading/Sequential. New image/video defaults are nano_banana_pro and veo_31_lite_relaxed. Saved HTTPS and custom model IDs remain intact. Advanced controls retain protocol and concurrent-job cap. Presets and existing routine snapshots retain precedence.
+
+Draft testing requires integration administration and only requests GET /api/health with a five-second timeout and redirects disabled. Online means health responded; it does not certify generation or model availability. Editing invalidates the displayed diagnostic. Blank key replacement preserves the encrypted stored secret.
+
+Migration 009 adds tenant + normalized worker lanes and per-job spacing. Same-endpoint connection revisions share capacity/due times; historical requests retain their original route. Unknown/submitting/running tasks consume capacity until reconciled. Start-frame Sequential waits for completion then the persisted delay; Threading spaces submissions while monitoring outstanding jobs within the cap. No long blocking delay or duplicate POST after ambiguity. Legacy completed tasks use the conservative configured maximum delay when no recorded delay exists.
+
+Live worker/key/model generation remains a separate pilot gate. Dispatch stays OFF until explicitly configured; no production deployment is included.
+
+Alpha.8 evidence: 89 tests/build passed; authenticated actual draft diagnostic against local fake worker, catalog HTTP smoke, light-theme UI inspection, migration 009 and pre/post backup restore verified. npm audit reports 0 vulnerabilities. No real G-Labs generation performed.

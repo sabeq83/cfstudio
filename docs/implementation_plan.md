@@ -2439,7 +2439,7 @@ Release v3.0.0-alpha.7 / 387e74c05d7a9bc946e2eb98693be7621ae73753 pushed to CF S
 
 ## Planned G-Labs Webhook Configuration refinement — 2 November 2026
 
-Status: plan only, requested by user. No application configuration, worker, credential or React changes in this step. Reference: V2 app/settings/page.js G Labs Webhook card and lib/webhook-client.js webhookHealth/applyRandomDelay; CF Studio app/Settings.js, lib/provider-settings.js, lib/media-services.js, lib/provider-jobs.js.
+Status: implementation authorized by user on 2 November 2026. Reference: V2 app/settings/page.js G Labs Webhook card and lib/webhook-client.js webhookHealth/applyRandomDelay; CF Studio app/Settings.js, lib/provider-settings.js, lib/media-services.js, lib/provider-jobs.js.
 
 ### Intended UI and behavior
 
@@ -2459,13 +2459,13 @@ Status: plan only, requested by user. No application configuration, worker, cred
 - Worker delays remain durable due-times, not long blocking sleeps. Authorization and tenant checks cover both draft tests and saves. No provider key or raw sensitive response in logs. Testing health never enables dispatch or sends generation requests.
 
 ## Execution Task List
-- [ ] Build standalone HTML mockup following V2; simulate status, stale result, key change/cancel, model dropdown, delay toggle/validation and both T2I sequences; show for user review before React edits.
-- [ ] Implement validated endpoint/config adapter and backward-compatible parsing of saved baseUrl; preserve saved HTTPS/custom model/secret values.
-- [ ] Add authorized read-only draft connection diagnostics with bounded timeout and redacted result.
-- [ ] Implement V2-style React controls, saved/dirty state and advanced concurrency.
-- [ ] Correct durable Sequential timing and stable per-worker queue accounting while preserving original routes for existing jobs.
-- [ ] Verify tenant isolation, host/port/delay validation, secret preservation, draft test without generation, threading/sequential order and no duplicate POST after unknown outcome.
-- [ ] Build and local HTTP/UI smoke; record live G-Labs pilot as separate pending evidence; release/push only CF Studio after checks pass.
+- [x] Build standalone HTML mockup following V2; simulate status, stale result, key change/cancel, model dropdown, delay toggle/validation and both T2I sequences; show for user review before React edits.
+- [x] Implement validated endpoint/config adapter and backward-compatible parsing of saved baseUrl; preserve saved HTTPS/custom model/secret values.
+- [x] Add authorized read-only draft connection diagnostics with bounded timeout and redacted result.
+- [x] Implement V2-style React controls, saved/dirty state and advanced concurrency.
+- [x] Correct durable Sequential timing and stable per-worker queue accounting while preserving original routes for existing jobs.
+- [x] Verify tenant isolation, host/port/delay validation, secret preservation, draft test without generation, threading/sequential order and no duplicate POST after unknown outcome.
+- [x] Build and local HTTP/UI smoke; record live G-Labs pilot as separate pending evidence; release/push only CF Studio after checks pass.
 
 ### Before / After code map
 
@@ -2524,3 +2524,6 @@ const nextEligibleAt = plusSeconds(anchor, persistedRandomDelay);
 ```
 
 Acceptance: User can configure the same main controls as V2; saved configurations are not reset; health tests are read-only; Sequential and Threading produce distinct verified timelines; saving the same endpoint cannot bypass pacing/concurrency; unknown POST never sends twice; active jobs preserve their original route.
+
+
+Alpha.8 verification: 89 tests passed, including normalized-worker identity across connection revisions, tenant isolation, unknown-job capacity, two-slot Threading, completion-relative Sequential and read-only authorized draft diagnostics. Optimized build, actual authenticated draft-test HTTP against a local fake worker (one GET health, zero generation POSTs/Settings writes), catalog HTTP smoke, npm audit (0 vulnerabilities), diff and changed-file secret-pattern checks passed. Catalog counts unchanged: 7 brands, 27 products, 202 deconstructs, 23 presets, 12 visual identities. Migration 009 applied only to CF Studio local database; backup/restore verified both before and after migration. Actual light-theme G-Labs UI inspected on port 3100. Provider dispatch remains OFF. Live G-Labs worker/key/model pilot remains pending; production not deployed.

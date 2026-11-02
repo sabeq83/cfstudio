@@ -10,6 +10,7 @@ import {
   listProviderSettings,
   saveProviderSettings,
   testProviderSettings,
+  testGlabsDraft,
 } from "../../../../lib/provider-settings.js";
 import {
   googleStatus,
@@ -309,6 +310,8 @@ export async function POST(request, context) {
       data = await testPoolKeys(actor, b.id);
     else if (s.join("/") === "settings/provider")
       data = await saveProviderSettings(actor, b);
+    else if (s.join("/") === "settings/glabs-test")
+      data = await testGlabsDraft(actor, b);
     else if (s.join("/") === "settings/provider-test")
       data = await testProviderSettings(actor, b.kind);
     else if (s.join("/") === "google/config")

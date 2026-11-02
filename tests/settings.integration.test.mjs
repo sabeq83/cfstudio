@@ -21,6 +21,7 @@ import {
   saveProviderSettings,
   productionDefaults,
   reserveGlabsLane,
+  testGlabsDraft,
 } from "../lib/provider-settings.js";
 import { decryptSecret, resolveConnection } from "../lib/connections.js";
 import { ProviderGateway } from "../lib/provider-gateway.js";
@@ -329,6 +330,26 @@ test("G-Labs safety delay persists instead of blocking a worker", async () => {
   await assert.rejects(() => reserveGlabsLane({ ...c, tenant_id: "a" }), {
     code: "GLABS_PACING_WAIT",
   });
+});
+test("same-worker settings revision retains pacing and tenant lanes stay separate", async () => {
+  const before = await resolveConnection("a", null, "glabs");
+  await saveProviderSettings(actor, {
+    kind: "glabs",
+    config: { baseUrl: "http://127.0.0.1:8765", delayMin: 15, delayMax: 15 },
+    secret: { apiKey: "" },
+  });
+  const after = await resolveConnection("a", null, "glabs");
+  assert.notEqual(before.id, after.id);
+  assert.equal(after.secret.apiKey, before.secret.apiKey);
+  await assert.rejects(() => reserveGlabsLane(after), {
+    code: "GLABS_PACING_WAIT",
+  });
+  await saveProviderSettings(other, {
+    kind: "glabs",
+    config: { baseUrl: "http://127.0.0.1:8765/", delayEnabled: false },
+    secret: { apiKey: "TEST_MOCK_OTHER" },
+  });
+  await reserveGlabsLane(await resolveConnection("b", null, "glabs"));
 });
 test("Google OAuth binds nonce, actor and tenant, consumes state once and encrypts offline tokens", async () => {
   const c = await saveGoogleConfig(actor, {
@@ -975,4 +996,46 @@ test("MiniMax key-only save preserves production defaults, enforces managed endp
       ),
     { code: "GLOBAL_CONNECTION_DENIED" },
   );
+});
+
+test("draft diagnostics require tenant integration admin, never generate or save", async () => {
+  await assert.rejects(() =>
+    testGlabsDraft(
+      { ...actor, capabilities: [] },
+      { config: { host: "worker", port: 8765 } },
+    ),
+  );
+  const original = globalThis.fetch,
+    calls = [];
+  const before = (
+    await getPool().query(
+      "SELECT count(*)::int n FROM connections WHERE tenant_id=$1",
+      [actor.tenantId],
+    )
+  ).rows[0].n;
+  globalThis.fetch = async (url, options) => {
+    calls.push({ url, options });
+    return json({ status: "ok" });
+  };
+  try {
+    const result = await testGlabsDraft(actor, {
+      config: { host: "draft.example.test", port: 8765 },
+      secret: { apiKey: "TEST_MOCK_DRAFT" },
+    });
+    assert.equal(result.ok, true);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].options.method, "GET");
+    assert.equal(calls[0].url, "http://draft.example.test:8765/api/health");
+    assert.equal(
+      (
+        await getPool().query(
+          "SELECT count(*)::int n FROM connections WHERE tenant_id=$1",
+          [actor.tenantId],
+        )
+      ).rows[0].n,
+      before,
+    );
+  } finally {
+    globalThis.fetch = original;
+  }
 });
