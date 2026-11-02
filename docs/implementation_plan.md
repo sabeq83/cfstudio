@@ -2436,3 +2436,91 @@ Alpha.6: 71 tests/build passed; actual authenticated pool API returns Free Tier 
 Alpha.7 verification: 82 tests passed. Real FFmpeg-generated MP3 survives managed MiniMax failover and is recorded once; fake transport confirms no Gemini calls for unknown/auth/balance failures. Authenticated actual HTTP smoke in a disposable tenant verifies single-field save, whitespace normalization, encrypted replacement, preserved defaults and secret-free connection listing; disposable tenant removed. Build, catalog API smoke, UI one-field inspection, npm audit (0 vulnerabilities) and secret-pattern check passed. No database migration required. Provider dispatch remains OFF and no MiniMax live call was made.
 
 Release v3.0.0-alpha.7 / 387e74c05d7a9bc946e2eb98693be7621ae73753 pushed to CF Studio main; annotated remote tag verified. GitHub Actions [41399962661](https://github.com/sabeq83/cfstudio/actions/runs/41399962661) verification job completed/success including npm test and build. Production not deployed.
+
+## Planned G-Labs Webhook Configuration refinement — 2 November 2026
+
+Status: plan only, requested by user. No application configuration, worker, credential or React changes in this step. Reference: V2 app/settings/page.js G Labs Webhook card and lib/webhook-client.js webhookHealth/applyRandomDelay; CF Studio app/Settings.js, lib/provider-settings.js, lib/media-services.js, lib/provider-jobs.js.
+
+### Intended UI and behavior
+
+1. Top status card: Belum dites / Memeriksa / Online / Gagal. Show the tested URL, time and safe failure reason. Editing host/port/key marks the prior result stale. Test the current draft without saving or generating media. A successful /api/health check means health responded, not proof every generation model or credential is valid.
+2. Separate Host/IP and Port (new default 8765), generated URL preview, and API key masked stored status with Ganti/Batal. Empty replacement preserves encrypted secret. Existing HTTPS connections must remain HTTPS; protocol control stays in advanced settings. Host is the CF Studio worker destination selected by administrator, never copied automatically from V2.
+3. Image Model dropdown follows V2 IDs: nano_banana_pro, nano_banana_2. New-configuration default nano_banana_pro. Video Model: veo_31_lite, veo_31_fast, veo_31_quality, veo_31_lite_relaxed, veo_31_fast_relaxed, omni_flash. New default veo_31_lite_relaxed. Preserve all existing saved values, showing a saved custom model rather than silently replacing it. Do not present V2 credit labels as verified current pricing.
+4. Safety Delay checkbox; show Min/Max seconds only when enabled, retain entered values while disabled. New defaults enabled, 10–20 seconds as V2 UI. Validate finite non-negative integers and min <= max; preserve current application upper limit 300 seconds unless a justified policy change is separately recorded.
+5. T2I (Start Frame): Threading submits with spacing and monitors outstanding tasks together within the concurrency cap; Sequential waits for completion, then waits the chosen spacing before the next scene. Labels use entered delay values rather than fixed 10–20 text. The setting applies to start-frame orchestration; every image/video request still passes through the shared submission gate.
+6. One Save G-Labs Configuration action; retain draft values on errors and show dirty/saved feedback. Max concurrent jobs remains available under advanced settings, preserving its saved value (new default 2); HTTPS protocol also advanced.
+
+### Engine findings to address
+
+- CF Studio already uses /api/image/generate, /api/video/generate, /api/status/:id, /api/result/:id and /api/health, matching the relevant V2 routes. Verify payload/result compatibility with fixtures before any live test.
+- Current pacing measures next submit from the previous submission. Sequential therefore may submit immediately after a long-running task finishes; explicitly record completion-relative delay. Threading must not accidentally wait for every task before submitting the next permitted one.
+- Current lane/concurrency accounting is tied to connection_id. Saving new connection revisions for the same worker can create a fresh lane while previous jobs are running. Introduce stable tenant + normalized worker endpoint identity; retain original connection/credential IDs for submitted tasks. Account for outstanding unknown/submitting/running tasks conservatively until reconciled.
+- Production uses one shared renderer/gateway for all source kinds. No per-campaign G-Labs workers. Preset overrides remain above global model defaults; model changes affect new/reactivated routine snapshots. Existing jobs retain original route and request hash.
+- Worker delays remain durable due-times, not long blocking sleeps. Authorization and tenant checks cover both draft tests and saves. No provider key or raw sensitive response in logs. Testing health never enables dispatch or sends generation requests.
+
+## Execution Task List
+- [ ] Build standalone HTML mockup following V2; simulate status, stale result, key change/cancel, model dropdown, delay toggle/validation and both T2I sequences; show for user review before React edits.
+- [ ] Implement validated endpoint/config adapter and backward-compatible parsing of saved baseUrl; preserve saved HTTPS/custom model/secret values.
+- [ ] Add authorized read-only draft connection diagnostics with bounded timeout and redacted result.
+- [ ] Implement V2-style React controls, saved/dirty state and advanced concurrency.
+- [ ] Correct durable Sequential timing and stable per-worker queue accounting while preserving original routes for existing jobs.
+- [ ] Verify tenant isolation, host/port/delay validation, secret preservation, draft test without generation, threading/sequential order and no duplicate POST after unknown outcome.
+- [ ] Build and local HTTP/UI smoke; record live G-Labs pilot as separate pending evidence; release/push only CF Studio after checks pass.
+
+### Before / After code map
+
+| File | Code Sebelum (Current/Before) | Code Sesudah (Proposed/After) |
+|---|---|---|
+| public/mockup_glabs_settings.html | Absent | Standalone V2-style interactive simulation using semantic tokens |
+| app/Settings.js | `<input type="url" value={forms.glabs.baseUrl}/>` plus text models | `<GlabsSettings .../>`, dedicated V2-style controls |
+| app/GlabsSettings.js | Absent | Host/Port, key change/cancel, model selects, status card and draft diagnostics |
+| lib/glabs-settings.js | Absent | `normalizeGlabsConfig(input, previous)` and safe draft diagnostic adapter |
+| lib/provider-settings.js | `config = { baseUrl: input.config.baseUrl, ... }`; test saved connection only | Normalize config, preserve previous secret/defaults; route saved/draft diagnostics through the shared adapter |
+| app/api/v3/[...segments]/route.js | `testProviderSettings(actor, b.kind)` | Dedicated authorized draft G-Labs diagnostic route with safe response |
+| lib/provider-jobs.js | `reserveGlabsLane(connection)` before submit | Gate by stable tenant/worker identity and retain completion timing without resubmitting accepted tasks |
+| lib/media-services.js | `const threaded = connection.config.t2iPattern === "threading"` | Explicit durable start-frame policy with completion-relative Sequential pacing |
+| db/migrations/009_glabs_worker_lanes.sql (if required by final audit) | Lane keyed by `(tenant_id, connection_id)` | Stable worker lane table/metadata; historical connection/job references preserved |
+| tests/glabs-settings.test.mjs | Absent | Validation, V2 options, retained custom/HTTPS values and diagnostics without generation |
+| tests/settings.integration.test.mjs, tests/pipeline.integration.test.mjs | Basic pacing and original-route tests | Same-worker config rotation, two modes/timing, scoped diagnostics and unknown guard |
+| docs/PRD.md, docs/operations.md, docs/delivery-status.md | Earlier G-Labs contract | Refined behavior, setup and verified/live-gate evidence |
+| package.json, package-lock.json, app/api/health/route.js, CHANGELOG.md | Current alpha.7 | Next verified release only after implementation |
+
+### Code Sebelum / Code Sesudah — key examples
+
+Current UI:
+```jsx
+<input type="url" value={forms.glabs.baseUrl} />
+<input value={forms.glabs.imageModel} />
+```
+Proposed UI:
+```jsx
+<GlabsSettings
+  initialConfig={providerConfig}
+  onTestDraft={testGlabsDraft}
+  onSave={saveGlabsConfig}
+/>
+```
+
+Current lane identity:
+```js
+[connection.tenant_id, connection.id]
+```
+Proposed identity (conceptual; existing job connection_id remains unchanged):
+```js
+const worker = normalizedWorkerIdentity(connection.config.baseUrl);
+await reserveWorkerLane(connection.tenant_id, worker, policy);
+```
+
+Current next-submit calculation:
+```js
+new Date(Date.now() + delay * 1000)
+```
+Proposed scheduling contract:
+```js
+const anchor = policy.pattern === 'sequential'
+  ? previousTask.completedAt
+  : previousSubmission.submittedAt;
+const nextEligibleAt = plusSeconds(anchor, persistedRandomDelay);
+```
+
+Acceptance: User can configure the same main controls as V2; saved configurations are not reset; health tests are read-only; Sequential and Threading produce distinct verified timelines; saving the same endpoint cannot bypass pacing/concurrency; unknown POST never sends twice; active jobs preserve their original route.
